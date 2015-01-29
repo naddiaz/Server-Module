@@ -1,5 +1,5 @@
 doctype html
-html(ng-app='store')
+html(ng-app='aMap')
   head
     title #{title}
     link(rel='stylesheet', href='/stylesheets/style.css')
@@ -7,11 +7,16 @@ html(ng-app='store')
     link(rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css")
     link(rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css")
     link( rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:900,900italic,500,400italic,100,700italic,300,700,500italic,100italic,300italic,400')
-    script(src='/javascripts/vendor/angular/angular.min.js')
+
+    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular.min.js')
     script(src='/javascripts/app.js')
-    block libraries
-      
-  body(onload="initialize()")
+
+    script(type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=weather,visualization,panoramio")
+    script(src='//maps.google.com/maps/api/js')
+    script(src='/javascripts/maps/ng-map.min.js')
+
+
+  body
     nav.navbar.navbar-inverse
       .container-fluid
         .navbar-header
