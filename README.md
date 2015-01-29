@@ -1,6 +1,6 @@
-mean-stack-skeleton
-===================
+# Server Module
 
-NodeJS and MongoDB setup instructions:
+Este es el módulo designado para la realización de las operaciones de localización de la APP ___TFG-BLE-System___
 
-http://thecodebarbarian.com/2013/07/22/introduction-to-the-mean-stack-part-one-setting-up-your-tools/
+# App
+[Repositorio](https://github.com/naddiaz/TFG-BLE-System)
