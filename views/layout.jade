@@ -9,7 +9,9 @@ html(ng-app='store')
     link( rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:900,900italic,500,400italic,100,700italic,300,700,500italic,100italic,300italic,400')
     script(src='/javascripts/vendor/angular/angular.min.js')
     script(src='/javascripts/app.js')
-  body
+    block libraries
+      
+  body(onload="initialize()")
     nav.navbar.navbar-inverse
       .container-fluid
         .navbar-header

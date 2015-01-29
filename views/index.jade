@@ -1,4 +1,8 @@
 extends layout
 
+block libraries
+  script(type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA5X8YsmAwkfl6i-QnAGSXPJOLaY52ANsM&sensor=false")
+  script(src='/javascripts/maps/basic-map.js')
+      
 block content
-  button.btn.btn-success #{title}
+  #map_canvas
