@@ -1,3 +1,71 @@
 html { height: 100% }
 body { height: 100%; margin: 0; padding: 0 }
 map { height: 80%; }
+.row#separator{
+  height: 150px;
+}
+.row#middle #title{
+  text-align: center;
+  color: #fff;
+  margin-bottom: 50px;
+}
+.row#middle #icon{
+  text-align: center;
+  color: #fff;
+  font-size: 4em;
+}
+.row#middle form label{
+  color: #fff;
+}
+
+input.hide{
+  visibility:hidden;
+}
+label.mklabel{
+  position: relative;
+  width: 100%;
+}
+.mark{
+  margin: 1% 0;
+  width: 100%;
+  border: dashed;
+  background: #AAA;
+}
+.mark > h1{
+  text-align: center;
+}
+.mark > img{
+  width: 92px;
+}
+.mark#loading{
+  position: absolute;
+  top: -2%;
+  z-index: 1000;
+  display: none;
+  background: transparent !important;
+  border: none;
+}
+.mark#loading > img{
+  width: 100%;
+  height: 5px;
+}
+.tablest{
+  margin: 2% 0;
+  border:solid 3px #ccc;
+  border-radius: 5px;
+  padding: 2% 0;
+  box-shadow: 0 0 10px #222
+}
+.confirm-delete{
+  margin: 2% 0 !important;
+  padding: 2% !important;
+  background: #ccc;
+  border-radius: 5px;
+}
+.margin{
+  margin: 0 10%;
+  width: 80%;
+}
+.vmargin{
+  margin: 5% 0;
+}

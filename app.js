@@ -7,7 +7,6 @@ require('./dbmodels');
 
 var express = require('express')
   , routes = require('./routes')
-  , people = require('./routes/people')
   , http = require('http')
   , path = require('path');
 
@@ -32,13 +31,8 @@ if ('development' == app.get('env')) {
 }
 
 //Routes
-app.get('/', routes.index);
-// WS
-app.get('/ws', routes.ws);
-app.get('/ws/:day/:month/:year',routes.wsf);
-//Person
-app.get('/people/list', people.list);
-app.get('/people/create', people.create);
+require('./routes/routes')(app,routes);
+
 
 //Run
 http.createServer(app).listen(app.get('port'), function(){

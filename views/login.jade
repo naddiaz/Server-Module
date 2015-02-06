@@ -1,0 +1,32 @@
+extends layout
+      
+block content
+  .row#separator
+  .row#middle
+    .col-md-3
+    .col-md-6
+      .row
+        .col-md-3
+        .col-md-6
+          h1#icon
+            i.fa.fa-user
+        .col-md-3
+      .row
+        .col-md-3
+        .col-md-6
+          h1#title Admin Panel Login
+        .col-md-3
+      .row
+        .col-md-3
+        .col-md-6
+          form(action = "/admin", method = "GET",role = "form")
+            .form-group
+              label.control-label(for = "inputUser") Usuario
+              input#inputUser.form-control(type = "text")
+            .form-group
+              label.control-label(for = "inputPass") Contraseña
+              input#inputPass.form-control(type = "text")
+            button.btn.btn-primary.pull-right(type = "submit") Entrar
+        .col-md-3
+    .col-md-3
+  .row#footer
