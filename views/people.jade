@@ -1,0 +1,6 @@
+extends layout
+      
+block content
+  - each person in people
+    p= person.device_type
+    p= person.worker_name

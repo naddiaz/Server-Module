@@ -2,20 +2,19 @@
 /**
  * Module dependencies.
  */
- require('./dbmodels.js');
+
+require('./dbmodels');
 
 var express = require('express')
   , routes = require('./routes')
-  , user = require('./routes/user')
+  , people = require('./routes/people')
   , http = require('http')
   , path = require('path');
 
 var app = express();
-var Mongoose = require('mongoose');
-
 
 // all environments
-app.set('address', process.env.ADDRESS || 'localhost');
+app.set('address', 'localhost');
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
@@ -26,18 +25,22 @@ app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
-var db = Mongoose.connect('mongodb://' + app.get('address') + '/bletaskerDB');
 
 // development only
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+//Routes
 app.get('/', routes.index);
+// WS
 app.get('/ws', routes.ws);
 app.get('/ws/:day/:month/:year',routes.wsf);
-app.get('/users', user.list);
+//Person
+app.get('/people/list', people.list);
+app.get('/people/create', people.create);
 
+//Run
 http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port') + " ::: " + app.get('address'));
+  console.log('Express server listening on port ' + app.get('port') + " :: " + app.get('address'));
 });
