@@ -1,6 +1,20 @@
 extends layout
       
 block content
-  - each person in people
-    p= person.device_type
-    p= person.worker_name
+  table.table
+    tbody
+      tr
+        td person_id
+        td push_id
+        td worker_id
+        td worker_name
+        td worker_type
+        td device_type
+      - each person in people
+        tr
+          td= person.id_person
+          td= person.id_push
+          td= person.worker_id
+          td= person.worker_name
+          td= person.worker_type
+          td= person.device_type

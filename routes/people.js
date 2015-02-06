@@ -3,10 +3,10 @@ var Person     = Mongoose.model( 'Person' );
 
 exports.create = function(req, res){
   new Person({
-    id_person: 0,
+    id_person: 1,
     id_push: 1000,
-    worker_name: "NESTOR",
-    worker_id: 0,
+    worker_name: "ALFREDO",
+    worker_id: 1,
     worker_type: "ADMIN"
   }).save( function( err, todo, count ){
     res.redirect( '/people/list' );
