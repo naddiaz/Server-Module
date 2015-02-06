@@ -6,3 +6,24 @@ nav i
 nav .brand{
 	color: #FFFFFF !important;
 }
+
+.table-responsive{
+  overflow: auto;
+}
+
+.actions-group .left{
+  float: left !important;
+}
+.actions-group{
+  text-align: right;
+}
+.actions-group button{
+  padding: 0 4%;
+}
+
+.actions-group form{
+  display: inline;
+}
+input.hide{
+  display: none;
+}

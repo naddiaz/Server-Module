@@ -1,0 +1,58 @@
+extends layout_admin
+      
+block content
+  .container-fluid
+    ol.breadcrumb
+      li
+        a(href="/admin") Inicio
+      li.active Empleados
+    .row
+      .col-xs-12.col-md-8
+        .panel.panel-info
+          .panel-heading
+            h1 Empleados
+          .panel-body.table-responsive
+            table.table
+              tbody
+                tr
+                  td ID Persona
+                  td ID Push
+                  td ID Empleado
+                  td Nombre
+                  td Tipo Empleado
+                  td Dispositivo
+                  td Acciones
+                - each person in people
+                  tr
+                    td= person.id_person
+                    td= person.id_push
+                    td= person.worker_id
+                    td= person.worker_name
+                    td= person.worker_type
+                    td= person.device_type
+                    td.actions-group
+                      button.left(title="Historial")
+                        i.fa.fa-history
+                      button(title="Editar")
+                        i.fa.fa-edit
+                      form(action="/admin/employee/delete", method="POST")
+                        input.hide(name="id_person",value="#{person.id_person}")
+                        button(title="Eliminar", type="submit")
+                          i.fa.fa-trash
+      .col-xs-12.col-md-4
+        .panel.panel-info
+          .panel-heading
+            h1 Registrar un Empleado
+          .panel-body
+            form(action="/admin/employee/create", method="POST")
+              .form-group
+                input.form-control(name="id_person", placeholder="ID Persona")
+              .form-group
+                input.form-control(name="id_push", placeholder="ID Push")
+              .form-group
+                input.form-control(name="worker_id", placeholder="ID Empleado")
+              .form-group
+                input.form-control(name="worker_name", placeholder="Nombre")
+              .form-group
+                input.form-control(name="worker_type", placeholder="Tipo Empleado")
+              button.btn.btn-success(title="Registrar", type="submit") Registrar

@@ -1,7 +1,7 @@
 module.exports = function (app,routes) {
 
   var people = require('./people');
-  var login = require('./login');
+  var admin = require('./admin');
 
   //Routes
   // WS
@@ -11,6 +11,9 @@ module.exports = function (app,routes) {
   app.get('/people/list', people.list);
   app.get('/people/create', people.create);
 
-  app.get('/',login.login);
-  app.get('/admin',login.index);
+  app.get('/',admin.login);
+  app.get('/admin',admin.index);
+  app.get('/admin/employee',admin.employee);
+  app.post('/admin/employee/create',admin.create_employee);
+  app.post('/admin/employee/delete',admin.delete_employee);
 };
