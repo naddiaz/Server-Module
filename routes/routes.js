@@ -16,4 +16,5 @@ module.exports = function (app,routes) {
   app.get('/admin/employee',admin.employee);
   app.post('/admin/employee/create',admin.create_employee);
   app.post('/admin/employee/delete',admin.delete_employee);
+  app.post('/admin/employee/update',admin.update_employee);
 };

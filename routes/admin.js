@@ -27,8 +27,35 @@ exports.create_employee =  function(req, res){
   });
 };
 
+exports.update_employee =  function(req, res){
+
+  var conditions = {id_person: req.body.id_person_old};
+  var query = {};
+  if(!emptyString(req.body.id_person))
+    query.id_person = req.body.id_person
+  if(!emptyString(req.body.id_push))
+    query.id_push = req.body.id_push
+  if(!emptyString(req.body.worker_id))
+    query.worker_id = req.body.worker_id
+  if(!emptyString(req.body.worker_name))
+    query.worker_name = req.body.worker_name
+  if(!emptyString(req.body.worker_type))
+    query.worker_type = req.body.worker_type
+  
+  Person.update(conditions, query, function(){
+    res.redirect('/admin/employee');
+  });
+};
+
 exports.delete_employee =  function(req, res){
   Person.remove({id_person: req.body.id_person}, function(){
     res.redirect('/admin/employee');
   });
 };
+
+
+function emptyString(value){
+  if(value != "")
+    return false;
+  return true;
+}
