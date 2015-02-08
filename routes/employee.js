@@ -3,24 +3,25 @@ var Person     = Mongoose.model( 'Person' );
 var Airport     = Mongoose.model( 'Airport' );
 
 exports.read_employee =  function(req, res){
-  var id = getAirport(req.params.location,req.params.name);
-  
-  Person.find( {id_airport: id}, function(err, people){
-    res.render('employee',{title: 'BLE Tasker', people: people, location: req.params.location, name: req.params.name, layout: 'layout_admin'});
+  Airport.findOne({location: req.params.location, name: req.params.name }).select('id_airport').exec(function(err, airport){
+    Person.find({id_airport: airport.id_airport}, function(err, people){
+      res.render('employee',{title: 'BLE Tasker', people: people, location: req.params.location, name: req.params.name, layout: 'layout_admin'});
+    });
   });
 };
 
 exports.create_employee =  function(req, res){
-  var id = getAirport(req.params.location,req.params.name);
-  new Person({
-    id_airport: id,
-    id_person: req.body.id_person,
-    id_push: req.body.id_push,
-    worker_name: req.body.worker_name,
-    worker_id: req.body.worker_id,
-    worker_type: req.body.worker_type,
-  }).save( function( err, todo, count ){
-    res.redirect( '/admin/#{req.params.location}/#{req.params.name}/employee' );
+  Airport.findOne({location: req.params.location, name: req.params.name }).select('id_airport').exec(function(err, airport){
+    new Person({
+      id_airport: airport.id_airport,
+      id_person: req.body.id_person,
+      id_push: req.body.id_push,
+      worker_name: req.body.worker_name,
+      worker_id: req.body.worker_id,
+      worker_type: req.body.worker_type,
+    }).save( function( err, todo, count ){
+      res.redirect( '/admin/' + req.params.location + '/' + req.params.name + '/employee' );
+    });
   });
 };
 
@@ -40,23 +41,16 @@ exports.update_employee =  function(req, res){
     query.worker_type = req.body.worker_type
   
   Person.update(conditions, query, function(){
-    res.redirect('/admin/employee');
+    res.redirect( '/admin/' + req.params.location + '/' + req.params.name + '/employee' );
   });
 };
 
 exports.delete_employee =  function(req, res){
   Person.remove({id_person: req.body.id_person}, function(){
-    res.redirect('/admin/employee');
+    res.redirect( '/admin/' + req.params.location + '/' + req.params.name + '/employee' );
   });
 };
 
-function getAirport(location,name){
-  var id = null;
-  Airport.findOne({location: location, name: name }, function(err, airport){
-    id = airport.id_airport;
-  });
-  return id;
-}
 
 function emptyString(value){
   if(value != "")

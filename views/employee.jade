@@ -43,12 +43,12 @@ block content
                     td.actions-group
                       button.btn.btn-info.left(title="Editar", onclick="$(\'#ed_#{person.id_person}\').toggle('fast')")
                         i.fa.fa-edit
-                      form(action="/admin/employee/delete", method="POST")
+                      form(action="/admin/config/#{location}/#{name}/employee/delete", method="POST")
                         input.hide(name="id_person",value="#{person.id_person}")
                         button.btn.btn-danger(title="Eliminar", type="submit")
                           i.fa.fa-trash
                   tr.edit_employee(id="ed_#{person.id_person}")
-                    form(action="/admin/employee/update", method="POST")
+                    form(action="/admin/config/#{location}/#{name}/employee/update", method="POST")
                       td
                         input.hide(name="id_person_old", value="#{person.id_person}")
                       td
@@ -71,7 +71,7 @@ block content
           .panel-heading
             h1 Registrar un Empleado
           .panel-body
-            form(action="/admin/#{location}/#{name}/employee/create", method="POST")
+            form(action="/admin/config/#{location}/#{name}/employee/create", method="POST")
               .form-group
                 input.form-control(name="id_person", placeholder="ID Persona")
               .form-group

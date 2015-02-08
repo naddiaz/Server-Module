@@ -15,9 +15,9 @@ module.exports = function (app,routes) {
 
   // Employee
   app.get('/admin/:location/:name/employee',employee.read_employee);
-  app.post('/admin/:location/:name/employee/create',employee.create_employee);
-  app.post('/admin/employee/delete',employee.delete_employee);
-  app.post('/admin/employee/update',employee.update_employee);
+  app.post('/admin/config/:location/:name/employee/create',employee.create_employee);
+  app.post('/admin/config/:location/:name/employee/delete',employee.delete_employee);
+  app.post('/admin/config/:location/:name/employee/update',employee.update_employee);
 
   // Beacon
   app.get('/admin/:location/:name/beacon',beacon.read_beacon);
