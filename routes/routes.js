@@ -3,6 +3,7 @@ module.exports = function (app,routes) {
   var admin = require('./admin');
   var employee = require('./employee');
   var beacon = require('./beacon');
+  var map = require('./map');
 
   // WebService
   app.get('/ws', routes.ws);
@@ -23,4 +24,7 @@ module.exports = function (app,routes) {
   app.post('/admin/beacon/create',beacon.create_beacon);
   app.post('/admin/beacon/delete',beacon.delete_beacon);
   app.post('/admin/beacon/update',beacon.update_beacon);
+
+  //Views maps
+  app.get('/admin/view/:location/:name',map.view_map)
 };

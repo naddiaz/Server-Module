@@ -1,4 +1,27 @@
 extends layout_admin
       
 block content
-  p HELLO
+  .container-fluid(ng-controller="MapCtrl as map")
+    ol.breadcrumb
+      li
+        a(href="/admin") Inicio
+    .row
+      .col-xs-12.col-md-6
+        .panel.panel-info
+          .panel-heading
+            h1 Aeropuertos disponibles
+          .panel-body
+            table.table
+              tr
+                th Localización
+                th Nombre
+                th.right Acciones
+              tr
+                td Tenerife
+                td Los Rodeos
+                td.actions-group
+                  a(href="/admin/view/Tenerife/LosRodeos" title="Ver Mapa")
+                    i.fa.fa-eye
+                  a(href="#/admin/config/Tenerife/LosRodeos" title="Administración")
+                    i.fa.fa-gears
+              

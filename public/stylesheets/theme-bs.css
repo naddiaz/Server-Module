@@ -17,7 +17,8 @@ nav .brand{
 .actions-group{
   text-align: right;
 }
-.actions-group button{
+.actions-group button,
+.actions-group a{
   padding: 0 4%;
 }
 
@@ -37,4 +38,7 @@ input.hide{
   width: 40px;
   border: 2px solid black;
   white-space: nowrap;
+}
+.right{
+  text-align: right;
 }
