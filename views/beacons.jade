@@ -28,6 +28,7 @@ block content
                 .col-xs-4
                   .form-group
                     input.form-control(id="cell" name="id_cell" placeholder="ID Celda" disabled)
+                    input.hide.form-control(id="cell_hide" name="id_cell_hide")
               button.btn.btn-success(title="Registrar", type="submit") Registrar
           .panel-footer
             p Para añadir la celda es necesario seleccionarla en el mapa, no se puede modificar manualmente.
@@ -40,6 +41,7 @@ block content
                 tr
                   td ID Beacon
                   td ID Celda
+                  td Acciones
                 - each beacon in beacons
                   tr
                     td= beacon.id_beacon
@@ -55,10 +57,9 @@ block content
                     form(action="/admin/beacon/update", method="POST")
                       td
                         input.hide(name="id_beacon_old", value="#{beacon.id_beacon}")
-                      td
                         input.form-control(name="id_beacon",placeholder="ID Beacon: #{beacon.id_beacon}")
                       td
-                        input.form-control(name="id_cell",placeholder="ID Celda: #{beacon.id_cell}")
+                        input.form-control(name="id_cell",placeholder="ID Celda: #{beacon.id_cell}" disabled)
                       td.actions-group
                         button.btn.btn-success(title="Guardar", type="submit")
                           i.fa.fa-save

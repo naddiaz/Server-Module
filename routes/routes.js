@@ -20,7 +20,7 @@ module.exports = function (app,routes) {
 
   // Beacon
   app.get('/admin/beacon',beacon.read_beacon);
-  //app.post('/admin/beacon/create',beacon.create_beacon);
-  //app.post('/admin/beacon/delete',beacon.delete_beacon);
-  //app.post('/admin/beacon/update',beacon.update_beacon);
+  app.post('/admin/beacon/create',beacon.create_beacon);
+  app.post('/admin/beacon/delete',beacon.delete_beacon);
+  app.post('/admin/beacon/update',beacon.update_beacon);
 };

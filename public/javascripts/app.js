@@ -41,6 +41,7 @@
 
       $scope.click_cell = function(event){
         $("#cell").val(this.id);
+        $("#cell_hide").val(this.id);
       }
   });
 })();

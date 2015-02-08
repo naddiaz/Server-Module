@@ -18,7 +18,7 @@ var Localization = new Schema({
 
 var Beacon = new Schema({
   id_beacon: Number,
-  id_cell: Number
+  id_cell: String
 });
 
 var Task = new Schema({

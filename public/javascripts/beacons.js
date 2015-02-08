@@ -1,3 +1,3 @@
 $( document ).ready(function(){
-  $('.edit_beacons').hide();
+  $('.edit_beacon').hide();
 });
