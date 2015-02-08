@@ -33,15 +33,29 @@
         }
       };
 
-      $scope.cell = {value: 0};
 
       this.location = function(){
         return this.airport.center.latitude + "," + this.airport.center.longitude;
-      }
+      };
+
+      $scope.cell = {value: 0};
 
       $scope.click_cell = function(event){
         $("#cell").val(this.id);
         $("#cell_hide").val(this.id);
-      }
+      };
   });
+
+  function initialize() {
+    var mapOptions = {
+      center: new google.maps.LatLng(28, -16),
+      zoom: 6,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById("map_canvas"),
+        mapOptions);
+  };
+
+  
 })();
+  google.maps.event.addDomListener(window, 'load', initialize);
