@@ -19,15 +19,7 @@ function initialize() {
           cell: "2",
           path: [[28.487749,-16.346565],[28.488029,-16.346302],[28.488107,-16.346551]]
       }
-    ],
-    cells_properties: {
-      name: "polygon",
-      geodesic: "true",
-      stroke_color: "#FF0000",
-      stroke_opacity: "1.0",
-      stroke_weight: "2",
-      clickable: "true"
-    }
+    ]
   };
 
   var mapOptions = {
