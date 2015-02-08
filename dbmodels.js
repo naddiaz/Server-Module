@@ -1,7 +1,14 @@
 var Mongoose = require( 'mongoose' );
 var Schema   = Mongoose.Schema;
 
+var Airport = new Schema({
+  id_airport: {type: Number, unique: true},
+  location: String,
+  name: String
+});
+
 var Person = new Schema({
+  id_airport: Number,
   id_person: {type: Number, unique: true},
   id_push: Number,
   worker_name: String,
@@ -17,6 +24,7 @@ var Localization = new Schema({
 });
 
 var Beacon = new Schema({
+  id_airport: Number,
   id_beacon: Number,
   id_cell: String
 });
@@ -44,6 +52,7 @@ var Work = new Schema({
 });
 
 var db = Mongoose.connect('mongodb://localhost/bletaskerDB');
+db.model('Airport', Airport);
 db.model('Person', Person);
 db.model('Localization', Localization);
 db.model('Beacon', Beacon);

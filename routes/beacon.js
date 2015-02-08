@@ -3,7 +3,7 @@ var Beacon     = Mongoose.model( 'Beacon' );
 
 exports.read_beacon =  function(req, res){
   Beacon.find( function(err, beacons){
-    res.render('beacons',{title: 'BLE Tasker', beacons: beacons, layout: 'layout_admin'});
+    res.render('beacons',{title: 'BLE Tasker', beacons: beacons, location: req.params.location, name: req.params.name, layout: 'layout_admin'});
   });
 };
 

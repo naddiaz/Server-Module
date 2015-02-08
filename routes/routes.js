@@ -3,7 +3,7 @@ module.exports = function (app,routes) {
   var admin = require('./admin');
   var employee = require('./employee');
   var beacon = require('./beacon');
-  var map = require('./map');
+  var config = require('./config');
 
   // WebService
   app.get('/ws', routes.ws);
@@ -14,17 +14,21 @@ module.exports = function (app,routes) {
   app.get('/admin',admin.index);
 
   // Employee
-  app.get('/admin/employee',employee.read_employee);
-  app.post('/admin/employee/create',employee.create_employee);
+  app.get('/admin/:location/:name/employee',employee.read_employee);
+  app.post('/admin/:location/:name/employee/create',employee.create_employee);
   app.post('/admin/employee/delete',employee.delete_employee);
   app.post('/admin/employee/update',employee.update_employee);
 
   // Beacon
-  app.get('/admin/beacon',beacon.read_beacon);
+  app.get('/admin/:location/:name/beacon',beacon.read_beacon);
   app.post('/admin/beacon/create',beacon.create_beacon);
   app.post('/admin/beacon/delete',beacon.delete_beacon);
   app.post('/admin/beacon/update',beacon.update_beacon);
 
   //Views maps
-  app.get('/admin/view/:location/:name',map.view_map)
+  app.get('/admin/view/:location/:name',config.view_map)
+
+  //Config
+  app.get('/admin/config/:location/:name',config.config_airport)
+  app.get('/admin/config/:location/:name/employees',employee.read_employee)
 };

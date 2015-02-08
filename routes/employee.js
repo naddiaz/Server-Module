@@ -1,21 +1,26 @@
 var Mongoose = require( 'mongoose' );
 var Person     = Mongoose.model( 'Person' );
+var Airport     = Mongoose.model( 'Airport' );
 
 exports.read_employee =  function(req, res){
-  Person.find( function(err, people){
-    res.render('employee',{title: 'BLE Tasker', people: people, layout: 'layout_admin'});
+  var id = getAirport(req.params.location,req.params.name);
+  
+  Person.find( {id_airport: id}, function(err, people){
+    res.render('employee',{title: 'BLE Tasker', people: people, location: req.params.location, name: req.params.name, layout: 'layout_admin'});
   });
 };
 
 exports.create_employee =  function(req, res){
+  var id = getAirport(req.params.location,req.params.name);
   new Person({
+    id_airport: id,
     id_person: req.body.id_person,
     id_push: req.body.id_push,
     worker_name: req.body.worker_name,
     worker_id: req.body.worker_id,
     worker_type: req.body.worker_type,
   }).save( function( err, todo, count ){
-    res.redirect( '/admin/employee' );
+    res.redirect( '/admin/#{req.params.location}/#{req.params.name}/employee' );
   });
 };
 
@@ -45,6 +50,13 @@ exports.delete_employee =  function(req, res){
   });
 };
 
+function getAirport(location,name){
+  var id = null;
+  Airport.findOne({location: location, name: name }, function(err, airport){
+    id = airport.id_airport;
+  });
+  return id;
+}
 
 function emptyString(value){
   if(value != "")
