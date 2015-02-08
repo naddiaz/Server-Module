@@ -48,13 +48,28 @@ function initialize() {
   var map = new google.maps.Map(document.getElementById("map_canvas"),
       mapOptions);
 
+  var labelOptions = {
+      boxStyle: {
+          background: '#FFFFFF',
+          textAlign: "center",
+          fontSize: "10pt",
+          width: "90px"
+      },
+      disableAutoPan: true,
+      pixelOffset: new google.maps.Size(-45, 0),
+      closeBoxURL: "",
+      isHidden: false,
+      pane: "mapPane",
+      enableEventPropagation: true
+  };
+
   for(i in airport.cells){
     paths_cell = new google.maps.LatLng(airport.cells[i].path[0], airport.cells[i].path[1]);
     
     cell = new google.maps.Circle({
       center: paths_cell,
       radius: 20,
-      strokeColor: '#FF0000',
+      strokeColor: airport.cells[i].color,
       strokeOpacity: 0.8,
       strokeWeight: 2,
       fillColor: airport.cells[i].color,
@@ -63,10 +78,23 @@ function initialize() {
     });
 
     cell.setMap(map);
+
     google.maps.event.addListener(cell, 'click', function (event) {
         console.log(this.indexID);
         $("#cell").val(this.indexID);
         $("#cell_hide").val(this.indexID);
+    });
+    
+    var labelText = "cell_" + i;
+
+    labelOptions.content = labelText;
+    labelOptions.position = paths_cell;
+
+    var label = new InfoBox(labelOptions);
+    label.open(map);
+
+    google.maps.event.addListener(cell, 'center_changed', function () {
+        label.setPosition(cell.getCenter());
     });
   }
 }
