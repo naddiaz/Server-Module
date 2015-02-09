@@ -9,13 +9,14 @@ var Airport = new Schema({
 
 var Person = new Schema({
   id_airport: Number,
-  id_person: {type: Number, unique: true},
+  id_person: Number,
   id_push: Number,
   worker_name: String,
-  worker_id: {type: Number, unique: true},
+  worker_id: Number,
   worker_type: String,
   device_type: {type: String, default: 'android'}
 });
+Person.index({id_airport: 1, id_person: 1}, {unique: true});
 
 var Localization = new Schema({
   id_person: Number,
