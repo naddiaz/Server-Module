@@ -7,9 +7,9 @@ var airport = {
   zoom: 18,
   cells: [
     {
-        cell: "",
-        path: [],
-        color: ''
+        cell: "0",
+        path: [28.046744,-16.579582],
+        color: '#F44336'
     }
   ]
 };

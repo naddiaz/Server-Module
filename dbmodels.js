@@ -29,6 +29,7 @@ var Beacon = new Schema({
   id_beacon: Number,
   id_cell: String
 });
+Beacon.index({id_airport: 1, id_beacon: 1}, {unique: true});
 
 var Task = new Schema({
   id_task: {type: Number, unique: true},

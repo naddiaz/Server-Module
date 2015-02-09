@@ -12,8 +12,10 @@ block content
     ol.breadcrumb
       li
         a(href="/admin") Inicio
+      li Administración
       li #{location}
-      li #{name}
+      li
+        a(href="/admin/config/#{location}/#{name}") #{name}
       li.active Beacons
     .row
       .col-xs-12.col-md-3
@@ -21,7 +23,7 @@ block content
           .panel-heading
             h1 Registrar un Beacon
           .panel-body
-            form(action="/admin/beacon/create", method="POST")
+            form(action="/admin/config/#{location}/#{name}/beacon/create", method="POST")
               .row
                 .col-xs-8
                   .form-group
@@ -50,12 +52,12 @@ block content
                     td.actions-group
                       button.btn.btn-info.left(title="Editar", onclick="$(\'#ed_#{beacon.id_beacon}\').toggle('fast')")
                         i.fa.fa-edit
-                      form(action="/admin/beacon/delete", method="POST")
+                      form(action="/admin/config/#{location}/#{name}/beacon/delete", method="POST")
                         input.hide(name="id_beacon",value="#{beacon.id_beacon}")
                         button.btn.btn-danger(title="Eliminar", type="submit")
                           i.fa.fa-trash
                   tr.edit_beacon(id="ed_#{beacon.id_beacon}")
-                    form(action="/admin/beacon/update", method="POST")
+                    form(action="/admin/config/#{location}/#{name}/beacon/update", method="POST")
                       td
                         input.hide(name="id_beacon_old", value="#{beacon.id_beacon}")
                         input.form-control(name="id_beacon",placeholder="ID Beacon: #{beacon.id_beacon}")

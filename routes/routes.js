@@ -14,21 +14,20 @@ module.exports = function (app,routes) {
   app.get('/admin',admin.index);
 
   // Employee
-  app.get('/admin/:location/:name/employee',employee.read_employee);
+  app.get('/admin/config/:location/:name/employees',employee.read_employee)
   app.post('/admin/config/:location/:name/employee/create',employee.create_employee);
   app.post('/admin/config/:location/:name/employee/delete',employee.delete_employee);
   app.post('/admin/config/:location/:name/employee/update',employee.update_employee);
 
   // Beacon
-  app.get('/admin/:location/:name/beacon',beacon.read_beacon);
-  app.post('/admin/beacon/create',beacon.create_beacon);
-  app.post('/admin/beacon/delete',beacon.delete_beacon);
-  app.post('/admin/beacon/update',beacon.update_beacon);
+  app.get('/admin/config/:location/:name/beacon',beacon.read_beacon);
+  app.post('/admin/config/:location/:name/beacon/create',beacon.create_beacon);
+  app.post('/admin/config/:location/:name/beacon/delete',beacon.delete_beacon);
+  app.post('/admin/config/:location/:name/beacon/update',beacon.update_beacon);
 
   //Views maps
   app.get('/admin/view/:location/:name',config.view_map)
 
   //Config
   app.get('/admin/config/:location/:name',config.config_airport)
-  app.get('/admin/config/:location/:name/employees',employee.read_employee)
 };
