@@ -42,3 +42,6 @@ input.hide{
 .right{
   text-align: right;
 }
+.no-resize{
+  resize: none;
+}

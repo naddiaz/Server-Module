@@ -32,12 +32,14 @@ var Beacon = new Schema({
 Beacon.index({id_airport: 1, id_beacon: 1}, {unique: true});
 
 var Task = new Schema({
-  id_task: {type: Number, unique: true},
-  id_beacon: Number,
+  id_airport: Number,
+  id_task: Number,
+  id_cell: String,
   type: String,
   priority: {type: Number, enum: [0,1,2,3,4]},
   description: String
 });
+Task.index({id_airport: 1, id_task: 1}, {unique: true});
 
 var Work = new Schema({
   id_person: Number,

@@ -14,39 +14,89 @@ block content
       li #{location}
       li.active #{name}
     .row
-      .col-xs-12.col-md-6
+      .col-xs-12.col-md-7
+        .col-xs-12.col-md-6
+          .panel.panel-info
+            .panel-heading
+              h1 Empleados
+            .panel-body
+              p Ir a la sección de empleados, tiene las siguientes opciones:
+              ul
+                li Registrar un nuevo empleado
+                li Modificar los datos de un empleado existente
+                li Eliminar un empleado
+                li Ver el conjunto de empleados registrados para este aeropuerto
+            .panel-footer
+              a(href="/admin/config/#{location}/#{name}/employees") Ir a la sección
+        .col-xs-12.col-md-6
+          .panel.panel-info
+            .panel-heading
+              h1 Beacons
+            .panel-body
+              p Ir a la sección de Beacons, tiene las siguientes opciones:
+              ul
+                li Registrar un nuevo beacon y asignarle una ubicación en el mapa
+                li Modificar y Eliminar los datos de un beacon existente
+            .panel-footer
+              a(href="/admin/config/#{location}/#{name}/beacons") Ir a la sección
+        
+        .row
+          .col-xs-12.col-md-12
+            .panel.panel-info
+              .panel-heading
+                h1 Mapa, distribución de Beacons
+              .panel-body
+                #map_canvas
+      .col-xs-12.col-md-5
         .panel.panel-info
           .panel-heading
-            h1 Empleados
+            h1 Creación de tareas
           .panel-body
-            p Ir a la sección de empleados, tiene las siguientes opciones:
-            ul
-              li Registrar un nuevo empleado
-              li Modificar los datos de un empleado existente
-              li Eliminar un empleado
-              li Ver el conjunto de empleados registrados para este aeropuerto
+            form(action="/admin/config/#{location}/#{name}/task/create", method="POST")
+              .form-group
+                input.form-control(name="id_task" placeholder="ID Tarea")
+              .form-group
+                input.form-control(id="cell" name="id_cell" placeholder="ID Celda" disabled)
+                input.hide.form-control(id="cell_hide" name="id_cell_hide")
+              .form-group
+                input.form-control(name="task_type" placeholder="Tipo de tarea")
+              .form-group
+                  label.radio-inline
+                    input(type="radio" name="task_priority" value="0")
+                    span 0 (Sin prioridad)
+                  label.radio-inline
+                    input(type="radio" name="task_priority" value="1")
+                    span 1
+                  label.radio-inline
+                    input(type="radio" name="task_priority" value="2")
+                    span 2
+                  label.radio-inline
+                    input(type="radio" name="task_priority" value="3")
+                    span 3
+                  label.radio-inline
+                    input(type="radio" name="task_priority" value="4")
+                    span 4
+              .form-group
+                label(for="description") Descripción
+                textarea.form-control.no-resize#description(name="task_description" rows="5")
+              button.btn.btn-success(title="Registrar", type="submit") Registrar
           .panel-footer
-            a(href="/admin/config/#{location}/#{name}/employees") Ir a la sección
-      .col-xs-12.col-md-6
+            p Para seleccionar el 'ID Celda' es necesario hacer click en las celdas del 'Mapa, distribución de Beacons'.
         .panel.panel-info
           .panel-heading
-            h1 Beacons
+            h1 Tareas Activas
           .panel-body
-            p Ir a la sección de Beacons, tiene las siguientes opciones:
-            ul
-              li Registrar un nuevo beacon y asignarle una ubicación en el mapa
-              li Modificar y Eliminar los datos de un beacon existente
-          .panel-footer
-            a(href="/admin/config/#{location}/#{name}/beacons") Ir a la sección
-    .row
-      .col-xs-12.col-md-8
-        .panel.panel-info
-          .panel-heading
-            h1 Mapa, distribución de Beacons
-          .panel-body
-            #map_canvas
-      .col-xs-12.col-md-4
-        .panel.panel-info
-          .panel-heading
-            h1 Actividad Reciente
-          .panel-body
+            table.table
+              tr
+                th ID Tarea
+                th ID Celda
+                th Tipo
+                th Prioridad
+                th Descripción
+              - each task in tasks
+                tr
+                  td= task.id_task
+                  td= task.id_cell
+                  td= task.type
+                  td= task.priority
+                  td= task.description
