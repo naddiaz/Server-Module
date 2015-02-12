@@ -5,6 +5,7 @@ module.exports = function (app,routes) {
   var beacon = require('./beacon');
   var task = require('./task');
   var config = require('./config');
+  var localization = require('./localization');
 
   // WebService
   app.get('/ws', routes.ws);
@@ -34,6 +35,11 @@ module.exports = function (app,routes) {
 
   // Task
   app.post('/admin/config/:location/:name/task/create',task.create_task);
+
+  //Localization
+  app.get('/admin/config/localization',localization.read_localization);
+  app.post('/receiveLocation',localization.create_localization);
+
 
 
 };
