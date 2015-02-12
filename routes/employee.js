@@ -20,7 +20,7 @@ exports.create_employee =  function(req, res){
       worker_id: req.body.worker_id,
       worker_type: req.body.worker_type,
     }).save( function( err, todo, count ){
-      res.redirect( '/admin/config/' + req.params.location + '/' + req.params.name + '/employee' );
+      res.redirect( '/admin/config/' + req.params.location + '/' + req.params.name + '/employees' );
     });
   });
 };
@@ -42,7 +42,7 @@ exports.update_employee =  function(req, res){
       query.worker_type = req.body.worker_type
 
     Person.update(conditions, query, function(){
-      res.redirect( '/admin/config/' + req.params.location + '/' + req.params.name + '/employee' );
+      res.redirect( '/admin/config/' + req.params.location + '/' + req.params.name + '/employees' );
     });
   });
 };
@@ -50,7 +50,7 @@ exports.update_employee =  function(req, res){
 exports.delete_employee =  function(req, res){
   Airport.findOne({location: req.params.location, name: req.params.name }).select('id_airport').exec(function(err, airport){
     Person.remove({id_airport: airport.id_airport, id_person: req.body.id_person}, function(){
-      res.redirect( '/admin/config/' + req.params.location + '/' + req.params.name + '/employee' );
+      res.redirect( '/admin/config/' + req.params.location + '/' + req.params.name + '/employees' );
     });
   });
 };

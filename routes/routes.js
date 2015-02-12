@@ -20,7 +20,7 @@ module.exports = function (app,routes) {
   app.post('/admin/config/:location/:name/employee/update',employee.update_employee);
 
   // Beacon
-  app.get('/admin/config/:location/:name/beacon',beacon.read_beacon);
+  app.get('/admin/config/:location/:name/beacons',beacon.read_beacon);
   app.post('/admin/config/:location/:name/beacon/create',beacon.create_beacon);
   app.post('/admin/config/:location/:name/beacon/delete',beacon.delete_beacon);
   app.post('/admin/config/:location/:name/beacon/update',beacon.update_beacon);
