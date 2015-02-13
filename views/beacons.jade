@@ -46,11 +46,11 @@ block content
                   td ID Celda
                   td Acciones
                 - each beacon in beacons
-                  tr
+                  tr(id="rigid_#{beacon.id_beacon}")
                     td= beacon.id_beacon
                     td= beacon.id_cell
                     td.actions-group
-                      button.btn.btn-info.left(title="Editar", onclick="$(\'#ed_#{beacon.id_beacon}\').toggle('fast')")
+                      button.btn.btn-info.left(title="Editar", onclick="editable(\'#{beacon.id_beacon}\')")
                         i.fa.fa-edit
                       form(action="/admin/config/#{location}/#{name}/beacon/delete", method="POST")
                         input.hide(name="id_beacon",value="#{beacon.id_beacon}")
@@ -60,12 +60,15 @@ block content
                     form(action="/admin/config/#{location}/#{name}/beacon/update", method="POST")
                       td
                         input.hide(name="id_beacon_old", value="#{beacon.id_beacon}")
-                        input.form-control(name="id_beacon",placeholder="ID Beacon: #{beacon.id_beacon}")
+                        input.form-control(name="id_beacon",placeholder="#{beacon.id_beacon}")
                       td
-                        input.form-control(name="id_cell",placeholder="ID Celda: #{beacon.id_cell}" disa)
+                        input.form-control(id="cell_edit_#{beacon.id_cell}" name="id_cell_edit" placeholder="#{beacon.id_cell}" disabled)
+                        input.hide.form-control(id="cell_edit_hide_#{beacon.id_cell}" name="id_cell_edit_hide")
                       td.actions-group
-                        button.btn.btn-success(title="Guardar", type="submit")
+                        button.btn.btn-success.left(title="Guardar", type="submit")
                           i.fa.fa-save
+                        button.btn.btn-warning(title="Cancelar", type="reset" onclick="no_editable(\'#{beacon.id_beacon}\')")
+                          i.fa.fa-times-circle-o
       .col-xs-12.col-md-9
         .panel.panel-info
           .panel-heading

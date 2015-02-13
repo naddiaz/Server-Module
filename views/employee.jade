@@ -30,7 +30,7 @@ block content
                   td Dispositivo
                   td Acciones
                 - each person in people
-                  tr
+                  tr(id="rigid_#{person.id_person}")
                     td.actions-group
                       button.btn.btn-info.left(title="Historial")
                         i.fa.fa-history
@@ -41,7 +41,7 @@ block content
                     td= person.worker_type
                     td= person.device_type
                     td.actions-group
-                      button.btn.btn-info.left(title="Editar", onclick="$(\'#ed_#{person.id_person}\').toggle('fast')")
+                      button.btn.btn-info.left(title="Editar", onclick="editable(\'#{person.id_person}\')")
                         i.fa.fa-edit
                       form(action="/admin/config/#{location}/#{name}/employee/delete", method="POST")
                         input.hide(name="id_person",value="#{person.id_person}")
@@ -52,20 +52,22 @@ block content
                       td
                         input.hide(name="id_person_old", value="#{person.id_person}")
                       td
-                        input.form-control(name="id_person",placeholder="ID Persona: #{person.id_person}")
+                        input.form-control(name="id_person",placeholder="#{person.id_person}")
                       td
-                        input.form-control(name="id_push",placeholder="ID Push: #{person.id_push}")
+                        input.form-control(name="id_push",placeholder="#{person.id_push}")
                       td
-                        input.form-control(name="worker_id",placeholder="ID Empleado: #{person.worker_id}")
+                        input.form-control(name="worker_id",placeholder="#{person.worker_id}")
                       td
-                        input.form-control(name="worker_name",placeholder="Nombre: #{person.worker_name}")
+                        input.form-control(name="worker_name",placeholder="#{person.worker_name}")
                       td
-                        input.form-control(name="worker_type",placeholder="Tipo: #{person.worker_type}")
+                        input.form-control(name="worker_type",placeholder="#{person.worker_type}")
                       td
-                        input.form-control(name="device_type",placeholder="Dispositivo: #{person.device_type}", disabled)
+                        input.form-control(name="device_type",placeholder="#{person.device_type}", disabled)
                       td.actions-group
-                        button.btn.btn-success(title="Guardar", type="submit")
+                        button.btn.btn-success.left(title="Guardar", type="submit")
                           i.fa.fa-save
+                        button.btn.btn-warning(title="Cancelar", type="reset" onclick="no_editable(\'#{person.id_person}\')")
+                          i.fa.fa-times-circle-o
       .col-xs-12.col-md-4
         .panel.panel-info
           .panel-heading

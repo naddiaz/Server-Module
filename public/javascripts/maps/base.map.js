@@ -40,9 +40,10 @@ function initialize() {
     cell.setMap(map);
 
     google.maps.event.addListener(cell, 'click', function (event) {
-        console.log(this.indexID);
         $("#cell").val(this.indexID);
         $("#cell_hide").val(this.indexID);
+        $("input[id^='cell_edit_']").val(this.indexID);
+        $("input[id^='cell_edit_hide_']").val(this.indexID);
     });
     
     var labelText = "cell_" + i;

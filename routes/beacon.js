@@ -27,8 +27,9 @@ exports.update_beacon =  function(req, res){
     var conditions = {id_airport: airport.id_airport, id_beacon: req.body.id_beacon_old};
     var query = {};
     if(!emptyString(req.body.id_beacon))
-      query.id_beacon = req.body.id_beacon
-    
+      query.id_beacon = req.body.id_beacon;
+    if(!emptyString(req.body.id_cell_edit_hide))
+      query.id_cell = req.body.id_cell_edit_hide;
     Beacon.update(conditions, query, function(){
       res.redirect( '/admin/config/' + req.params.location + '/' + req.params.name + '/beacons' );
     });
