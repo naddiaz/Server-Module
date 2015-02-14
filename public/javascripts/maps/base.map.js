@@ -81,8 +81,8 @@ function getNextCellID(location,name){
     async: false,
     type:"POST",
     success:function(data) {
-      id = data; 
-      console.log(data)
+      id = data.id_cell; 
+      console.log(id)
     }
   });
   return id;
@@ -91,6 +91,14 @@ function getNextCellID(location,name){
 function setCell(location,name,cell){
   $.ajax({
     url:"/admin/config/" + location + "/" + name + "/cell/create",
+    type:"POST",
+    data: cell
+  });
+}
+
+function deleteCell(location,name,cell){
+  $.ajax({
+    url:"/admin/config/" + location + "/" + name + "/cell/delete",
     type:"POST",
     data: cell
   });
@@ -122,28 +130,12 @@ function makeBeaconCircle(map,cell){
     strokeWeight: 2,
     fillColor: "#"+cell.color,
     fillOpacity: 0.35,
-    indexID: "cell_" + cell.id_cell
+    indexID: cell.id_cell
   });
 
   cell_map.setMap(map);
-
-  google.maps.event.addListener(cell_map, 'click', function (event) {
-      $("#cell").val(this.indexID);
-      $("#cell_hide").val(this.indexID);
-      $("input[id^='cell_edit_']").val(this.indexID);
-      $("input[id^='cell_edit_hide_']").val(this.indexID);
-  });
   
-
-  google.maps.event.addDomListener(cell_map, "rightclick", function(e) {
-    if($('#sw_editmode').is(':checked')){
-      var r = confirm("Desea eliminar la celda: " + this.indexID);
-      if (r == true) {
-          x = "You pressed OK!";
-      }
-    }
-  });
-  var labelText = "cell_" + cell.id_cell;
+  var labelText = "celda: " + cell.id_cell;
 
   labelOptions.content = labelText;
   labelOptions.position = paths_cell;
@@ -151,8 +143,19 @@ function makeBeaconCircle(map,cell){
   var label = new InfoBox(labelOptions);
   label.open(map);
 
-  google.maps.event.addListener(cell_map, 'center_changed', function () {
-      label.setPosition(cell_map.getCenter());
+  google.maps.event.addListener(cell_map, 'click', function (event) {
+      $("#cell").val(this.indexID);
+      $("#cell_hide").val(this.indexID);
+      $("input[id^='cell_edit_']").val(this.indexID);
+      $("input[id^='cell_edit_hide_']").val(this.indexID);
+      if($('#sw_editmode').is(':checked')){
+        var r = confirm("Desea eliminar la celda: " + this.indexID);
+        if (r == true) {
+            deleteCell(LOCATION,NAME,{id_cell: this.indexID});
+            this.setMap(null);
+            label.setVisible(false);
+        }
+      }
   });
 }
 

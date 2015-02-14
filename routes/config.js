@@ -34,10 +34,11 @@ exports.get_cells =  function(req, res){
 
 exports.get_next_cell_id =  function(req, res){
   Airport.findOne({location: req.params.location, name: req.params.name }).select('id_airport').exec(function(err, airport){
-    Cell.where('id_airport', airport.id_airport).count(function(err, count){
-      if(err)
-        res.send(err);
-      res.json(count);
+    Cell.findOne({id_airport: airport.id_airport}).sort({ field: 'asc', id_cell: -1 }).exec(function(err, last) {
+      if(last == null)
+        res.send({id_cell: 0});
+      else
+        res.send({id_cell:last.id_cell+1});
     });
   });
 };
@@ -51,5 +52,11 @@ exports.set_cell =  function(req, res){
       longitude: req.body.longitude,
       color: req.body.color
     }).save();
+  });
+};
+
+exports.delete_cell =  function(req, res){
+  Airport.findOne({location: req.params.location, name: req.params.name }).select('id_airport').exec(function(err, airport){
+    Cell.remove({id_airport: airport.id_airport, id_cell: req.body.id_cell}, function(){});
   });
 };
