@@ -22,6 +22,7 @@ module.exports = function (app,routes) {
   app.get('/admin/config/:location/:name',config.config_airport);
   app.post('/admin/config/:location/:name/airport/info',config.get_airport);
   app.post('/admin/config/:location/:name/cells/info',config.get_cells);
+  app.post('/admin/config/:location/:name/cell/next',config.get_next_cell_id);
   app.post('/admin/config/:location/:name/cell/create',config.set_cell);
 
   // Employee

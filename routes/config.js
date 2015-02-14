@@ -32,6 +32,16 @@ exports.get_cells =  function(req, res){
   });
 };
 
+exports.get_next_cell_id =  function(req, res){
+  Airport.findOne({location: req.params.location, name: req.params.name }).select('id_airport').exec(function(err, airport){
+    Cell.where('id_airport', airport.id_airport).count(function(err, count){
+      if(err)
+        res.send(err);
+      res.json(count);
+    });
+  });
+};
+
 exports.set_cell =  function(req, res){
   Airport.findOne({location: req.params.location, name: req.params.name }).select('id_airport').exec(function(err, airport){
     new Cell({

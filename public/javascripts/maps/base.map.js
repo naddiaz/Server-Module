@@ -9,7 +9,6 @@ function initialize() {
           ]
       }
   ];
-  console.log(airport)
   var mapOptions = {
     center: new google.maps.LatLng(airport.latitude,airport.longitude),
     zoom: 19,
@@ -26,7 +25,7 @@ function initialize() {
 
   google.maps.event.addDomListener(map, "click", function (e) {
     var cell = {
-      id_cell: cells.length,
+      id_cell: getNextCellID(LOCATION,NAME),
       latitude: e.latLng.k,
       longitude: e.latLng.D,
       color: randColor()
@@ -62,6 +61,20 @@ function getCells(location,name){
     }
   });
   return cells;
+}
+
+function getNextCellID(location,name){
+  var id;
+  $.ajax({
+    url:"/admin/config/" + location + "/" + name + "/cell/next",
+    async: false,
+    type:"POST",
+    success:function(data) {
+      id = data; 
+      console.log(data)
+    }
+  });
+  return id;
 }
 
 function setCell(location,name,cell){
