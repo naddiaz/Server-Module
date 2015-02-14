@@ -19,9 +19,12 @@ block content
       .col-xs-12.col-md-12
         .panel.panel-info
           .panel-heading
-            h1 Mapa: #{location}, #{name}
-              span.sw
-                  input.switch#sw_editmode(type="checkbox")
-                  label.pull-right(for="sw_editmode") Editar Mapa
+            .row
+              .col-xs-12.col-md-10
+                h1 Mapa: #{location}, #{name}
+              .col-xs-12.col-md-2
+                input.switch#sw_editmode(type="checkbox")
+                label.pull-right(for="sw_editmode") Editar Mapa
+                p.pull-right Click derecho para eliminar
           .panel-body
             #map_canvas

@@ -25,12 +25,13 @@ function initialize() {
 
   google.maps.event.addListener(map, 'mouseover', function (event) {
     if($('#sw_editmode').is(':checked')){
-      map.setOptions({ draggableCursor : "url(images/cursor_edit.png), auto" })
+      map.setOptions({ draggableCursor : "url(https://raw.githubusercontent.com/naddiaz/Server-Module/beaconsAddDynamic/public/images/cursor_edit.png), auto" })
     }
     else{
       map.setOptions({ draggableCursor : "url(https://maps.gstatic.com/mapfiles/openhand_8_8.cur), default" })
     }
   });
+
   google.maps.event.addDomListener(map, "click", function (e) {
     if($('#sw_editmode').is(':checked')){
       var cell = {
@@ -133,6 +134,15 @@ function makeBeaconCircle(map,cell){
       $("input[id^='cell_edit_hide_']").val(this.indexID);
   });
   
+
+  google.maps.event.addDomListener(cell_map, "rightclick", function(e) {
+    if($('#sw_editmode').is(':checked')){
+      var r = confirm("Desea eliminar la celda: " + this.indexID);
+      if (r == true) {
+          x = "You pressed OK!";
+      }
+    }
+  });
   var labelText = "cell_" + cell.id_cell;
 
   labelOptions.content = labelText;
