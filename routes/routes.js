@@ -20,8 +20,9 @@ module.exports = function (app,routes) {
 
   //Config
   app.get('/admin/config/:location/:name',config.config_airport);
+  app.post('/admin/config/:location/:name/airport/info',config.get_airport);
   app.post('/admin/config/:location/:name/cells/info',config.get_cells);
-  //app.post('/admin/config/:location/:name/cells/create',config.set_cell);
+  app.post('/admin/config/:location/:name/cell/create',config.set_cell);
 
   // Employee
   app.get('/admin/config/:location/:name/employees',employee.read_employee)

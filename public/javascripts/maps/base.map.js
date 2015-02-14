@@ -1,4 +1,5 @@
 function initialize() {
+  var airport = getAirport(LOCATION,NAME);
   var style =[
       {
           featureType: "poi",
@@ -8,16 +9,17 @@ function initialize() {
           ]
       }
   ];
+  console.log(airport)
   var mapOptions = {
-    center: new google.maps.LatLng(airport.center.latitude,airport.center.longitude),
-    zoom: airport.zoom,
+    center: new google.maps.LatLng(airport.latitude,airport.longitude),
+    zoom: 19,
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     styles: style
   };
   var map = new google.maps.Map(document.getElementById("map_canvas"),
       mapOptions);
 
-  var cells = getCells('Tenerife','LosRodeos');
+  var cells = getCells(LOCATION,NAME);
   for(i in cells){
     makeBeaconCircle(map,cells[i])
   }
@@ -30,10 +32,24 @@ function initialize() {
       color: randColor()
     }
     makeBeaconCircle(map,cell);
+    setCell(LOCATION,NAME,cell);
   });
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
+
+function getAirport(location,name){
+  var airport;
+  $.ajax({
+    url:"/admin/config/" + location + "/" + name + "/airport/info",
+    async: false,
+    type:"POST",
+    success:function(data) {
+      airport = data; 
+    }
+  });
+  return airport;
+}
 
 function getCells(location,name){
   var cells;
@@ -46,6 +62,14 @@ function getCells(location,name){
     }
   });
   return cells;
+}
+
+function setCell(location,name,cell){
+  $.ajax({
+    url:"/admin/config/" + location + "/" + name + "/cell/create",
+    type:"POST",
+    data: cell
+  });
 }
 
 function makeBeaconCircle(map,cell){

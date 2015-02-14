@@ -2,12 +2,13 @@ var Mongoose = require( 'mongoose' );
 var Schema   = Mongoose.Schema;
 
 var Airport = new Schema({
-  id_airport: {type: Number, unique: true},
+  id_airport: Number,
   latitude: Number,
   longitude: Number,
   location: String,
   name: String
 });
+Airport.index({id_airport: 1, location: 1, name: 1}, {unique: true});
 
 var Cell = new Schema({
   id_airport: Number,

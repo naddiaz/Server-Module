@@ -16,6 +16,12 @@ exports.config_airport = function(req, res){
   });
 };
 
+exports.get_airport =  function(req, res){
+  Airport.findOne({location: req.params.location, name: req.params.name }).exec(function(err, airport){
+    res.send(airport);
+  });
+};
+
 exports.get_cells =  function(req, res){
   Airport.findOne({location: req.params.location, name: req.params.name }).select('id_airport').exec(function(err, airport){
     Cell.find({id_airport: airport.id_airport}, function(err, cells){
@@ -23,5 +29,17 @@ exports.get_cells =  function(req, res){
         res.send(err);
       res.send(cells);
     });
+  });
+};
+
+exports.set_cell =  function(req, res){
+  Airport.findOne({location: req.params.location, name: req.params.name }).select('id_airport').exec(function(err, airport){
+    new Cell({
+      id_airport: airport.id_airport,
+      id_cell: req.body.id_cell,
+      latitude: req.body.latitude,
+      longitude: req.body.longitude,
+      color: req.body.color
+    }).save();
   });
 };

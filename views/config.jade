@@ -3,7 +3,9 @@ extends layout_admin
 block scripts
   script(type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA5X8YsmAwkfl6i-QnAGSXPJOLaY52ANsM&sensor=false")
   script(src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox.js")
-  script(src='/javascripts/maps/#{location}.#{name}.js')
+  script.
+    LOCATION = "#{location}"
+    NAME = "#{name}"
   script(src='/javascripts/maps/base.map.js')
 block content
   .container-fluid
