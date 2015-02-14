@@ -44,6 +44,8 @@ exports.delete_beacon =  function(req, res){
   });
 };
 
+
+
 function emptyString(value){
   if(value != "")
     return false;

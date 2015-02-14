@@ -17,18 +17,35 @@ function initialize() {
   var map = new google.maps.Map(document.getElementById("map_canvas"),
       mapOptions);
 
-  for(i in airport.cells){
-    makeBeaconCircle(map,airport.cells[i])
+  var cells = getCells('Tenerife','LosRodeos');
+  for(i in cells){
+    makeBeaconCircle(map,cells[i])
   }
 
   google.maps.event.addDomListener(map, "click", function (e) {
     var cell = {
-      id: airport.cells.length,
-      path: [e.latLng.k,e.latLng.D],
-      color: '#'+randColor()
+      id_cell: cells.length,
+      latitude: e.latLng.k,
+      longitude: e.latLng.D,
+      color: randColor()
     }
     makeBeaconCircle(map,cell);
   });
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+function getCells(location,name){
+  var cells;
+  $.ajax({
+    url:"/admin/config/" + location + "/" + name + "/cells/info",
+    async: false,
+    type:"POST",
+    success:function(data) {
+      cells = data; 
+    }
+  });
+  return cells;
 }
 
 function makeBeaconCircle(map,cell){
@@ -47,17 +64,17 @@ function makeBeaconCircle(map,cell){
       enableEventPropagation: true
   };
 
-  paths_cell = new google.maps.LatLng(cell.path[0], cell.path[1]);
+  paths_cell = new google.maps.LatLng(cell.latitude, cell.longitude);
   
   cell_map = new google.maps.Circle({
     center: paths_cell,
     radius: 20,
-    strokeColor: cell.color,
+    strokeColor: "#"+cell.color,
     strokeOpacity: 0.8,
     strokeWeight: 2,
-    fillColor: cell.color,
+    fillColor: "#"+cell.color,
     fillOpacity: 0.35,
-    indexID: "cell_" + cell.id
+    indexID: "cell_" + cell.id_cell
   });
 
   cell_map.setMap(map);
@@ -69,7 +86,7 @@ function makeBeaconCircle(map,cell){
       $("input[id^='cell_edit_hide_']").val(this.indexID);
   });
   
-  var labelText = "cell_" + cell.id;
+  var labelText = "cell_" + cell.id_cell;
 
   labelOptions.content = labelText;
   labelOptions.position = paths_cell;
@@ -86,5 +103,3 @@ function randColor(){
   // #CCCCCC to #222222
   return Math.floor(Math.random() * (13421772 - 2236962) + 2236962).toString(16);
 }
-
-google.maps.event.addDomListener(window, 'load', initialize);

@@ -5,6 +5,7 @@ var Airport = new Schema({
   id_airport: {type: Number, unique: true},
   latitude: Number,
   longitude: Number,
+  location: String,
   name: String
 });
 
@@ -72,3 +73,4 @@ db.model('Localization', Localization);
 db.model('Beacon', Beacon);
 db.model('Task', Task);
 db.model('Work', Work);
+db.model('Cell', Cell);

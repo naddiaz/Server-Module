@@ -16,10 +16,12 @@ module.exports = function (app,routes) {
   app.get('/admin',admin.index);
 
   //Views maps
-  app.get('/admin/view/:location/:name',config.view_map)
+  app.get('/admin/view/:location/:name',config.view_map);
 
   //Config
-  app.get('/admin/config/:location/:name',config.config_airport)
+  app.get('/admin/config/:location/:name',config.config_airport);
+  app.post('/admin/config/:location/:name/cells/info',config.get_cells);
+  //app.post('/admin/config/:location/:name/cells/create',config.set_cell);
 
   // Employee
   app.get('/admin/config/:location/:name/employees',employee.read_employee)
@@ -32,6 +34,7 @@ module.exports = function (app,routes) {
   app.post('/admin/config/:location/:name/beacon/create',beacon.create_beacon);
   app.post('/admin/config/:location/:name/beacon/delete',beacon.delete_beacon);
   app.post('/admin/config/:location/:name/beacon/update',beacon.update_beacon);
+
 
   // Task
   app.post('/admin/config/:location/:name/task/create',task.create_task);
