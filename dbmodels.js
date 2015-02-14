@@ -3,9 +3,19 @@ var Schema   = Mongoose.Schema;
 
 var Airport = new Schema({
   id_airport: {type: Number, unique: true},
-  location: String,
+  latitude: Number,
+  longitude: Number,
   name: String
 });
+
+var Cell = new Schema({
+  id_airport: Number,
+  id_cell: Number,
+  latitude: Number,
+  longitude: Number,
+  color: String
+});
+Cell.index({id_airport: 1, id_cell: 1}, {unique: true});
 
 var Person = new Schema({
   id_airport: Number,
