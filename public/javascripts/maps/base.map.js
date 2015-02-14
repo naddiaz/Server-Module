@@ -17,7 +17,7 @@ function initialize() {
     var latLng = e.latLng;
     console.log(latLng);
     var cell = {
-      cell: airport.cells.length+1,
+      id: airport.cells.length,
       path: [e.latLng.k,e.latLng.D],
       color: '#'+randColor()
     }
@@ -52,7 +52,7 @@ function makeBeaconCircle(map,cell){
     strokeWeight: 2,
     fillColor: cell.color,
     fillOpacity: 0.35,
-    indexID: "cell_" + i
+    indexID: "cell_" + cell.id
   });
 
   cell_map.setMap(map);
@@ -64,7 +64,7 @@ function makeBeaconCircle(map,cell){
       $("input[id^='cell_edit_hide_']").val(this.indexID);
   });
   
-  var labelText = "cell_" + i;
+  var labelText = "cell_" + cell.id;
 
   labelOptions.content = labelText;
   labelOptions.position = paths_cell;
