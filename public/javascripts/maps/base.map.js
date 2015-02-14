@@ -8,6 +8,25 @@ function initialize() {
   var map = new google.maps.Map(document.getElementById("map_canvas"),
       mapOptions);
 
+  for(i in airport.cells){
+    makeBeaconCircle(map,airport.cells[i])
+  }
+
+  google.maps.event.addDomListener(map, "click", function (e) {
+    //lat and lng is available in e object
+    var latLng = e.latLng;
+    console.log(latLng);
+    var cell = {
+      cell: airport.cells.length+1,
+      path: [e.latLng.k,e.latLng.D],
+      color: '#'+randColor()
+    }
+    console.log(cell);
+    makeBeaconCircle(map,cell);
+  });
+}
+
+function makeBeaconCircle(map,cell){
   var labelOptions = {
       boxStyle: {
           background: '#FFFFFF',
@@ -23,41 +42,39 @@ function initialize() {
       enableEventPropagation: true
   };
 
-  for(i in airport.cells){
-    paths_cell = new google.maps.LatLng(airport.cells[i].path[0], airport.cells[i].path[1]);
-    
-    cell = new google.maps.Circle({
-      center: paths_cell,
-      radius: 20,
-      strokeColor: airport.cells[i].color,
-      strokeOpacity: 0.8,
-      strokeWeight: 2,
-      fillColor: airport.cells[i].color,
-      fillOpacity: 0.35,
-      indexID: "cell_" + i
-    });
+  paths_cell = new google.maps.LatLng(cell.path[0], cell.path[1]);
+  
+  cell_map = new google.maps.Circle({
+    center: paths_cell,
+    radius: 20,
+    strokeColor: cell.color,
+    strokeOpacity: 0.8,
+    strokeWeight: 2,
+    fillColor: cell.color,
+    fillOpacity: 0.35,
+    indexID: "cell_" + i
+  });
 
-    cell.setMap(map);
+  cell_map.setMap(map);
 
-    google.maps.event.addListener(cell, 'click', function (event) {
-        $("#cell").val(this.indexID);
-        $("#cell_hide").val(this.indexID);
-        $("input[id^='cell_edit_']").val(this.indexID);
-        $("input[id^='cell_edit_hide_']").val(this.indexID);
-    });
-    
-    var labelText = "cell_" + i;
+  google.maps.event.addListener(cell_map, 'click', function (event) {
+      $("#cell").val(this.indexID);
+      $("#cell_hide").val(this.indexID);
+      $("input[id^='cell_edit_']").val(this.indexID);
+      $("input[id^='cell_edit_hide_']").val(this.indexID);
+  });
+  
+  var labelText = "cell_" + i;
 
-    labelOptions.content = labelText;
-    labelOptions.position = paths_cell;
+  labelOptions.content = labelText;
+  labelOptions.position = paths_cell;
 
-    var label = new InfoBox(labelOptions);
-    label.open(map);
+  var label = new InfoBox(labelOptions);
+  label.open(map);
 
-    google.maps.event.addListener(cell, 'center_changed', function () {
-        label.setPosition(cell.getCenter());
-    });
-  }
+  google.maps.event.addListener(cell_map, 'center_changed', function () {
+      label.setPosition(cell_map.getCenter());
+  });
 }
 
 function randColor(){
