@@ -23,6 +23,14 @@ function initialize() {
     makeBeaconCircle(map,cells[i])
   }
 
+  google.maps.event.addListener(map, 'mouseover', function (event) {
+    if($('#sw_editmode').is(':checked')){
+      map.setOptions({ draggableCursor : "url(images/cursor_edit.png), auto" })
+    }
+    else{
+      map.setOptions({ draggableCursor : "url(https://maps.gstatic.com/mapfiles/openhand_8_8.cur), default" })
+    }
+  });
   google.maps.event.addDomListener(map, "click", function (e) {
     if($('#sw_editmode').is(':checked')){
       var cell = {

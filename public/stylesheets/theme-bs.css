@@ -20,6 +20,7 @@ nav .brand{
 .actions-group button,
 .actions-group a{
   padding: 0 4%;
+  margin: 0 2%;
 }
 
 .actions-group form{
