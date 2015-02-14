@@ -24,14 +24,16 @@ function initialize() {
   }
 
   google.maps.event.addDomListener(map, "click", function (e) {
-    var cell = {
-      id_cell: getNextCellID(LOCATION,NAME),
-      latitude: e.latLng.k,
-      longitude: e.latLng.D,
-      color: randColor()
+    if($('#sw_editmode').is(':checked')){
+      var cell = {
+        id_cell: getNextCellID(LOCATION,NAME),
+        latitude: e.latLng.k,
+        longitude: e.latLng.D,
+        color: randColor()
+      }
+      makeBeaconCircle(map,cell);
+      setCell(LOCATION,NAME,cell);
     }
-    makeBeaconCircle(map,cell);
-    setCell(LOCATION,NAME,cell);
   });
 }
 

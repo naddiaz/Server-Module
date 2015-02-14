@@ -5,7 +5,9 @@ block scripts
 
   script(type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA5X8YsmAwkfl6i-QnAGSXPJOLaY52ANsM&sensor=false")
   script(src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox.js")
-  script(src='/javascripts/maps/#{location}.#{name}.js')
+  script.
+    LOCATION = "#{location}"
+    NAME = "#{name}"
   script(src='/javascripts/maps/base.map.js')
 block content
   .container-fluid(ng-controller="MapCtrl as map")
@@ -73,7 +75,9 @@ block content
         .panel.panel-info
           .panel-heading
             h1 Mapa
-              button.pull-right.btn.btn-success(onclick="setConfig(\'#{location}\',\'#{name}\')") Editar Mapa
+              span.sw
+                input.switch#sw_editmode(type="checkbox")
+                label.pull-right(for="sw_editmode") Editar Mapa
           .panel-body
             #map_canvas
     
