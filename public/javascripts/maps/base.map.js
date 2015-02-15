@@ -1,5 +1,7 @@
 function initialize() {
   var airport = getAirport(LOCATION,NAME);
+  var edit_state = false;
+
   var style =[
       {
           featureType: "poi",
@@ -42,6 +44,16 @@ function initialize() {
       }
       makeBeaconCircle(map,cell);
       setCell(LOCATION,NAME,cell);
+    }
+  });
+
+  $('#sw_editmode').change(function(){
+    if($(this).is(':checked')){
+      edit_state = true;
+    }
+    else if(edit_state){
+      edit_state = false;
+      makeGraph();
     }
   });
 }
@@ -157,6 +169,16 @@ function makeBeaconCircle(map,cell){
         }
       }
   });
+}
+
+function makeGraph(){
+  var cells = getCells(LOCATION,NAME);
+  alert(distanceEuclidea(cells[0],cells[1]))
+
+}
+
+function distanceEuclidea(a,b){
+  return Math.sqrt(Math.pow((b.latitude-a.latitude),2),Math.pow((b.longitude-a.longitude),2))
 }
 
 function randColor(){
