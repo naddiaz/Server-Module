@@ -27,6 +27,15 @@ var Distance = new Schema({
 });
 Distance.index({id_airport: 1, cell_origin: 1, cell_end: 1}, {unique: true});
 
+var Cell = new Schema({
+  id_airport: Number,
+  id_cell: Number,
+  latitude: Number,
+  longitude: Number,
+  color: String
+});
+Cell.index({id_airport: 1, id_cell: 1}, {unique: true});
+
 var Person = new Schema({
   id_airport: Number,
   id_person: Number,
