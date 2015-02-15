@@ -19,6 +19,14 @@ var Cell = new Schema({
 });
 Cell.index({id_airport: 1, id_cell: 1}, {unique: true});
 
+var Distance = new Schema({
+  id_airport: Number,
+  cell_origin: Number,
+  cell_end: Number,
+  distance: Number
+});
+Distance.index({id_airport: 1, cell_origin: 1, cell_end: 1}, {unique: true});
+
 var Person = new Schema({
   id_airport: Number,
   id_person: Number,
@@ -75,3 +83,4 @@ db.model('Beacon', Beacon);
 db.model('Task', Task);
 db.model('Work', Work);
 db.model('Cell', Cell);
+db.model('Distance', Distance);

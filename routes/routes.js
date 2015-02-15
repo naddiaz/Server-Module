@@ -25,6 +25,8 @@ module.exports = function (app,routes) {
   app.post('/admin/config/:location/:name/cell/next',config.get_next_cell_id);
   app.post('/admin/config/:location/:name/cell/create',config.set_cell);
   app.post('/admin/config/:location/:name/cell/delete',config.delete_cell);
+  app.post('/admin/config/:location/:name/graph/clear',config.graph_clear);
+  app.post('/admin/config/:location/:name/graph/create',config.graph_cell);
 
   // Employee
   app.get('/admin/config/:location/:name/employees',employee.read_employee)
