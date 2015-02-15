@@ -3,6 +3,7 @@ extends layout_admin
 block scripts
   script(type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA5X8YsmAwkfl6i-QnAGSXPJOLaY52ANsM&sensor=false")
   script(src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox.js")
+  script(src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js")
 
   script.
     LOCATION = "#{location}"
@@ -10,6 +11,7 @@ block scripts
   
   script(src='/javascripts/maps/helpers.map.js')
   script(src='/javascripts/maps/base.map.js')
+  
 block content
   .container-fluid
     ol.breadcrumb
@@ -32,3 +34,5 @@ block content
                 p.pull-right Para completar la edición tiene que finalizar el modo edición antes de salir
           .panel-body
             #map_canvas
+  #dialog-confirm-cell(title="Eliminar celda")
+    p .

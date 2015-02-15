@@ -118,12 +118,7 @@ function makeBeaconCircle(map,cell){
       $("input[id^='cell_edit_']").val(this.indexID);
       $("input[id^='cell_edit_hide_']").val(this.indexID);
       if($('#sw_editmode').is(':checked')){
-        var r = confirm("Desea eliminar la celda: " + this.indexID);
-        if (r == true) {
-            deleteCell(LOCATION,NAME,{id_cell: this.indexID});
-            this.setMap(null);
-            label.setVisible(false);
-        }
+        confirmDelete(this,label,LOCATION,NAME,this.indexID)
       }
   });
 
@@ -145,6 +140,34 @@ function makeBeaconCircle(map,cell){
     }
   });
 }
+
+function confirmDelete(cell_map,label,location,name,id) {
+  $( "#dialog-confirm-cell > p" ).html("¿Desea eliminar la celda <b>" + id + "</b>?");
+  $( "#dialog-confirm-cell" ).dialog({
+    resizable: false,
+    height:180,
+    modal: true,
+    buttons: {
+      Eliminar: function() {
+        $( this ).dialog( "close" );
+        deleteCell(LOCATION,NAME,{id_cell: id});
+        cell_map.setMap(null);
+        label.setVisible(false);
+      },
+      Cancelar: function() {
+        $( this ).dialog( "close" );
+      }
+    }
+  });
+}
+
+$(window).bind('beforeunload', function(e) {
+  if($('#sw_editmode').is(':checked')){
+    var message = "Recuerde que para que los cambios tengan efecto tiene que terminar el modo edición";
+    e.returnValue = message;
+    return message;
+  }
+});
 
 function randColor(){
   // #CCCCCC to #222222
