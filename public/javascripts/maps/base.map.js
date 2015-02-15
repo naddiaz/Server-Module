@@ -139,12 +139,41 @@ function makeBeaconCircle(map,cell){
 
 function makeGraph(){
   var cells = getCells(LOCATION,NAME);
-  alert(distanceEuclidea(cells[0],cells[1]))
-
+  if(cells.length >= 2){
+    clearGraph();
+    for(var i=0; i<cells.length; i++){
+      for(var j=0; j<cells.length; j++){
+        if(cells[i] != cells[j]){
+          var origin = new google.maps.LatLng(cells[i].latitude,cells[i].longitude);
+          var end = new google.maps.LatLng(cells[j].latitude,cells[j].longitude);
+          var distance = google.maps.geometry.spherical.computeDistanceBetween(origin, end);
+          if(distance <= (RADIUS*2)){
+            var cell = {
+              cell_origin: cells[i].id_cell,
+              cell_end: cells[j].id_cell,
+              distance: distance
+            }
+            createGraphCell(cell);
+          }
+        }
+      }
+    }
+  }
 }
 
-function distanceEuclidea(a,b){
-  return Math.sqrt(Math.pow((b.latitude-a.latitude),2),Math.pow((b.longitude-a.longitude),2))
+function clearGraph(){
+  $.ajax({
+    url:"/admin/config/" + LOCATION + "/" + NAME + "/graph/clear",
+    type:"POST"
+  });
+}
+
+function createGraphCell(data){
+  $.ajax({
+    url:"/admin/config/" + LOCATION + "/" + NAME + "/graph/create",
+    type:"POST",
+    data: data
+  });
 }
 
 function randColor(){
