@@ -45,7 +45,7 @@ function initialize() {
 
   google.maps.event.addListener(map, 'mouseover', function (event) {
     if($('#sw_editmode').is(':checked')){
-      map.setOptions({ draggableCursor : "url(http://www.oxygenxml.com/doc/ug-editor/img/cursor_move.png), auto" })
+      map.setOptions({ draggableCursor : "url(https://raw.githubusercontent.com/naddiaz/Server-Module/refactor/public/images/cursoradd.png), auto" })
     }
     else{
       map.setOptions({ draggableCursor : "url(https://maps.gstatic.com/mapfiles/openhand_8_8.cur), default" })
@@ -123,7 +123,7 @@ function makeBeaconCircle(map,cell){
 
   google.maps.event.addListener(cell_map, 'mouseover', function (event) {
     if($('#sw_editmode').is(':checked')){
-      this.setOptions({ cursor : "url(http://megaicons.net/static/img/icons_sizes/151/1160/32/eraser-icon.png), auto" })
+      this.setOptions({ cursor : "url(https://raw.githubusercontent.com/naddiaz/Server-Module/refactor/public/images/eraser-icon.png), auto" })
     }
     else{
       this.setOptions({ cursor : "url(https://maps.gstatic.com/mapfiles/openhand_8_8.cur), default" })
