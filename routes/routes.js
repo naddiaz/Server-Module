@@ -7,10 +7,6 @@ module.exports = function (app,routes) {
   var config = require('./config');
   var localization = require('./localization');
 
-  // WebService
-  app.get('/ws', routes.ws);
-  app.get('/ws/:day/:month/:year',routes.wsf);
-
   // Admin
   app.get('/',admin.login);
   app.get('/admin',admin.index);
