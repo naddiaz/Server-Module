@@ -137,6 +137,16 @@ function makeBeaconCircle(map,cell){
   });
 }
 
+function makeGraph(){
+  var cells = getCells(LOCATION,NAME);
+  alert(distanceEuclidea(cells[0],cells[1]))
+
+}
+
+function distanceEuclidea(a,b){
+  return Math.sqrt(Math.pow((b.latitude-a.latitude),2),Math.pow((b.longitude-a.longitude),2))
+}
+
 function randColor(){
   // #CCCCCC to #222222
   return Math.floor(Math.random() * (13421772 - 2236962) + 2236962).toString(16);
