@@ -135,7 +135,6 @@ function makeBeaconCircle(map,cell){
       this.setOptions({ cursor : "url(https://maps.gstatic.com/mapfiles/openhand_8_8.cur), default" })
     }
   });
-}
 
   google.maps.event.addListener(cell_map, 'mouseover', function (event) {
     if($('#sw_editmode').is(':checked')){
