@@ -78,6 +78,14 @@ function initialize() {
 
 google.maps.event.addDomListener(window, 'load', initialize);
 
+function deleteCell(location,name,cell){
+  $.ajax({
+    url:"/admin/config/" + location + "/" + name + "/cell/delete",
+    type:"POST",
+    data: cell
+  });
+}
+
 function makeBeaconCircle(map,cell){
   
 
