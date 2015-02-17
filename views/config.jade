@@ -10,6 +10,7 @@ block scripts
   
   script(src='/javascripts/maps/helpers.map.js')
   script(src='/javascripts/maps/base.map.js')
+
 block content
   .container-fluid
     ol.breadcrumb
@@ -18,31 +19,6 @@ block content
       li Administración
       li #{location}
       li.active #{name}
-    .row
-      .col-xs-12.col-md-6
-        .panel.panel-info
-          .panel-heading
-            h1 Empleados
-          .panel-body
-            p Ir a la sección de empleados, tiene las siguientes opciones:
-            ul
-              li Registrar un nuevo empleado
-              li Modificar los datos de un empleado existente
-              li Eliminar un empleado
-              li Ver el conjunto de empleados registrados para este aeropuerto
-          .panel-footer
-            a(href="/admin/config/#{location}/#{name}/employees") Ir a la sección
-      .col-xs-12.col-md-6
-        .panel.panel-info
-          .panel-heading
-            h1 Beacons
-          .panel-body
-            p Ir a la sección de Beacons, tiene las siguientes opciones:
-            ul
-              li Registrar un nuevo beacon y asignarle una ubicación en el mapa
-              li Modificar y Eliminar los datos de un beacon existente
-          .panel-footer
-            a(href="/admin/config/#{location}/#{name}/beacons") Ir a la sección
     .row
       .col-xs-12.col-md-4
         .panel.panel-info

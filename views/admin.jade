@@ -1,4 +1,4 @@
-extends layout_admin
+extends layout_internal
       
 block content
   .container-fluid
@@ -15,21 +15,50 @@ block content
               tr
                 th Localización
                 th Nombre
-                th.right Acciones
-              tr
-                td Tenerife
-                td Los Rodeos
-                td.actions-group
-                  a.btn.btn-success(href="/admin/view/Tenerife/LosRodeos" title="Mapa: Edición")
-                    i.fa.fa-edit
-                  a.btn.btn-success(href="/admin/config/Tenerife/LosRodeos" title="Administración")
-                    i.fa.fa-gears
-              tr
-                td Tenerife
-                td Reina Sofia
-                td.actions-group
-                  a.btn.btn-success(href="/admin/view/Tenerife/ReinaSofia" title="Mapa: Edición")
-                    i.fa.fa-edit
-                  a.btn.btn-success(href="/admin/config/Tenerife/ReinaSofia" title="Administración")
-                    i.fa.fa-gears
-              
+                th Acciones
+              - each airport in airports
+                tr
+                  td= airport.location
+                  td= airport.name
+                  td.actions-group
+                    a.btn.btn-success(href="/admin/view/#{airport.location}/#{airport.name}" title="Mapa: Edición")
+                      i.fa.fa-edit
+                    a.btn.btn-info(href="/admin/config/#{airport.location}/#{airport.name}" title="Administración")
+                      i.fa.fa-gears
+                    a.btn.btn-warning(href="/admin/config/#{airport.location}/#{airport.name}/employees" title="Empleados")
+                      i.fa.fa-users
+                    a.btn.btn-danger(href="/admin/config/#{airport.location}/#{airport.name}/beacons" title="Beacons")
+                      i.fa.fa-signal
+      .col-xs-12.col-md-6
+        .col-xs-12.col-md-6
+          .panel.panel-success
+            .panel-heading
+              h2 Mapa: Edición
+            .panel-body
+              p Esta acción permite editar la ubicación de los dispositivos bluetooth (Beacons) mediante un mapa interactivo.
+        .col-xs-12.col-md-6
+          .panel.panel-info
+            .panel-heading
+              h2 Administración
+            .panel-body
+              p Esta acción entra en el panel de configuración y visualización global de cada instalación. Aquí podrá gestionar las tareas que se quieran realizar y estén realizando.
+        .col-xs-12.col-md-6
+          .panel.panel-warning
+            .panel-heading
+              h2 Empleados
+            .panel-body
+              p Ir a la sección de empleados, tiene las siguientes opciones:
+              ul
+                li Registrar un nuevo empleado
+                li Modificar los datos de un empleado existente
+                li Eliminar un empleado
+                li Ver el conjunto de empleados registrados para este aeropuerto
+        .col-xs-12.col-md-6
+          .panel.panel-danger
+            .panel-heading
+              h1 Beacons
+            .panel-body
+              p Ir a la sección de Beacons, tiene las siguientes opciones:
+              ul
+                li Registrar un nuevo beacon y asignarle una ubicación en el mapa
+                li Modificar y Eliminar los datos de un beacon existente

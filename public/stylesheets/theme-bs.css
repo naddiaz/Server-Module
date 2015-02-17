@@ -11,15 +11,8 @@ nav .brand{
   overflow: auto;
 }
 
-.actions-group .left{
-  float: left !important;
-}
-.actions-group{
-  text-align: right;
-}
 .actions-group button,
 .actions-group a{
-  padding: 0 4%;
   margin: 0 2%;
 }
 
