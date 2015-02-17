@@ -17,9 +17,11 @@ block content
     ol.breadcrumb
       li
         a(href="/admin") Inicio
-      li Mapas
+      li Administración
       li #{location}
-      li.active #{name}
+      li
+        a(href="/admin/config/#{location}/#{name}") #{name}
+      li.active Mapa
     .row
       .col-xs-12.col-md-12
         .panel.panel-info
