@@ -32,7 +32,10 @@ block content
                 input.form-control(id="cell" name="id_cell" placeholder="ID Celda" disabled)
                 input.hide.form-control(id="cell_hide" name="id_cell_hide")
               .form-group
-                input.form-control(name="task_type" placeholder="Tipo de tarea")
+                select.form-control(name="task_type")
+                  option(value="null") Seleccionar un tipo...
+                  - each type in types
+                    option(value="#{type.name}")= type.name
               .form-group
                   label.radio-inline
                     input(type="radio" name="task_priority" value="0")

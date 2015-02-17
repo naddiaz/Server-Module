@@ -1,18 +1,31 @@
+async = require("async");
+
 var Mongoose = require( 'mongoose' );
 var Person     = Mongoose.model( 'Person' );
 var Airport     = Mongoose.model( 'Airport' );
 var Cell     = Mongoose.model( 'Cell' );
 var Task     = Mongoose.model( 'Task' );
 var Distance     = Mongoose.model( 'Distance' );
+var Type     = Mongoose.model( 'Type' );
+
+function callback(err, item){
+  console.log("ITEM" + item);
+}
 
 exports.view_map =  function(req, res){
   res.render('map',{title: 'BLE Tasker', location: req.params.location, name: req.params.name, layout: 'layout_admin'});
 };
 
-exports.config_airport = function(req, res){
+exports.config_airport = function(req, res, callback){
   Airport.findOne({location: req.params.location, name: req.params.name }).select('id_airport').exec(function(err, airport){
-    Task.find({id_airport: airport.id_airport}, function(err, tasks){
-      res.render('config',{title: 'BLE Tasker', location: req.params.location, name: req.params.name, tasks: tasks, layout: 'layout_admin'});
+    var Tasks = Task.find({id_airport: airport.id_airport});
+    var Types = Type.find({id_airport: airport.id_airport});
+    var data = {
+      tasks: Tasks.exec.bind(Tasks),
+      types: Types.exec.bind(Types)
+    };
+    async.parallel(data,function(err,results){
+      res.render('config',{title: 'BLE Tasker', location: req.params.location, name: req.params.name, tasks: results.tasks, types: results.types, layout: 'layout_admin'});
     });
   });
 };
