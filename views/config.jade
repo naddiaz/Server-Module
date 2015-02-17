@@ -70,8 +70,11 @@ block content
                 p
                   strong Seleccione el conjunto de empleados
                 select#select-employees.form-control(name="employees" multiple)
-                  - each person in people
-                    option(value="#{person.worker_name}") #{person.worker_name } (#{person.worker_id})
+                  optgroup(label='Libres')
+                    - each person in people
+                      option(value="#{person.worker_name}") #{person.worker_name } (#{person.worker_id})
+                  optgroup(label='Ocupados')
+                    option FELIX (4)
               button.btn.btn-success(title="Registrar", type="submit") Registrar
           .panel-footer
             p Para seleccionar el 'ID Celda' es necesario hacer click en las celdas del 'Mapa, distribución de Beacons'.

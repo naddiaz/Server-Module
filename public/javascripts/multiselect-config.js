@@ -6,6 +6,7 @@ $(document).ready(function(){
       var multiSelectEmployees = 1;
       $('#select-employees').multiSelect({
         keepOrder: true,
+        selectableOptgroup: true,
         afterSelect: function(values){
           if(multiSelectEmployees == $('#n_employees').val()){
             $('#ms-select-employees > .ms-selectable > .ms-list').css("display","none");
