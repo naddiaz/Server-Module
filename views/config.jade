@@ -40,7 +40,9 @@ block content
                   - each type in types
                     option(value="#{type.name}")= type.name
               .form-group
-                input.form-control#n_employees(type="number" name="n_employees" placeholder="Número de empleados" min="1" max="10" value="1")
+                p 
+                  strong Número de empleados
+                input.form-control#n_employees(type="number" name="n_employees" placeholder="Número de empleados" min="1" value="1" step="1")
               .form-group
                 label(for="description") Descripción
                 textarea.form-control.no-resize#description(name="task_description" rows="5")
