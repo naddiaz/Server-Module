@@ -163,9 +163,9 @@ function confirmDelete(cell_map,label,location,name,id) {
 
 $(window).bind('beforeunload', function(e) {
   if($('#sw_editmode').is(':checked')){
-    var message = "Recuerde que para que los cambios tengan efecto tiene que terminar el modo edición";
-    e.returnValue = message;
-    return message;
+    edit_state = false;
+    $('#sw_editmode').attr('checked', false);
+    makeGraph(LOCATION,NAME,RADIUS);
   }
 });
 

@@ -30,9 +30,10 @@ block content
               .col-xs-12.col-md-2
                 input.switch#sw_editmode(type="checkbox")
                 label.pull-right(for="sw_editmode") Modo edición
-                p.pull-right Click sobre la celda para eliminar
-                p.pull-right Para completar la edición tiene que finalizar el modo edición antes de salir
           .panel-body
             #map_canvas
+          .panel-footer
+            p Para eliminar una celda es necesario hacer click sobre ella y confirmar el mensaje que aparece a continuación del click.
+            p Siempre que se quiera interactuar con el mapa para modificarlo es necesario que el Modo edición esté activado.
   #dialog-confirm-cell(title="Eliminar celda")
     p .
