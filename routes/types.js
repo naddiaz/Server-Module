@@ -21,6 +21,14 @@ exports.create_type =  function(req, res){
   });
 };
 
+exports.delete_type =  function(req, res){
+  Airport.findOne({location: req.params.location, name: req.params.name }).select('id_airport').exec(function(err, airport){
+    Type.remove({id_airport: airport.id_airport, name: req.body.name}, function(){
+      res.redirect( '/admin/config/' + req.params.location + '/' + req.params.name + '/types' );
+    });
+  });
+};
+
 function emptyString(value){
   if(value != "")
     return false;

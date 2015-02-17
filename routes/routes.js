@@ -48,8 +48,6 @@ module.exports = function (app,routes) {
   //Types
   app.get('/admin/config/:location/:name/types',types.read_type);
   app.post('/admin/config/:location/:name/type/create',types.create_type);
-
-
-
+  app.post('/admin/config/:location/:name/type/delete',types.delete_type);
 
 };

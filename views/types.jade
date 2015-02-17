@@ -13,7 +13,7 @@ block content
         a(href="/admin/config/#{location}/#{name}") #{name}
       li.active Tipos
     .row
-      .col-xs-12.col-md-3
+      .col-xs-12.col-md-4
         .panel.panel-info
           .panel-heading
             h1 Crear un nuevo 'TIPO'
@@ -24,12 +24,21 @@ block content
                   input.form-control(name="name", placeholder="Nombre del tipo")
               .col-xs-12.col-md-4
                 button.btn.btn-success(title="Registrar", type="submit") Registrar
-      .col-xs-12.col-md-6
+      .col-xs-12.col-md-8
         .panel.panel-info
           .panel-heading
             h1 Tipos existentes
-          .panel-body
-            ul.list-group
+          .panel-body.table-responsive
+            table.table
+              tr
+                th Nombre
+                th Acciones
               - each type in types
-                li.list-group-item= type.name
+                tr
+                  td= type.name
+                  td
+                    form(action="/admin/config/#{location}/#{name}/type/delete", method="POST")
+                      input.form-control.hide(name="name", value="#{type.name}")
+                      button.btn.btn-danger.pull.right
+                        i.fa.fa-trash
     
