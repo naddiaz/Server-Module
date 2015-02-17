@@ -93,3 +93,8 @@ input.switch:checked ~ label:before{
 input.switch:checked ~ label:after{
   margin-left: 2.1em;
 }
+
+hr{
+  border-color: #666 !important;
+  box-shadow: 0 0.1em 2px #222;
+}

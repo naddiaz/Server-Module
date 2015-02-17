@@ -3,10 +3,13 @@ extends layout_admin
 block scripts
   script(type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA5X8YsmAwkfl6i-QnAGSXPJOLaY52ANsM&sensor=false")
   script(src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox.js")
+  script(src='/javascripts/jquery.multi-select.js')
+  script(src='/javascripts/multiselect-config.js')
 
   script.
     LOCATION = "#{location}"
     NAME = "#{name}"
+    
   
   script(src='/javascripts/maps/helpers.map.js')
   script(src='/javascripts/maps/base.map.js')
@@ -25,7 +28,7 @@ block content
           .panel-heading
             h1 Creación de tareas
           .panel-body
-            form(action="/admin/config/#{location}/#{name}/task/create", method="POST")
+            form(action="/admin/config/#{location}/#{name}/task/create", method="POST" oninput="data.value=priority.value")
               .form-group
                 input.form-control(name="id_task" placeholder="ID Tarea")
               .form-group
@@ -37,24 +40,36 @@ block content
                   - each type in types
                     option(value="#{type.name}")= type.name
               .form-group
-                  label.radio-inline
-                    input(type="radio" name="task_priority" value="0")
-                    span 0 (Sin prioridad)
-                  label.radio-inline
-                    input(type="radio" name="task_priority" value="1")
-                    span 1
-                  label.radio-inline
-                    input(type="radio" name="task_priority" value="2")
-                    span 2
-                  label.radio-inline
-                    input(type="radio" name="task_priority" value="3")
-                    span 3
-                  label.radio-inline
-                    input(type="radio" name="task_priority" value="4")
-                    span 4
+                input.form-control#n_employees(type="number" name="n_employees" placeholder="Número de empleados" min="1" max="10" value="1")
               .form-group
                 label(for="description") Descripción
                 textarea.form-control.no-resize#description(name="task_description" rows="5")
+              hr
+              .form-group
+                  p 
+                    strong Prioridad
+                  h3
+                    span -
+                    span.pull-right +
+                  input(type="range" name="priority" min="0" max="4" value="0")
+                  output(name="data" for="priority") 0
+              hr
+              .form-group
+                p
+                  strong Búsqueda de empleados
+                label.radio-inline
+                  input(type="radio" name="searching" value="auto" checked)
+                  span Automático
+                label.radio-inline
+                  input#sr-manual(type="radio" name="searching" value="manual")
+                  span Manual
+              hr
+              .form-group#searching
+                p
+                  strong Seleccione el conjunto de empleados
+                select#select-employees.form-control(name="employees" multiple)
+                  - each person in people
+                    option(value="#{person.worker_name}") #{person.worker_name } (#{person.worker_id})
               button.btn.btn-success(title="Registrar", type="submit") Registrar
           .panel-footer
             p Para seleccionar el 'ID Celda' es necesario hacer click en las celdas del 'Mapa, distribución de Beacons'.
