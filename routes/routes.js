@@ -6,6 +6,7 @@ module.exports = function (app,routes) {
   var task = require('./task');
   var config = require('./config');
   var localization = require('./localization');
+  var types = require('./types');
 
   // Admin
   app.get('/',admin.login);
@@ -43,6 +44,11 @@ module.exports = function (app,routes) {
   //Localization
   app.get('/admin/config/localization',localization.read_localization);
   app.post('/receiveLocation',localization.create_localization);
+
+  //Types
+  app.get('/admin/config/:location/:name/types',types.read_type);
+  app.post('/admin/config/:location/:name/type/create',types.create_type);
+
 
 
 

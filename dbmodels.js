@@ -70,6 +70,12 @@ var Task = new Schema({
 });
 Task.index({id_airport: 1, id_task: 1}, {unique: true});
 
+var Type = new Schema({
+  id_airport: Number,
+  name: String
+});
+Type.index({id_airport: 1, name: 1}, {unique: true});
+
 var Work = new Schema({
   id_person: Number,
   id_task: Number,
@@ -93,3 +99,4 @@ db.model('Task', Task);
 db.model('Work', Work);
 db.model('Cell', Cell);
 db.model('Distance', Distance);
+db.model('Type', Type);

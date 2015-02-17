@@ -1,0 +1,35 @@
+extends layout_admin
+
+block scripts
+  
+block content
+  .container-fluid
+    ol.breadcrumb
+      li
+        a(href="/admin") Inicio
+      li Administración
+      li #{location}
+      li
+        a(href="/admin/config/#{location}/#{name}") #{name}
+      li.active Tipos
+    .row
+      .col-xs-12.col-md-3
+        .panel.panel-info
+          .panel-heading
+            h1 Crear un nuevo 'TIPO'
+          .panel-body
+            form(action="/admin/config/#{location}/#{name}/type/create", method="POST")
+              .col-xs-12.col-md-8
+                .form-group
+                  input.form-control(name="name", placeholder="Nombre del tipo")
+              .col-xs-12.col-md-4
+                button.btn.btn-success(title="Registrar", type="submit") Registrar
+      .col-xs-12.col-md-6
+        .panel.panel-info
+          .panel-heading
+            h1 Tipos existentes
+          .panel-body
+            ul.list-group
+              - each type in types
+                li.list-group-item= type.name
+    

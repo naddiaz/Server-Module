@@ -1,0 +1,113 @@
+/* RED */
+.color-red .panel-heading{
+  background-color: #F44336 !important;/*ui 500*/
+}
+.color-red .panel-footer{
+  background-color: #FFCDD2 !important;/*ui 100*/
+}
+.panel.color-red{
+  border-color: #E53935 !important;/*ui 600*/
+}
+.btn-red{
+  background-color: #F44336 !important;/*ui 500*/
+  color: #222 !important;
+}
+.btn-red:hover{
+  background-color: #E53935 !important;/*ui 600*/
+  color: #FFF !important;
+}
+
+/* INDIGO */
+.color-indigo .panel-heading{
+  background-color: #3F51B5 !important;/*ui 500*/
+}
+.color-indigo .panel-footer{
+  background-color: #C5CAE9 !important;/*ui 100*/
+}
+.panel.color-indigo{
+  border-color: #3949AB !important;/*ui 600*/
+}
+.btn-indigo{
+  background-color: #3F51B5 !important;/*ui 500*/
+  color: #222 !important;
+}
+.btn-indigo:hover{
+  background-color: #3949AB !important;/*ui 600*/
+  color: #FFF !important;
+}
+
+/* BLUE */
+.color-blue .panel-heading{
+  background-color: #2196F3 !important;/*ui 500*/
+}
+.color-blue .panel-footer{
+  background-color: #BBDEFB !important;/*ui 100*/
+}
+.panel.color-blue{
+  border-color: #1E88E5 !important;/*ui 600*/
+}
+.btn-blue{
+  background-color: #2196F3 !important;/*ui 500*/
+  color: #222 !important;
+}
+.btn-blue:hover{
+  background-color: #1E88E5 !important;/*ui 600*/
+  color: #FFF !important;
+}
+
+/* TEAL */
+.color-teal .panel-heading{
+  background-color: #009688 !important;/*ui 500*/
+}
+.color-teal .panel-footer{
+  background-color: #B2DFDB !important;/*ui 100*/
+}
+.panel.color-teal{
+  border-color: #00897B !important;/*ui 600*/
+}
+.btn-teal{
+  background-color: #009688 !important;/*ui 500*/
+  color: #222 !important;
+}
+.btn-teal:hover{
+  background-color: #00897B !important;/*ui 600*/
+  color: #FFF !important;
+}
+
+/* GREEN */
+.color-green .panel-heading{
+  background-color: #4CAF50 !important;/*ui 500*/
+}
+.color-green .panel-footer{
+  background-color: #C8E6C9 !important;/*ui 100*/
+}
+.panel.color-green{
+  border-color: #43A047 !important;/*ui 600*/
+}
+.btn-green{
+  background-color: #4CAF50 !important;/*ui 500*/
+  color: #222 !important;
+}
+.btn-green:hover{
+  background-color: #43A047 !important;/*ui 600*/
+  color: #FFF !important;
+}
+
+/* YELLOW */
+.color-yellow .panel-heading{
+  background-color: #FFEB3B !important;/*ui 500*/
+}
+.color-yellow .panel-footer{
+  background-color: #FFF9C4 !important;/*ui 100*/
+}
+.panel.color-yellow{
+  border-color: #FDD835 !important;/*ui 600*/
+}
+.btn-yellow{
+  background-color: #FFEB3B !important;/*ui 500*/
+  color: #222 !important;
+}
+.btn-yellow:hover{
+  background-color: #FDD835 !important;/*ui 600*/
+  color: #FFF !important;
+}
