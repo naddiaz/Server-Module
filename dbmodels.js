@@ -43,7 +43,7 @@ var Person = new Schema({
   worker_name: String,
   worker_id: Number,
   worker_type: String,
-  device_type: {type: String, default: 'android'}
+  device_type: {type: String, default: 'ANDROID'}
 });
 Person.index({id_airport: 1, id_person: 1}, {unique: true});
 

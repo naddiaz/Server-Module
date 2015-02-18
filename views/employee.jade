@@ -59,8 +59,13 @@ block content
                         input.form-control(name="worker_id",placeholder="#{person.worker_id}")
                       td
                         input.form-control(name="worker_name",placeholder="#{person.worker_name}")
-                      td
-                        input.form-control(name="worker_type",placeholder="#{person.worker_type}")
+                      td.form-group
+                          select.form-control(name="worker_type")
+                            optgroup(label="Actual")
+                              option(value="#{person.worker_type}") #{person.worker_type}
+                            optgroup(label="Disponibles")
+                              - each type in types
+                                option(value="#{type.name}")= type.name
                       td
                         input.form-control(name="device_type",placeholder="#{person.device_type}", disabled)
                       td.actions-group
@@ -83,5 +88,8 @@ block content
               .form-group
                 input.form-control(name="worker_name", placeholder="Nombre")
               .form-group
-                input.form-control(name="worker_type", placeholder="Tipo Empleado")
+                select.form-control(name="worker_type")
+                  option(value="null") Seleccionar un tipo...
+                  - each type in types
+                    option(value="#{type.name}")= type.name
               button.btn.btn-success(title="Registrar", type="submit") Registrar
