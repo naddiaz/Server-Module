@@ -41,7 +41,7 @@ module.exports = function (app,routes) {
 
 
   // Task
-  app.get('/admin/config/:location/:name/tasks',config.config_airport);
+  app.get('/admin/config/:location/:name/tasks',task.read_tasks);
   app.post('/admin/config/:location/:name/task/create',task.create_task);
 
   //Localization

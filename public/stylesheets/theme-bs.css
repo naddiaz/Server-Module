@@ -98,3 +98,7 @@ hr{
   border-color: #666 !important;
   box-shadow: 0 0.1em 2px #222;
 }
+output{
+  display: inline !important;
+  margin: 0 2%;
+}
