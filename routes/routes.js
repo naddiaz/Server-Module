@@ -27,6 +27,8 @@ module.exports = function (app,routes) {
 
   // Employee
   app.get('/admin/config/:location/:name/employees',employee.read_employee)
+
+  app.post('/admin/config/:location/:name/employee/filter',employee.filter_type);
   app.post('/admin/config/:location/:name/employee/create',employee.create_employee);
   app.post('/admin/config/:location/:name/employee/delete',employee.delete_employee);
   app.post('/admin/config/:location/:name/employee/update',employee.update_employee);

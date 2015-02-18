@@ -17,6 +17,14 @@ exports.read_employee =  function(req, res){
   });
 };
 
+exports.filter_type =  function(req, res){
+  Airport.findOne({location: req.params.location, name: req.params.name }).exec(function(err, airport){
+    Person.find({id_airport: airport.id_airport, worker_type: req.body.task_type}).exec(function(err, people){
+      res.send(people);
+    });
+  });
+};
+
 exports.create_employee =  function(req, res){
   Airport.findOne({location: req.params.location, name: req.params.name }).select('id_airport').exec(function(err, airport){
     new Person({

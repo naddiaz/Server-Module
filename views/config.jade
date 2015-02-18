@@ -35,7 +35,7 @@ block content
                 input.form-control(id="cell" name="id_cell" placeholder="ID Celda" disabled)
                 input.hide.form-control(id="cell_hide" name="id_cell_hide")
               .form-group
-                select.form-control(name="task_type")
+                select.form-control#task_type(name="task_type")
                   option(value="null") Seleccionar un tipo...
                   - each type in types
                     option(value="#{type.name}")= type.name
@@ -70,11 +70,6 @@ block content
                 p
                   strong Seleccione el conjunto de empleados
                 select#select-employees.form-control(name="employees" multiple)
-                  optgroup(label='Libres')
-                    - each person in people
-                      option(value="#{person.worker_name}") #{person.worker_name } (#{person.worker_id})
-                  optgroup(label='Ocupados')
-                    option FELIX (4)
               button.btn.btn-success(title="Registrar", type="submit") Registrar
           .panel-footer
             p Para seleccionar el 'ID Celda' es necesario hacer click en las celdas del 'Mapa, distribución de Beacons'.
