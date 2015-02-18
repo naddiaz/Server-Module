@@ -6,7 +6,6 @@ function create_task(location,name){
       priority: $('input[name="task_priority"]').val(),
       description: $('#description').val(),
   };
-  console.log(task);
   $.ajax({
     url:"/admin/config/" + location + "/" + name + "/task/create",
     type:"POST",
@@ -20,4 +19,8 @@ function create_task(location,name){
       $("#active_tasks").prepend("<tr>" + row + "</tr>");
     }
   });
+  $('input').each(function(){
+    $(this).val('')
+  });
+  $('textarea').val('');
 }
