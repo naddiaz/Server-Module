@@ -88,3 +88,13 @@ exports.graph_cell =  function(req, res){
     });
   });
 };
+
+exports.get_adjacents_cells =  function(req, res){
+  Airport.findOne({location: req.params.location, name: req.params.name }).select('id_airport').exec(function(err, airport){
+    Distance.find({id_airport: airport.id_airport, cell_origin: req.body.id_cell}, function(err, cells){
+      if(err)
+        res.send(err);
+      res.send(cells);
+    });
+  });
+};

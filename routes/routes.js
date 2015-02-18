@@ -4,6 +4,7 @@ module.exports = function (app,routes) {
   var employee = require('./employee');
   var beacon = require('./beacon');
   var task = require('./task');
+  var work = require('./work');
   var config = require('./config');
   var localization = require('./localization');
   var types = require('./types');
@@ -22,6 +23,7 @@ module.exports = function (app,routes) {
   app.post('/admin/config/:location/:name/cell/next',config.get_next_cell_id);
   app.post('/admin/config/:location/:name/cell/create',config.set_cell);
   app.post('/admin/config/:location/:name/cell/delete',config.delete_cell);
+  app.post('/admin/config/:location/:name/cells/adjacents',config.get_adjacents_cells);
   app.post('/admin/config/:location/:name/graph/clear',config.graph_clear);
   app.post('/admin/config/:location/:name/graph/create',config.graph_cell);
 
@@ -44,13 +46,18 @@ module.exports = function (app,routes) {
   app.get('/admin/config/:location/:name/tasks',task.read_tasks);
   app.post('/admin/config/:location/:name/task/create',task.create_task);
 
+  //Work
+  app.post('/admin/config/:location/:name/work/create',work.create_work);
+
   //Localization
   app.get('/admin/config/localization',localization.read_localization);
+  app.post('/admin/config/:location/:name/localization/employeesByCell',localization.get_employees_by_cell);
   app.post('/receiveLocation',localization.create_localization);
 
   //Types
   app.get('/admin/config/:location/:name/types',types.read_type);
   app.post('/admin/config/:location/:name/type/create',types.create_type);
   app.post('/admin/config/:location/:name/type/delete',types.delete_type);
+
 
 };

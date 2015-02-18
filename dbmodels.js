@@ -48,6 +48,7 @@ var Person = new Schema({
 Person.index({id_airport: 1, id_person: 1}, {unique: true});
 
 var Localization = new Schema({
+  id_airport: Number,
   id_person: Number,
   id_beacon: Number,
   date: Date
@@ -77,17 +78,16 @@ var Type = new Schema({
 Type.index({id_airport: 1, name: 1}, {unique: true});
 
 var Work = new Schema({
+  id_airport: Number,
   id_person: Number,
   id_task: Number,
   state: {type: String, enum: ["no_asign", "asign", "running", "finish", "pause", "cancel"]},
-  date: [{
-    created_at: Date,
-    asign_at: Date,
-    running_at: Date,
-    finish_at: Date,
-    pause_at: Date,
-    cancel_at: Date
-  }]
+  created_at: Date,
+  asign_at: Date,
+  running_at: Date,
+  finish_at: Date,
+  pause_at: Date,
+  cancel_at: Date
 });
 
 var db = Mongoose.connect('mongodb://localhost/bletaskerDB');

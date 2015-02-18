@@ -1,5 +1,6 @@
 var Mongoose = require( 'mongoose' );
 var Localization     = Mongoose.model( 'Localization' );
+var Airport     = Mongoose.model( 'Airport' );
 
 exports.read_localization =  function(req, res){
   Localization.find(function(err, localization){
@@ -17,3 +18,13 @@ exports.create_localization =  function(req, res){
     res.redirect( '/admin/config/localization' );
   });
 };
+
+exports.get_employees_by_cell =  function(req, res){
+  Airport.findOne({location: req.params.location, name: req.params.name }).select('id_airport').exec(function(err, airport){
+    Localization.find({id_airport: airport.id_airport, id_beacon: req.body.id_cell}, function(err, people){
+      if(err)
+        res.send(err);
+      res.send(people);
+    });
+  });
+}
