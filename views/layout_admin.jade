@@ -29,6 +29,15 @@ html(ng-app='aMap')
             i.fa.fa-gears
             |   Administración
         li
+          a(href = "/admin/view/#{location}/#{name}")
+            i.fa.fa-edit
+            |   Mapa
+
+        li
+          a(href = "/admin/config/#{location}/#{name}/tasks")
+            i.fa.fa-tasks
+            |   Tareas
+        li
           a(href = "/admin/config/#{location}/#{name}/employees")
             i.fa.fa-users
             |   Empleados
@@ -36,10 +45,6 @@ html(ng-app='aMap')
           a(href = "/admin/config/#{location}/#{name}/beacons")
             i.fa.fa-signal
             |   Beacons
-        li
-          a(href = "/admin/view/#{location}/#{name}")
-            i.fa.fa-edit
-            |   Mapa
         li
           a(href = "/admin/config/#{location}/#{name}/types")
             i.fa.fa-th-list

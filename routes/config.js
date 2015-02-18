@@ -16,6 +16,10 @@ exports.view_map =  function(req, res){
   res.render('map',{title: 'BLE Tasker', location: req.params.location, name: req.params.name, layout: 'layout_admin'});
 };
 
+exports.index =  function(req, res){
+  res.render('config',{title: 'BLE Tasker', location: req.params.location, name: req.params.name, layout: 'layout_admin'});
+};
+
 exports.config_airport = function(req, res, callback){
   Airport.findOne({location: req.params.location, name: req.params.name }).select('id_airport').exec(function(err, airport){
     var Tasks = Task.find({id_airport: airport.id_airport});
@@ -27,7 +31,7 @@ exports.config_airport = function(req, res, callback){
       people: Types.exec.bind(People)
     };
     async.parallel(data,function(err,results){
-      res.render('config',{title: 'BLE Tasker', location: req.params.location, name: req.params.name, people: results.people, tasks: results.tasks, types: results.types, layout: 'layout_admin'});
+      res.render('task',{title: 'BLE Tasker', location: req.params.location, name: req.params.name, people: results.people, tasks: results.tasks, types: results.types, layout: 'layout_admin'});
     });
   });
 };

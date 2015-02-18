@@ -16,7 +16,7 @@ module.exports = function (app,routes) {
   app.get('/admin/view/:location/:name',config.view_map);
 
   //Config
-  app.get('/admin/config/:location/:name',config.config_airport);
+  app.get('/admin/config/:location/:name',config.index);
   app.post('/admin/config/:location/:name/airport/info',config.get_airport);
   app.post('/admin/config/:location/:name/cells/info',config.get_cells);
   app.post('/admin/config/:location/:name/cell/next',config.get_next_cell_id);
@@ -41,6 +41,7 @@ module.exports = function (app,routes) {
 
 
   // Task
+  app.get('/admin/config/:location/:name/tasks',config.config_airport);
   app.post('/admin/config/:location/:name/task/create',task.create_task);
 
   //Localization
