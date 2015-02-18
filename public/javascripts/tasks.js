@@ -36,10 +36,12 @@ function bfs_works(location,name,id_task,origin,n){
 
   while(rest > 0){
     var people = get_employees_by_cell(location,name,list[0]);
+    console.log(people)
     if(people.length > 0){
+      console.log(people[0]._id)
       rest -= people.length;
       for(var i in people){
-        selected_employees.push(people[i].id_person.toString());
+        selected_employees.push(people[i]._id.id_person.toString());
       }
     }
     var adjacents = get_adjacents_cells(location,name,list[0]);

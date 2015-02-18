@@ -21,10 +21,31 @@ exports.create_localization =  function(req, res){
 
 exports.get_employees_by_cell =  function(req, res){
   Airport.findOne({location: req.params.location, name: req.params.name }).select('id_airport').exec(function(err, airport){
-    Localization.find({id_airport: airport.id_airport, id_beacon: req.body.id_cell}, function(err, people){
-      if(err)
-        res.send(err);
-      res.send(people);
+    var rules = [
+      {id_airport: airport.id_airport},
+      {id_beacon: parseInt(req.body.id_cell)}
+    ]
+    Localization.aggregate([
+      {$match:
+        {
+          $and: rules
+        }
+      },
+      {
+        $sort:
+          {
+            date: -1
+          }
+      },
+      {
+        $group:
+          {
+            _id: {id_person : "$id_person"},
+            lastSalesDate: { $last: "$date" }
+          }
+      }
+    ], function(err, people){
+      res.send(people)
     });
   });
 }
