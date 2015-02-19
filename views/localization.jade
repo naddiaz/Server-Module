@@ -14,11 +14,13 @@ block content
           .panel-body
             table.table
               tr
+                th ID Airport
                 th ID Persona
                 th ID Beacon
                 th Fecha
               - each locale in localization
                 tr
+                  td= locale.id_airport
                   td= locale.id_person
                   td= locale.id_beacon
                   td= locale.date

@@ -11,6 +11,7 @@ exports.read_localization =  function(req, res){
 exports.create_localization =  function(req, res){
   console.log(req.body)
   new Localization({
+    id_airport: req.body.id_airport,
     id_person: req.body.id_person,
     id_beacon: req.body.id_beacon,
     date: Date.now()
@@ -24,7 +25,8 @@ exports.get_employees_by_cell =  function(req, res){
     var rules = [
       {id_airport: airport.id_airport},
       {id_beacon: parseInt(req.body.id_cell)},
-      {id_person: {$nin: JSON.parse(req.body.ids_people)}}
+      {id_person: {$nin: JSON.parse(req.body.ids_people)}},
+      {date: {$gte: new Date(req.body.last_minute)}}
     ]
     Localization.aggregate([
       {$match:

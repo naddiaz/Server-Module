@@ -61,9 +61,13 @@ function bfs_works(location,name,id_task,origin,n){
 }
 
 function get_employees_by_cell(location,name,actual,selected_employees){
+  var last_minute = new Date();
+  last_minute.setMinutes(last_minute.getMinutes()-1);
+  console.log(last_minute)
   var data = {
     id_cell: actual,
-    ids_people: JSON.stringify(selected_employees)
+    ids_people: JSON.stringify(selected_employees),
+    last_minute: last_minute
   };
   var people;
   $.ajax({
