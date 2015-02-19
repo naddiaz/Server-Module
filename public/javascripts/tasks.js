@@ -34,14 +34,15 @@ function bfs_works(location,name,id_task,origin,n){
   var visit = [];
   var selected_employees = [];
 
-  while(rest > 0){
-    var people = get_employees_by_cell(location,name,list[0]);
+  while(list.length > 0 && rest > 0){
+    var people = get_employees_by_cell(location,name,list[0],selected_employees);
+    console.log("PEOPLE")
     console.log(people)
     if(people.length > 0){
       console.log(people[0]._id)
       rest -= people.length;
       for(var i in people){
-        selected_employees.push(people[i]._id.id_person.toString());
+        selected_employees.push(parseInt(people[i]._id.id_person));
       }
     }
     var adjacents = get_adjacents_cells(location,name,list[0]);
@@ -51,15 +52,18 @@ function bfs_works(location,name,id_task,origin,n){
         list.push(adjacents[i].cell_end.toString());
       }
     }
+    console.log("EMPLOYEES")
+    console.log(selected_employees)
   }
   for(var i in selected_employees){
     make_work(location,name,id_task,selected_employees[i]);
   }
 }
 
-function get_employees_by_cell(location,name,actual){
+function get_employees_by_cell(location,name,actual,selected_employees){
   var data = {
-    id_cell: actual
+    id_cell: actual,
+    ids_people: JSON.stringify(selected_employees)
   };
   var people;
   $.ajax({

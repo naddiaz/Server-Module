@@ -23,7 +23,8 @@ exports.get_employees_by_cell =  function(req, res){
   Airport.findOne({location: req.params.location, name: req.params.name }).select('id_airport').exec(function(err, airport){
     var rules = [
       {id_airport: airport.id_airport},
-      {id_beacon: parseInt(req.body.id_cell)}
+      {id_beacon: parseInt(req.body.id_cell)},
+      {id_person: {$nin: JSON.parse(req.body.ids_people)}}
     ]
     Localization.aggregate([
       {$match:
