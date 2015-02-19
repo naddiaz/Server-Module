@@ -1,4 +1,62 @@
 function create_task(location,name){
+  if($('#sr-manual').is(':checked')){
+    create_task_manual(location,name);
+  }
+  else{
+    create_task_auto(location,name);
+  }
+}
+
+function create_task_manual(location,name){
+  var task = {
+      id_task: $('input[name="id_task"]').val(),
+      id_cell: $('input[name="id_cell_hide"]').val(),
+      type: $('#task_type').val(),
+      priority: $('input[name="task_priority"]').val(),
+      description: $('#description').val(),
+      n_employees: $('#n_employees').val(),
+      employees: $('#select-employees').val()
+  };
+  $.ajax({
+    url:"/admin/config/" + location + "/" + name + "/task/create",
+    type:"POST",
+    data: task,
+    success: function(data){
+      var row = "<td>" + data.id_task + "</td>";
+      row += "<td>" + data.id_cell + "</td>";
+      row += "<td>" + data.type + "</td>";
+      row += "<td>" + data.priority + "</td>";
+      row += "<td>" + data.description + "</td>";
+      $("#active_tasks").prepend("<tr>" + row + "</tr>");
+    }
+  });
+  $('input').each(function(){
+    $(this).val('')
+  });
+  $('textarea').val('');
+  for(i in task.employees){
+    make_work(location,name,task.id_task,task.employees[i]);
+  }
+  manualAsing();
+}
+
+function manualAsing() {
+  $( "#dialog-pending > p" ).html("Se ha asignado la tarea a los empleados que ha seleccionado");
+  $( "#dialog-pending" ).attr("title","Empleados asignados correctamente");
+  $( "#dialog-pending" ).dialog({
+    resizable: false,
+    width: 350,
+    height:250,
+    modal: true,
+    buttons: {
+      OK: function() {
+        $( this ).dialog( "close" );
+      }
+    }
+  });
+}
+
+function create_task_auto(location,name){
   var task = {
       id_task: $('input[name="id_task"]').val(),
       id_cell: $('input[name="id_cell_hide"]').val(),
