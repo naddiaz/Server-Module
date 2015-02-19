@@ -22,4 +22,21 @@ block content
       li Administración
       li #{location}
       li.active #{name}
+    .row
+      .col-xs-12.col-md-4
+        .panel.panel-info
+          .panel-heading
+            h1 Listado de Trabajos
+          .panel-body.table-responsive
+            table.table
+              tr
+                th ID Tarea
+                th Nombre Empleado
+                th Estado
+                th Información
+              - each work in works
+                tr
+                  th= work.id_task
+                  th= work.person
+                  th(class="#{work.state}")= work.state
     

@@ -6,6 +6,7 @@ var Airport     = Mongoose.model( 'Airport' );
 var Cell     = Mongoose.model( 'Cell' );
 var Task     = Mongoose.model( 'Task' );
 var Distance     = Mongoose.model( 'Distance' );
+var Work     = Mongoose.model( 'Work' );
 
 function callback(err, item){
   console.log("ITEM" + item);
@@ -16,7 +17,12 @@ exports.view_map =  function(req, res){
 };
 
 exports.index =  function(req, res){
-  res.render('config',{title: 'BLE Tasker', location: req.params.location, name: req.params.name, layout: 'layout_admin'});
+  Airport.findOne({location: req.params.location, name: req.params.name }).select('id_airport').exec(function(err, airport){
+    Work.find({id_airport: airport.id_airport}).populate('person','task').exec(function(err,works){
+      console.log(works[0].task);
+        res.render('config',{title: 'BLE Tasker', location: req.params.location, name: req.params.name, works: works, layout: 'layout_admin'});
+    });
+  });
 };
 
 exports.get_airport =  function(req, res){

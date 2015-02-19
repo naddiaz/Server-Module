@@ -87,7 +87,9 @@ var Work = new Schema({
   running_at: Date,
   finish_at: Date,
   pause_at: Date,
-  cancel_at: Date
+  cancel_at: Date,
+  person: { type: Schema.ObjectId, ref: 'Person' },
+  task: { type: Schema.ObjectId, ref: 'Task' }
 });
 
 var db = Mongoose.connect('mongodb://localhost/bletaskerDB');
