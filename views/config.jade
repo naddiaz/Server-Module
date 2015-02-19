@@ -31,12 +31,18 @@ block content
             table.table
               tr
                 th ID Tarea
+                th ID Empleado
                 th Nombre Empleado
                 th Estado
                 th Información
               - each work in works
                 tr
                   th= work.id_task
-                  th= work.person
+                  th= work.person.worker_id
+                  th= work.person.worker_name
                   th(class="#{work.state}")= work.state
+                  td.actions-group
+                    button.btn.btn-info.left(title="Ver toda la Información", onclick="show_info(\'#{work.id_task}\')")
+                      i.fa.fa-eye
+      
     
