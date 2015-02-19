@@ -25,7 +25,30 @@ function create_task(location,name){
   });
   $('textarea').val('');
 
-  bfs_works(location,name,task.id_task,task.id_cell,task.n_employees);
+  var pending = bfs_works(location,name,task.id_task,task.id_cell,task.n_employees);
+  isPending(task.n_employees,pending);
+}
+
+function isPending(n,rest) {
+  if(rest != 0){
+    $( "#dialog-pending > p" ).html("Al realizar la búsqueda hemos detectado que solamente están activos <strong>" + (n-rest) + " de " + n + "</strong> empleados.");
+    $( "#dialog-pending" ).attr("title","Empleados sin asignación");
+  }
+  else{
+    $( "#dialog-pending > p" ).html("Se han encontrado <strong>" + (n-rest) + " de " + n + "</strong> empleados para realizar la tarea solicitada.");
+    $( "#dialog-pending" ).attr("title","Empleados asignados correctamente");
+  }
+  $( "#dialog-pending" ).dialog({
+    resizable: false,
+    width: 350,
+    height:250,
+    modal: true,
+    buttons: {
+      OK: function() {
+        $( this ).dialog( "close" );
+      }
+    }
+  });
 }
 
 function bfs_works(location,name,id_task,origin,n){
@@ -36,8 +59,6 @@ function bfs_works(location,name,id_task,origin,n){
 
   while(list.length > 0 && rest > 0){
     var people = get_employees_by_cell(location,name,list[0],selected_employees);
-    console.log("PEOPLE")
-    console.log(people)
     if(people.length > 0){
       console.log(people[0]._id)
       rest -= people.length;
@@ -52,18 +73,16 @@ function bfs_works(location,name,id_task,origin,n){
         list.push(adjacents[i].cell_end.toString());
       }
     }
-    console.log("EMPLOYEES")
-    console.log(selected_employees)
   }
   for(var i in selected_employees){
     make_work(location,name,id_task,selected_employees[i]);
   }
+  return rest;
 }
 
 function get_employees_by_cell(location,name,actual,selected_employees){
   var last_minute = new Date();
   last_minute.setMinutes(last_minute.getMinutes()-1);
-  console.log(last_minute)
   var data = {
     id_cell: actual,
     ids_people: JSON.stringify(selected_employees),

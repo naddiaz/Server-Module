@@ -5,6 +5,7 @@ block scripts
   script(src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox.js")
   script(src='/javascripts/jquery.multi-select.js')
   script(src='/javascripts/multiselect-config.js')
+  script(src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js")
 
   script.
     LOCATION = "#{location}"
@@ -105,5 +106,7 @@ block content
                     td= task.type
                     td= task.priority
                     td= task.description
+    #dialog-pending
+      p .
         
         
