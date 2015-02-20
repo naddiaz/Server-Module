@@ -9,6 +9,11 @@ module.exports = function (app,routes) {
   var localization = require('./localization');
   var types = require('./types');
 
+  //Test
+  var testBeacons = require('./testBeacons');
+  app.get('/admin/config/testBeacons',testBeacons.read_testBeacons);
+  app.post('/send/beacons',testBeacons.create_testBeacons);
+
   // Admin
   app.get('/',admin.login);
   app.get('/admin',admin.index);

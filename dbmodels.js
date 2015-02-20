@@ -92,6 +92,15 @@ var Work = new Schema({
   task: { type: Schema.ObjectId, ref: 'Task' }
 });
 
+var TestBeacons = new Schema({
+  id_beacon: String,
+  mac: String,
+  timestamp: String,
+  rssi: String,
+  avg_rssi: String,
+  distance: String
+});
+
 var db = Mongoose.connect('mongodb://localhost/bletaskerDB');
 db.model('Airport', Airport);
 db.model('Person', Person);
@@ -102,3 +111,4 @@ db.model('Work', Work);
 db.model('Cell', Cell);
 db.model('Distance', Distance);
 db.model('Type', Type);
+db.model('TestBeacons', TestBeacons);
