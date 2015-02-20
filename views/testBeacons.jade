@@ -1,0 +1,31 @@
+extends layout_admin
+      
+block content
+  .container-fluid
+    ol.breadcrumb
+      li
+        a(href="/admin") Inicio
+      li.active TestBeacons
+    .row
+      .col-xs-12.col-md-6
+        .panel.panel-info
+          .panel-heading
+            h1 TestBeacons
+          .panel-body
+            table.table
+              tr
+                th Beacon
+                th Mac
+                th Timestamp
+                th RSSI
+                th AVG RSSI
+                th Distancia
+              - each beacon in testBeacons
+                tr
+                  td= beacon.id_beacon
+                  td= beacon.mac
+                  td= beacon.timestamp
+                  td= beacon.rssi
+                  td= beacon.avg_rssi
+                  td= beacon.distance
+              
