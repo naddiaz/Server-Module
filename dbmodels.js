@@ -95,10 +95,9 @@ var Work = new Schema({
 var TestBeacons = new Schema({
   id_beacon: String,
   mac: String,
-  timestamp: String,
   rssi: String,
-  avg_rssi: String,
-  distance: String
+  timestamp: String,
+  date: Date
 });
 
 var db = Mongoose.connect('mongodb://localhost/bletaskerDB');

@@ -12,10 +12,9 @@ exports.create_testBeacons =  function(req, res){
   new TestBeacons({
     id_beacon: req.body.id_beacon,
     mac: req.body.mac,
-    timestamp: req.body.timestamp,
     rssi: req.body.rssi,
-    avg_rssi: req.body.avg_rssi,
-    distance: req.body.distance
+    timestamp: req.body.timestamp,
+    date: Date(req.body.timestamp),
   }).save( function( err, todo, count ){
     res.redirect( '/admin/config/testBeacons' );
   });
