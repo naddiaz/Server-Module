@@ -6,7 +6,6 @@
 require('./dbmodels');
 
 var express = require('express')
-  , routes = require('./routes')
   , http = require('http')
   , path = require('path');
 
@@ -31,7 +30,7 @@ if ('development' == app.get('env')) {
 }
 
 //Routes
-require('./routes/routes')(app,routes);
+require('./routes/routes')(app);
 
 
 //Run

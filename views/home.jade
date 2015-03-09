@@ -1,0 +1,39 @@
+extends layout_home
+
+block breadcrumb
+  li
+    i.fa.fa-home
+    a(href='/index') Inicio
+
+block content
+  - each airport in airports
+    .row-fluid
+      .span12.box
+        .box-header
+          h2 #{airport.location}
+          strong - #{airport.name}
+        .box-content
+          .span2
+            a.quick-button.metro.yellow
+              i.fa.fa-gears
+              p Panel de control
+          .span2
+            a.quick-button.metro.green
+              i.fa.fa-tasks
+              p Tareas
+          .span2
+            a.quick-button.metro.blue
+              i.fa.fa-globe
+              p Mapa
+          .span2
+            a.quick-button.metro.red
+              i.fa.fa-users
+              p Empleados
+          .span2
+            a.quick-button.metro.purple
+              i.fa.fa-signal
+              p Dispositivos
+          .span2
+            a.quick-button.metro.black
+              i.fa.fa-th-list
+              p Categorias

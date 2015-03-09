@@ -1,0 +1,88 @@
+doctype html
+html
+  head
+    title BLE TASKER
+    meta(charset='utf-8' name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet' href="css/material-design-color-palette.css")
+    link(rel='stylesheet' href="css/pace.css")
+    link#bootstrap-style(href='css/bootstrap.min.css', rel='stylesheet')
+    link(href='css/bootstrap-responsive.min.css', rel='stylesheet')
+    link#base-style(href='css/style.css', rel='stylesheet')
+    link#base-style-responsive(href='css/style-responsive.css', rel='stylesheet')
+    link(href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,cyrillic-ext,latin-ext', rel='stylesheet', type='text/css')
+    link(rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css")
+
+    //if lt IE 9
+      script(src='http://html5shim.googlecode.com/svn/trunk/html5.js')
+      link#ie-style(href='css/ie.css', rel='stylesheet')
+    //if IE 9
+      link#ie9style(href='css/ie9.css', rel='stylesheet')
+    
+  body.mdc-bg-green
+    .navbar
+      .navbar-inner
+        .container-fluid
+          a.btn.btn-navbar(data-toggle='collapse', data-target='.top-nav.nav-collapse,.sidebar-nav.nav-collapse')
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.brand(href='/index')
+            span BLE TASKER
+          .nav-no-collapse.header-nav
+            ul.nav.pull-right
+              li.dropdown
+                a.btn.dropdown-toggle(data-toggle='dropdown', href='#')
+                  i.halflings-icon.white.user
+                  |  Ble Username
+                  span.caret
+                ul.dropdown-menu
+                  li.dropdown-menu-title
+                    span Opciones
+                  li
+                    a(href='/')
+                      i.halflings-icon.off
+                      |  Salir
+    .container-fluid-full
+      .row-fluid
+        #sidebar-left.span2
+          .nav-collapse.sidebar-nav
+            ul.nav.nav-tabs.nav-stacked.main-menu
+              li
+                a(href='/index')
+                  i.fa.fa-home
+                  span.hidden-tablet  Inicio
+              li
+                a(href='/help')
+                  i.fa.fa-question
+                  span.hidden-tablet  Ayuda
+        #content.span10
+          ul.breadcrumb
+            block breadcrumb
+          .mdc-bg-green
+            block content
+
+script(src='js/jquery-1.9.1.min.js')
+script(src='js/jquery-migrate-1.0.0.min.js')
+script(src='js/jquery-ui-1.10.0.custom.min.js')
+script(src='js/jquery.ui.touch-punch.js')
+script(src='js/modernizr.js')
+script(src='js/bootstrap.min.js')
+script(src='js/jquery.cookie.js')
+script(src='js/fullcalendar.min.js')
+script(src='js/jquery.dataTables.min.js')
+script(src='js/excanvas.js')
+script(src='js/jquery.flot.js')
+script(src='js/jquery.flot.pie.js')
+script(src='js/jquery.flot.stack.js')
+script(src='js/jquery.flot.resize.min.js')
+script(src='js/jquery.chosen.min.js')
+script(src='js/jquery.uniform.min.js')
+script(src='js/jquery.cleditor.min.js')
+script(src='js/jquery.elfinder.min.js')
+script(src='js/jquery.raty.min.js')
+script(src='js/jquery.uploadify-3.1.min.js')
+script(src='js/jquery.masonry.min.js')
+script(src='js/jquery.sparkline.min.js')
+script(src='js/custom.js')
+script(src='js/pace.min.js')
+script(data-pace-options='{ "ajax": false }', src='pace.js')
