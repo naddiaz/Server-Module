@@ -10,5 +10,5 @@ exports.index =  function(req, res){
 };
 
 exports.help =  function(req, res){
-    res.render('help',{airports: airports});
+    res.render('help',{});
 };
