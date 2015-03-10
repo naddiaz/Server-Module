@@ -18,31 +18,31 @@ block menu_options
 block content
   .row-fluid
     .span4.statbox.green
-      h1 Activas
+      h1 Tareas Activas
       .footer Tareas que se están realizando por algún empleado
       .number
-        | #{}
+        | #{tasks_active.length}
       
     .span4.statbox.yellow
-      h1 Pendientes
+      h1 Tareas Pendientes
       .footer Tareas creadas pendientes de que empiece a ser realizada
       .number
-        | 3
+        | #{tasks_pending.length}
     .span4.statbox.blue
-      h1 Completadas
+      h1 Tareas Completadas
       .footer Tareas acabadas por cada una de las partes
       .number
-        | 32
+        | #{tasks_complete.length}
   .row-fluid
     .span8.box
       .box-header
         | Asignaciones
       .box-content
         ul.dashboard-list.metro
-          li.yellow
-            h3
-              i.fa.fa-minus.yellow
-              | Tareas Pendientes
+          li.red
+            h3 
+              i.fa.fa-times.red
+              | Trabajos Pausados o Cancelados
           table.table.table-bordered
             thead
               tr
@@ -51,27 +51,99 @@ block content
                 th Categoría
                 th Prioridad
                 th Registro
+                th Estado
+                th Descripción
             tbody
+              -each work in works_stop
+                tr
+                  td= work.task.id_task
+                  td= work.person.worker_name
+                  td= work.task.type
+                  td= work.task.priority
+                  td= work.asign_at
+                  td= work.state
+                  td= work.task.description
+          li.yellow
+            h3
+              i.fa.fa-minus.yellow
+              | Trabajos Pendientes
+          table.table.table-bordered
+            thead
               tr
-                td 23652
-                td Néstor
-                td Mantenimiento
-                td.priority.medium 3
-                td 2012/15/10 15:10
+                th ID Tarea
+                th Empleado
+                th Categoría
+                th Prioridad
+                th Registro
+                th Descripción
+            tbody
+              -each work in works_pending
+                tr
+                  td= work.task.id_task
+                  td= work.person.worker_name
+                  td= work.task.type
+                  td= work.task.priority
+                  td= moment(work.asign_at).format('HH:MM - DD.MM.YYYY')
+                  td= work.task.description
           li.green
-            h3 Tareas Activas
-          li
-            a(href="#")
+            h3 
               i.fa.fa-plus.green
-              strong Nombre
+              | Trabajos Activos
+          table.table.table-bordered
+            thead
+              tr
+                th ID Tarea
+                th Empleado
+                th Categoría
+                th Prioridad
+                th Registro
+                th Descripción
+            tbody
+              -each work in works_active
+                tr
+                  td= work.task.id_task
+                  td= work.person.worker_name
+                  td= work.task.type
+                  td= work.task.priority
+                  td= moment(work.asign_at).format('HH:MM - DD.MM.YYYY')
+                  td= work.task.description
           li.blue
-            h3 Tareas Completadas
-          li
-            a(href="#")
+            h3 
               i.fa.fa-check.blue
-              strong Nombre
+              | Trabajos Completados
+          table.table.table-bordered
+            thead
+              tr
+                th ID Tarea
+                th Empleado
+                th Categoría
+                th Prioridad
+                th Registro
+                th Descripción
+            tbody
+              -each work in works_complete
+                tr
+                  td= work.task.id_task
+                  td= work.person.worker_name
+                  td= work.task.type
+                  td= work.task.priority
+                  td= moment(work.asign_at).format('HH:MM - DD.MM.YYYY')
+                  td= work.task.description
     .span4.box
       .box-header
-        | Empleados activos
+        | Empleados
       .box-content
-        ul.dashboard-list.metro
+        table.table.table-bordered
+          thead
+            tr
+              th ID
+              th Nombre
+              th Categoría
+              th Estado Actual
+          tbody
+            -each person in people
+              tr
+                td= person.worker_id
+                td= person.worker_name
+                td= person.worker_type
+                td(class="#{person.state}")= person.state

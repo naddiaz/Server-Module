@@ -11,6 +11,11 @@ var express = require('express')
 
 var app = express();
 
+app.locals._      = require('underscore');
+app.locals._.str  = require('underscore.string');
+app.locals.moment = require('moment');
+
+
 // all environments
 app.set('address', 'localhost');
 app.set('port', process.env.PORT || 10000);

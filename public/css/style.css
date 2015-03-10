@@ -59,7 +59,8 @@
 .sliderVertical.green .ui-slider-range,
 .progressSlim.green .ui-progressbar-value,
 .label-success,
-.badge-success {
+.badge-success,
+.ACTIVO {
 	background: #43B5AD !important;
 	border-color: #43B5AD !important;
 	color: #fff;
@@ -121,7 +122,8 @@
 .sliderVertical.yellow .ui-slider-range,
 .progressSlim.yellow .ui-progressbar-value,
 .label-warning,
-.badge-warning {
+.badge-warning,
+.ESPERA {
 	background: #DEB948 !important;
 	border-color: #DEB948 !important;
 	color: #fff;
@@ -209,7 +211,8 @@
 .sliderVertical.red .ui-slider-range,
 .progressSlim.red .ui-progressbar-value,
 .label-important,
-.badge-important {
+.badge-important,
+.DESOCUPADO{
 	background: #E25A59 !important;
 	border-color: #E25A59 !important;
 	color: #fff;

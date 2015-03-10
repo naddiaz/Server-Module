@@ -66,6 +66,7 @@ var Task = new Schema({
   id_task: Number,
   id_cell: String,
   type: String,
+  n_employees: Number,
   priority: {type: Number, enum: [0,1,2,3,4]},
   description: String
 });
