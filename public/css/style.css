@@ -417,7 +417,7 @@ a.brand span {
 }
 
 .nav-tabs.nav-stacked > li > a,
-.nav-tabs.nav-stacked > li > ul > li > a {
+.nav-tabs.nav-stacked > li > ul > li > a{
 	padding: 15px 10px 14px 10px;
 	color: #fff;
 	border-top: none;
@@ -428,6 +428,11 @@ a.brand span {
 	-webkit-border-radius: 0px;
 	-moz-border-radius: 0px;
 	border-radius: 0px;		
+}
+
+li.nonmark > a{
+  background: #1C2B36 !important;
+  border: solid 1px #1C2B36 !important;
 }
 
 .nav-tabs.nav-stacked > li:last-child > a {
@@ -461,7 +466,7 @@ a.brand span {
 .nav-tabs.nav-stacked > li > a:hover,
 .nav-tabs.nav-stacked > li > ul > li > a:hover {
   	color: #fff;
-	background-color: #080808;
+	background-color: #080808 !important;
 }
 
 .nav-tabs.nav-stacked  > li.active > a,
@@ -487,6 +492,14 @@ background: #3A3A3A;
 z-index: 2;
 border-bottom: 1px solid transparent;
 }
+
+.nav-tabs.nav-stacked>li>a.tag,
+.nav-tabs.nav-stacked>li:hover>a.tag {
+  background-color: #eee !important;
+  color: #000;
+  cursor: default;
+}
+
 .nav-tabs.nav-stacked  > li.active > ul {
 	padding: 5px 0px;
   	color: #3b3b41;
@@ -1285,6 +1298,8 @@ ul.dashboard-list.metro li i {
 	font-size: 18px;
 	padding: 9px 7px;
 	margin: -5px 10px -5px 0px;
+  width: 32px;
+  text-align: center;
 }
 
 ul.dashboard-list a:hover{

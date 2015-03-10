@@ -14,26 +14,26 @@ block content
           strong - #{airport.name}
         .box-content
           .span2
-            a.quick-button.metro.yellow
+            a.quick-button.metro.yellow(href="/airport/#{airport.location}/#{airport.name}")
               i.fa.fa-gears
               p Panel de control
           .span2
-            a.quick-button.metro.green
+            a.quick-button.metro.green(href="/airport/#{airport.location}/#{airport.name}/tasks")
               i.fa.fa-tasks
               p Tareas
           .span2
-            a.quick-button.metro.blue
+            a.quick-button.metro.blue(href="/airport/#{airport.location}/#{airport.name}/map")
               i.fa.fa-globe
               p Mapa
           .span2
-            a.quick-button.metro.red
+            a.quick-button.metro.red(href="/airport/#{airport.location}/#{airport.name}/employees")
               i.fa.fa-users
               p Empleados
           .span2
-            a.quick-button.metro.purple
+            a.quick-button.metro.purple(href="/airport/#{airport.location}/#{airport.name}/devices")
               i.fa.fa-signal
               p Dispositivos
           .span2
-            a.quick-button.metro.black
+            a.quick-button.metro.black(href="/airport/#{airport.location}/#{airport.name}/categories")
               i.fa.fa-th-list
               p Categorias

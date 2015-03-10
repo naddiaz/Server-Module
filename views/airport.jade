@@ -1,0 +1,77 @@
+extends layout_home
+
+block breadcrumb
+  li
+    i.fa.fa-home
+    a(href='/index') Inicio
+    i.fa.fa-angle-right
+  li #{location}
+    i.fa.fa-angle-right
+  li #{name}
+    i.fa.fa-angle-right
+  li
+    i.fa.fa-gears 
+    | Panel de Control
+
+block menu_options
+  include ../partials/menu.jade
+block content
+  .row-fluid
+    .span4.statbox.green
+      h1 Activas
+      .footer Tareas que se están realizando por algún empleado
+      .number
+        | #{}
+      
+    .span4.statbox.yellow
+      h1 Pendientes
+      .footer Tareas creadas pendientes de que empiece a ser realizada
+      .number
+        | 3
+    .span4.statbox.blue
+      h1 Completadas
+      .footer Tareas acabadas por cada una de las partes
+      .number
+        | 32
+  .row-fluid
+    .span8.box
+      .box-header
+        | Asignaciones
+      .box-content
+        ul.dashboard-list.metro
+          li.yellow
+            h3
+              i.fa.fa-minus.yellow
+              | Tareas Pendientes
+          table.table.table-bordered
+            thead
+              tr
+                th ID Tarea
+                th Empleado
+                th Categoría
+                th Prioridad
+                th Registro
+            tbody
+              tr
+                td 23652
+                td Néstor
+                td Mantenimiento
+                td.priority.medium 3
+                td 2012/15/10 15:10
+          li.green
+            h3 Tareas Activas
+          li
+            a(href="#")
+              i.fa.fa-plus.green
+              strong Nombre
+          li.blue
+            h3 Tareas Completadas
+          li
+            a(href="#")
+              i.fa.fa-check.blue
+              strong Nombre
+    .span4.box
+      .box-header
+        | Empleados activos
+      .box-content
+        ul.dashboard-list.metro

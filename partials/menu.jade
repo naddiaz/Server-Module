@@ -1,0 +1,41 @@
+li 
+  a.tag(href="#")
+    i.fa.fa-plane
+    span #{name}, #{location}
+li
+  a(href="/airport/#{location}/#{name}/")
+    i.fa.fa-gears
+    span.hidden-tablet  Panel de Control
+li
+  a(href="/airport/#{location}/#{name}/tasks")
+    i.fa.fa-tasks
+    span.hidden-tablet  Tareas
+li
+  a(href="/airport/#{location}/#{name}/map")
+    i.fa.fa-globe
+    span.hidden-tablet  Mapa
+li
+  a(href="/airport/#{location}/#{name}/employees")
+    i.fa.fa-users
+    span.hidden-tablet  Empleados
+li
+  a(href="/airport/#{location}/#{name}/devices")
+    i.fa.fa-signal
+    span.hidden-tablet  Dispositivos
+li
+  a(href="/airport/#{location}/#{name}/categories")
+    i.fa.fa-th-list
+    span.hidden-tablet  Categorías
+li 
+  a.tag(href="#")
+    i.fa.fa-th
+    span Todas las instalaciones
+- each airport in airports
+  li.nonmark 
+    a(href="/airport/#{airport.location}/#{airport.name}/")
+      i.fa.fa-plane
+      span #{airport.name}, #{airport.location}
+li 
+  a.tag(href="#")
+    i.fa.fa-th
+    span Más opciones
