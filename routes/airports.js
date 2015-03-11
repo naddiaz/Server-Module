@@ -20,6 +20,9 @@ exports.index =  function(req, res){
     };
     async.parallel(data,function(err,results){
       /*
+        
+      Búsqueda de tareas sin asignar o parcialmente asignadas
+      
       Recuento de tareas: activas, completadas y pendientes
       Una tarea puede comtemplar varios trabajos por lo que puede estar:
         - Completada: si todos los trabajos que pertenezcan a esa tarea también lo están.
@@ -29,10 +32,13 @@ exports.index =  function(req, res){
       var tasks_active = new Array();
       var tasks_pending = new Array();
       var tasks_complete = new Array();
+      var tasks_nonasign = new Array();
       for(var i=0; i<results.tasks.length; i++){
         var full_completed = 0;
+        var partial_asign = 0;
         for(var j=0; j<results.works.length; j++){
           if(results.tasks[i]._id.toString() == results.works[j].task.toString()){
+            partial_asign++;
             if(results.works[j].state.toString() == 'finish' )
               full_completed++;
           }
@@ -45,6 +51,10 @@ exports.index =  function(req, res){
         }
         else{
           tasks_pending.push(results.tasks[i]);
+        }
+        if(partial_asign > 0 && partial_asign < results.tasks[i].n_employees){
+          results.tasks[i].pending = results.tasks[i].n_employees - partial_asign;
+          tasks_nonasign.push(results.tasks[i]);
         }
       }
 
@@ -114,6 +124,7 @@ exports.index =  function(req, res){
           tasks_complete: tasks_complete,
           tasks_active: tasks_active,
           tasks_pending: tasks_pending,
+          tasks_nonasign: tasks_nonasign,
           works_complete: works_complete,
           works_active: works_active,
           works_pending: works_pending,

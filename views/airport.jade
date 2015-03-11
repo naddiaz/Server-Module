@@ -39,6 +39,30 @@ block content
         | Asignaciones
       .box-content
         ul.dashboard-list.metro
+          li.orangeDark
+            h3 
+              i.fa.fa-times.orangeDark
+              | Tareas sin asignación o parcialmente asignadas
+          table.table.table-bordered
+            thead
+              tr
+                th ID Tarea
+                th Pendientes
+                th Categoría
+                th Prioridad
+                th Descripción
+                th Acciones
+            tbody
+              -each task in tasks_nonasign
+                tr
+                  td= task.id_task
+                  td #{task.pending} / #{task.n_employees}
+                  td= task.type
+                  td= task.priority
+                  td= task.description
+                  td 
+                    button.btn(title="Reintentar la asignación")
+                      i.fa.fa-refresh
           li.red
             h3 
               i.fa.fa-times.red
