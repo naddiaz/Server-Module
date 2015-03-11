@@ -52,7 +52,7 @@ exports.index =  function(req, res){
         else{
           tasks_pending.push(results.tasks[i]);
         }
-        if(partial_asign > 0 && partial_asign < results.tasks[i].n_employees){
+        if(partial_asign > 0 && partial_asign <= results.tasks[i].n_employees){
           results.tasks[i].pending = results.tasks[i].n_employees - partial_asign;
           tasks_nonasign.push(results.tasks[i]);
         }
