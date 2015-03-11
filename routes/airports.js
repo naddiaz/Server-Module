@@ -35,18 +35,22 @@ exports.index =  function(req, res){
       var tasks_nonasign = new Array();
       for(var i=0; i<results.tasks.length; i++){
         var full_completed = 0;
+        var running = 0;
         var partial_asign = 0;
         for(var j=0; j<results.works.length; j++){
           if(results.tasks[i]._id.toString() == results.works[j].task._id.toString()){
             partial_asign++;
+            console.log(results.works[j].state.toString())
             if(results.works[j].state.toString() == 'finish' )
               full_completed++;
+            else if(results.works[j].state.toString() == 'running' )
+              running++;
           }
         }
         if(full_completed == results.tasks[i].n_employees){
           tasks_complete.push(results.tasks[i]);
         }
-        else if(full_completed > 0){
+        else if(running > 0){
           tasks_active.push(results.tasks[i]);
         }
         else{
@@ -88,10 +92,9 @@ exports.index =  function(req, res){
       for(var i=0; i<results.people.length; i++){
         var active = false;
         var pending = false;
-        var j = 0;
-        while(active || j<results.works.length){
+        for(var j=0; j<results.works.length; j++){
           //Si ha encontrado un trabajo para esta persona
-          if(results.works[j].person._id.toString() == results.people[i]._id.toString()){
+          if(results.works[j].id_person == results.people[i].id_person){
             //Si el estado es activo, deja de buscar y asigna activo al estado de esta persona
             if(results.works[j].state.toString() == 'running'){
               active = true;
@@ -103,17 +106,17 @@ exports.index =  function(req, res){
               pending = true;
             }
           }
-          j++;
         }
         if(pending && !active){
           results.people[i].state = "ESPERA";
           employee.push(results.people[i]);
         }
-        else{
+        else if(!active){
           results.people[i].state = "DESOCUPADO";
           employee.push(results.people[i]);
         }
       }
+      //console.log(employee)
 
       res.render(
         'airport',
