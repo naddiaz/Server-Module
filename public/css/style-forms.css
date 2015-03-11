@@ -39,8 +39,11 @@ textarea,
 
 textarea {
   height: auto;
+  width: 80%;
 }
-
+.no-resize{
+  resize: none;
+}
 textarea,
 input[type="text"],
 input[type="password"],
@@ -920,4 +923,14 @@ legend + .control-group {
 
 .form-horizontal .form-actions {
   padding-left: 180px;
+}
+
+.controls > p{
+  width: 206px;
+}
+.controls > p > span.left{
+  float: left;
+}
+.controls > p > span.right{
+  float: right;
 }

@@ -29,4 +29,31 @@ module.exports = function (app,routes) {
 
   var airport = require('./airports');
   app.get('/airport/:location/:name',airport.index);
+
+  //Routes Tasks
+  /*
+    File: routes/tasks.js
+    tasks.index -> views/tasks.jade
+  */
+
+  var tasks = require('./tasks');
+  app.get('/airport/:location/:name/tasks',tasks.index);
+
+  //Routes Scripts
+  /*
+    File: routes/scripts.js
+    Only can access by POST method
+    employeesByType -> return employees filtering by specific param type
+  */
+
+  var scripts = require('./scripts');
+  app.post('/scripts/employeesByType',scripts.employeesByType);
+  app.post('/scripts/airportData',scripts.airportData);
+  app.post('/scripts/cellsData',scripts.cellsData);
+  app.post('/scripts/nextCell',scripts.nextCell);
+  app.post('/scripts/setCell',scripts.setCell);
+  app.post('/scripts/deleteCell',scripts.deleteCell);
+  app.post('/scripts/clearGraph',scripts.clearGraph);
+  app.post('/scripts/setCellGraph',scripts.setCellGraph);
+  app.post('/scripts/adjacentsCells',scripts.adjacentsCells);
 };

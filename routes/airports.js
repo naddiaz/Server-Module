@@ -15,8 +15,8 @@ exports.index =  function(req, res){
     var data = {
       tasks: Tasks.exec.bind(Tasks),
       people: People.exec.bind(People),
-      works: People.exec.bind(Works),
-      airports: People.exec.bind(Airports)
+      works: Works.exec.bind(Works),
+      airports: Airports.exec.bind(Airports)
     };
     async.parallel(data,function(err,results){
       /*

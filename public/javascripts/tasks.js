@@ -124,7 +124,7 @@ function bfs_works(location,name,id_task,origin,n){
         selected_employees.push(parseInt(people[i]._id.id_person));
       }
     }
-    var adjacents = get_adjacents_cells(location,name,list[0]);
+    var adjacents = adjacentsCells(location,name,list[0]);
     visit.push(list.shift());
     for(i in adjacents){
       if(visit.indexOf(adjacents[i].cell_end.toString()) == -1 && list.indexOf(adjacents[i].cell_end.toString()) == -1){
@@ -157,23 +157,6 @@ function get_employees_by_cell(location,name,actual,selected_employees){
     }
   });
   return people;
-}
-
-function get_adjacents_cells(location,name,actual){
-  var data = {
-    id_cell: actual
-  };
-  var cells;
-  $.ajax({
-    url:"/admin/config/" + location + "/" + name + "/cells/adjacents",
-    async: false,
-    type:"POST",
-    data: data,
-    success:function(data) {
-      cells = data; 
-    }
-  });
-  return cells;
 }
 
 function make_work(location,name,id_task,id_person){
