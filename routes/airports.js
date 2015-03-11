@@ -37,7 +37,7 @@ exports.index =  function(req, res){
         var full_completed = 0;
         var partial_asign = 0;
         for(var j=0; j<results.works.length; j++){
-          if(results.tasks[i]._id.toString() == results.works[j].task.toString()){
+          if(results.tasks[i]._id.toString() == results.works[j].task._id.toString()){
             partial_asign++;
             if(results.works[j].state.toString() == 'finish' )
               full_completed++;
@@ -52,7 +52,7 @@ exports.index =  function(req, res){
         else{
           tasks_pending.push(results.tasks[i]);
         }
-        if(partial_asign > 0 && partial_asign <= results.tasks[i].n_employees){
+        if(results.tasks[i].n_employees - partial_asign != 0){
           results.tasks[i].pending = results.tasks[i].n_employees - partial_asign;
           tasks_nonasign.push(results.tasks[i]);
         }
