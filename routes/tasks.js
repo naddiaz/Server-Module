@@ -34,3 +34,22 @@ exports.index =  function(req, res){
     });
   });
 };
+
+exports.create =  function(req, res){
+  Airport.findOne({location: req.body.location, name: req.body.name }).select('id_airport').exec(function(err, airport){
+    console.log("HELLO")
+    new Task({
+      id_airport: airport.id_airport,
+      id_task: req.body.id_task,
+      id_cell: req.body.id_cell,
+      type: req.body.type,
+      n_employees: req.body.n_employees,
+      priority: req.body.priority,
+      description: req.body.description,
+    }).save( function( err, tasks ){
+      if(err)
+        console.log(err)
+      res.send(tasks);
+    });
+  });
+};

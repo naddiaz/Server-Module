@@ -38,6 +38,18 @@ module.exports = function (app,routes) {
 
   var tasks = require('./tasks');
   app.get('/airport/:location/:name/tasks',tasks.index);
+  app.post('/tasks/create',tasks.create);
+
+
+
+  //Routes Works
+  /*
+    File: routes/work.js
+  */
+
+  var work = require('./work');
+  app.post('/work/create',work.create);
+
 
   //Routes Scripts
   /*

@@ -63,7 +63,7 @@ Beacon.index({id_airport: 1, id_beacon: 1}, {unique: true});
 
 var Task = new Schema({
   id_airport: Number,
-  id_task: Number,
+  id_task: String,
   id_cell: String,
   type: String,
   n_employees: Number,
@@ -81,7 +81,7 @@ Type.index({id_airport: 1, name: 1}, {unique: true});
 var Work = new Schema({
   id_airport: Number,
   id_person: Number,
-  id_task: Number,
+  id_task: String,
   state: {type: String, enum: ["no_asign", "asign", "running", "finish", "pause", "cancel"]},
   created_at: Date,
   asign_at: Date,
