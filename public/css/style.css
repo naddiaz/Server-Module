@@ -322,7 +322,7 @@ h6 {
        -moz-border-radius: 0px;
           	border-radius: 0px;
   	*zoom: 1;
-	border-bottom: 1px solid #38383D; /* rgba(0, 0, 0, 0.05); */
+	border-bottom: 0px solid #38383D; /* rgba(0, 0, 0, 0.05); */
 	
 }
 
@@ -403,7 +403,8 @@ a.brand span {
 =================================================================== */
 
 #sidebar-left {
-	background: #1C2B36;
+  box-shadow: 0 1px 8px #222 !important;
+	background: #222 !important;
 }
 
 .sidebar-nav > ul{
@@ -735,8 +736,8 @@ ul.messages li .message {
 
 .breadcrumb {
 	margin: -28px -28px 28px -26px;
-	line-height: 20px;
-	/*background: #F7F7F7;*/
+	line-height: 33px;
+	background: #222;
 	border: 0px;
 	color: #888;
 	-webkit-box-shadow: none;
@@ -744,31 +745,38 @@ ul.messages li .message {
 	   		box-shadow: none;
   	-webkit-border-radius: 0px;
        -moz-border-radius: 0px;
-	        border-radius: 0px; 	
+	        border-radius: 0px;
+  box-shadow: 0 1px 8px #222;
 }
 
+.breadcrumb li{
+  color: #fff;
+  text-shadow: none !important;
+}
 .breadcrumb span {
-	text-shadow: 1px 1px 0px #fff;
+  color: #fff;
+	/*text-shadow: 1px 1px 0px #fff;*/
 }
 
 .breadcrumb i {
+  color: #fff;
   margin: 0 0.5em;
 }
 
 .breadcrumb a {
-	color: #888;
-	text-shadow: 0px 1px 1px #fff;
+	color: #fff;
+	/*text-shadow: 0px 1px 1px #fff;*/
 }
 
 .breadcrumb a:hover {
 	color: #646464;
-	text-shadow: 0px 1px 1px #fff;
+	/*text-shadow: 0px 1px 1px #fff;*/
 	text-decoration: none;	
 }
 
 .dark {
 	background: #fdfdfd;
-	text-shadow: 0px 1px 1px #fff !important;
+	/*text-shadow: 0px 1px 1px #fff !important;*/
 	padding: 20px;
 	top: -28px;
 	right: -28px;

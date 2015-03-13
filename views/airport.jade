@@ -1,5 +1,9 @@
 extends layout_home
-
+block scripts
+  script.
+    LOCATION = "#{location}"
+    NAME = "#{name}"
+  script(src='/scripts/airport.js')
 block breadcrumb
   li
     i.fa.fa-home
@@ -21,18 +25,18 @@ block content
       h1 Tareas Activas
       .footer Tareas que se están realizando por algún empleado
       .number
-        | #{tasks_active.length}
+        span#tasks_active
       
     .span4.statbox.yellow
       h1 Tareas Pendientes
       .footer Tareas creadas pendientes de que empiece a ser realizada
       .number
-        | #{tasks_pending.length}
+        span#tasks_pending
     .span4.statbox.blue
       h1 Tareas Completadas
       .footer Tareas acabadas por cada una de las partes
       .number
-        | #{tasks_complete.length}
+        span#tasks_complete
   .row-fluid
     .span8.box
       .box-header
@@ -52,17 +56,8 @@ block content
                 th Prioridad
                 th Descripción
                 th Acciones
-            tbody
-              -each task in tasks_nonasign
-                tr
-                  td= task.id_task
-                  td #{task.pending} / #{task.n_employees}
-                  td= task.type
-                  td= task.priority
-                  td= task.description
-                  td 
-                    button.btn(title="Reintentar la asignación")
-                      i.fa.fa-refresh
+            tbody#tasks_nonasign
+              
           li.red
             h3 
               i.fa.fa-times.red
@@ -77,16 +72,7 @@ block content
                 th Registro
                 th Estado
                 th Descripción
-            tbody
-              -each work in works_stop
-                tr
-                  td= work.task.id_task
-                  td= work.person.worker_name
-                  td= work.task.type
-                  td= work.task.priority
-                  td= work.asign_at
-                  td= work.state
-                  td= work.task.description
+            tbody#works_stop
           li.yellow
             h3
               i.fa.fa-minus.yellow
@@ -100,15 +86,7 @@ block content
                 th Prioridad
                 th Registro
                 th Descripción
-            tbody
-              -each work in works_pending
-                tr
-                  td= work.task.id_task
-                  td= work.person.worker_name
-                  td= work.task.type
-                  td= work.task.priority
-                  td= moment(work.asign_at).format('HH:MM - DD.MM.YYYY')
-                  td= work.task.description
+            tbody#works_pending
           li.green
             h3 
               i.fa.fa-plus.green
@@ -122,15 +100,7 @@ block content
                 th Prioridad
                 th Registro
                 th Descripción
-            tbody
-              -each work in works_active
-                tr
-                  td= work.task.id_task
-                  td= work.person.worker_name
-                  td= work.task.type
-                  td= work.task.priority
-                  td= moment(work.asign_at).format('HH:MM - DD.MM.YYYY')
-                  td= work.task.description
+            tbody#works_active
           li.blue
             h3 
               i.fa.fa-check.blue
@@ -144,15 +114,7 @@ block content
                 th Prioridad
                 th Registro
                 th Descripción
-            tbody
-              -each work in works_complete
-                tr
-                  td= work.task.id_task
-                  td= work.person.worker_name
-                  td= work.task.type
-                  td= work.task.priority
-                  td= moment(work.asign_at).format('HH:MM - DD.MM.YYYY')
-                  td= work.task.description
+            tbody#works_complete
     .span4.box
       .box-header
         | Empleados

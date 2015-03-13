@@ -21,7 +21,7 @@ html
       
   body.mdc-bg-green
     .navbar
-      .navbar-inner
+      .navbar-inner.mdc-bg-green-600
         .container-fluid
           a.btn.btn-navbar(data-toggle='collapse', data-target='.top-nav.nav-collapse,.sidebar-nav.nav-collapse')
             span.icon-bar
@@ -48,11 +48,11 @@ html
         #sidebar-left.span2
           .nav-collapse.sidebar-nav
             ul.nav.nav-tabs.nav-stacked.main-menu
-              block menu_options
               li
                 a(href='/index')
                   i.fa.fa-home
                   span.hidden-tablet  Inicio
+              block menu_options
               li
                 a(href='/help')
                   i.fa.fa-question

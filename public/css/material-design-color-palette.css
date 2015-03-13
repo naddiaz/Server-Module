@@ -1998,7 +1998,7 @@ a.mdc-text-green-A700:focus {
   color: #00953e;
 }
 .mdc-bg-green {
-  background-color: #4caf50;
+  background-color: #4caf50 !important;
 }
 a.mdc-bg-green:hover,
 a.mdc-bg-green:focus {
@@ -2047,11 +2047,11 @@ a.mdc-bg-green-500:focus {
   background-color: #43a047;
 }
 .mdc-bg-green-600 {
-  background-color: #43a047;
+  background-color: #43a047 !important;
 }
 a.mdc-bg-green-600:hover,
 a.mdc-bg-green-600:focus {
-  background-color: #388e3c;
+  background-color: #388e3c !important;
 }
 .mdc-bg-green-700 {
   background-color: #388e3c;
@@ -2068,7 +2068,7 @@ a.mdc-bg-green-800:focus {
   background-color: #1b5e20;
 }
 .mdc-bg-green-900 {
-  background-color: #1b5e20;
+  background-color: #1b5e20 !important;
 }
 a.mdc-bg-green-900:hover,
 a.mdc-bg-green-900:focus {

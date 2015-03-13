@@ -29,6 +29,8 @@ module.exports = function (app,routes) {
 
   var airport = require('./airports');
   app.get('/airport/:location/:name',airport.index);
+  app.post('/airport/tasksStates',airport.tasksStates);
+  app.post('/airport/worksStates',airport.worksStates);
 
   //Routes Tasks
   /*
