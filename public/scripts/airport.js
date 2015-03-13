@@ -40,25 +40,25 @@ function worksStates(){
       var works_stop = $('#works_stop');
       for(i in data.works_stop){
         var work = data.works_stop[i];
-        var html = "<tr><td>"+work.task.id_task+"</td><td>"+work.person.worker_name+"</td><td>"+work.task.type+"</td><td>"+work.task.priority+"</td><td>"+getDateFormatter(work.asign_at)+"</td><td>"+work.state+"</td><td>"+work.task.description+"</td>";
+        var html = "<tr><td>"+work.task.id_task+"</td><td>"+work.person.worker_name+"</td><td>"+work.task.type+"</td><td>"+work.task.priority+"</td><td>"+getDateFormatter(work.asign_at)+"</td><td>"+work.task.description+"</td>";
         works_stop.append(html);
       }
       var works_pending = $('#works_pending');
       for(i in data.works_pending){
         var work = data.works_pending[i];
-        var html = "<tr><td>"+work.task.id_task+"</td><td>"+work.person.worker_name+"</td><td>"+work.task.type+"</td><td>"+work.task.priority+"</td><td>"+getDateFormatter(work.asign_at)+"</td><td>"+work.state+"</td><td>"+work.task.description+"</td>";
+        var html = "<tr><td>"+work.task.id_task+"</td><td>"+work.person.worker_name+"</td><td>"+work.task.type+"</td><td>"+work.task.priority+"</td><td>"+getDateFormatter(work.asign_at)+"</td><td>"+work.task.description+"</td>";
         works_pending.append(html);
       }
       var works_active = $('#works_active');
       for(i in data.works_active){
         var work = data.works_active[i];
-        var html = "<tr><td>"+work.task.id_task+"</td><td>"+work.person.worker_name+"</td><td>"+work.task.type+"</td><td>"+work.task.priority+"</td><td>"+getDateFormatter(work.asign_at)+"</td><td>"+work.state+"</td><td>"+work.task.description+"</td>";
+        var html = "<tr><td>"+work.task.id_task+"</td><td>"+work.person.worker_name+"</td><td>"+work.task.type+"</td><td>"+work.task.priority+"</td><td>"+getDateFormatter(work.asign_at)+"</td><td>"+work.task.description+"</td>";
         works_active.append(html);
       }
       var works_complete = $('#works_complete');
       for(i in data.works_complete){
         var work = data.works_complete[i];
-        var html = "<tr><td>"+work.task.id_task+"</td><td>"+work.person.worker_name+"</td><td>"+work.task.type+"</td><td>"+work.task.priority+"</td><td>"+getDateFormatter(work.asign_at)+"</td><td>"+work.state+"</td><td>"+work.task.description+"</td>";
+        var html = "<tr><td>"+work.task.id_task+"</td><td>"+work.person.worker_name+"</td><td>"+work.task.type+"</td><td>"+work.task.priority+"</td><td>"+getDateFormatter(work.asign_at)+"</td><td>"+work.task.description+"</td>";
         works_complete.append(html);
       }
     }
@@ -67,5 +67,6 @@ function worksStates(){
 
 function getDateFormatter(str_date){
   var date = new Date(str_date);
-  return "<strong>" + date.getHours() + ":" + date.getMinutes() + "</strong> " + date.getDay() + "/" + date.getMonth() + "/" + date.getYear();
+  var months = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  return "<strong>" + date.getHours() + ":" + date.getMinutes() + "</strong> -- <span>" + date.getDay() + " de " + months[date.getMonth()] + " de " + date.getFullYear() +"</span>";
 }
