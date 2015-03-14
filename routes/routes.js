@@ -62,6 +62,9 @@ module.exports = function (app,routes) {
     File: routes/scripts.js
     Only can access by POST method
     employeesByType -> return employees filtering by specific param type
+    employeesByCell -> return employees in cell
+    employeesData -> return employee data
+    employeesByStateAndWork -> return employees for the works order by: first with State, and second with numbers of works asign
     airportData -> return specific airport
     cellsData -> return return specific cell
     nextCell -> find next ID cell
@@ -75,6 +78,8 @@ module.exports = function (app,routes) {
   var scripts = require('./scripts');
   app.post('/scripts/employeesByType',scripts.employeesByType);
   app.post('/scripts/employeesByCell',scripts.employeesByCell);
+  app.post('/scripts/employeesData',scripts.employeesData);
+  app.post('/scripts/employeesByStateAndWork',scripts.employeesByStateAndWork);
   app.post('/scripts/airportData',scripts.airportData);
   app.post('/scripts/cellsData',scripts.cellsData);
   app.post('/scripts/nextCell',scripts.nextCell);

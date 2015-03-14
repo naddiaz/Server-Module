@@ -170,3 +170,42 @@ function employeesByCell(location,name,actual,selected_employees){
   });
   return people;
 }
+
+function employeesData(location,name,id){
+  var data = {
+    location: location,
+    name: name,
+    id_person: id
+  };
+  var person;
+  $.ajax({
+    url:"/scripts/employeesData",
+    async: false,
+    type:"POST",
+    data: data,
+    success:function(data) {
+      person = data; 
+    }
+  });
+  return person;
+}
+
+
+function employeesByStateAndWork(location,name,employees){
+  var data = {
+    location: location,
+    name: name,
+    people: employees
+  }
+  var people;
+  $.ajax({
+    url:"/scripts/employeesByStateAndWork",
+    type:"POST",
+    data: data,
+    async: false,
+    success:function(data){
+      people = data; 
+    }
+  });
+  return people;
+}

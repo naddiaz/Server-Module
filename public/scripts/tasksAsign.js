@@ -30,7 +30,10 @@ $(document).ready(function(){
       n_employees: $('#nEmployees').val(),
       employees: $('#select-employees').val()
     };
-
+    $('input').each(function(){
+      $(this).val('')
+    });
+    $('textarea').val('');
     if(checkDataTask(task)){
       if($('#tasksAsign').val().toString() == 'manual'){
         manualAsign(task);
@@ -39,9 +42,7 @@ $(document).ready(function(){
         autoAsign(task);
       }
     }
-
     return false;
-
   });
 });
 
@@ -98,12 +99,18 @@ function bfsWorks(location,name,id_task,origin,n){
   var selected_employees = [];
 
   while(list.length > 0 && rest > 0){
-    var people = employeesByCell(location,name,list[0],selected_employees);
-    if(people.length > 0){
-      rest -= people.length;
-      for(var i in people){
-        console.log(people[i]._id)
-        selected_employees.push(parseInt(people[i]._id.id_person));
+    var people_cell = employeesByCell(location,name,list[0],selected_employees);
+    if(people_cell.length > 0){
+      var tmp = new Array();
+      for(var i in people_cell){
+        tmp.push(parseInt(people_cell[i]._id.id_person));
+      }
+      var people = employeesByStateAndWork(location,name,tmp);
+      if(people.order.length > 0){
+        rest -= people.order.length;
+        for(var i in people.order){
+          selected_employees.push(people.order[i].employee);
+        }
       }
     }
     var adjacents = adjacentsCells(location,name,list[0]);
@@ -114,10 +121,14 @@ function bfsWorks(location,name,id_task,origin,n){
       }
     }
   }
-  for(var i in selected_employees){
-    makeWork(location,name,id_task,selected_employees[i]);
+  var i = 0;
+  var tmp = new Array();
+  while(i < n){
+    tmp.push(selected_employees[i]);
+    makeWork(location,name,id_task,parseInt(selected_employees[i].id_person));
+    i++;
   }
-  return selected_employees;
+  return tmp;
 }
 
 function employeesByCell(location,name,actual,selected_employees){
