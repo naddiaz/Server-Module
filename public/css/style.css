@@ -251,6 +251,10 @@ table tbody > tr:nth-child(even){
   background-color: rgba(200,200,200,0.4);;
 }
 
+th > i{
+  padding: 0 10px;
+}
+
 
 /* Basic
 =================================================================== */

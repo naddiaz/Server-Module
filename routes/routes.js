@@ -47,15 +47,16 @@ module.exports = function (app,routes) {
   app.post('/tasks/create',tasks.create);
 
 
-  //Routes Tasks
+  //Routes Employees
   /*
-    File: routes/tasks.js
-    tasks.index -> views/tasks.jade
-    tasks.create -> async create new task
+    File: routes/employees.js
+    employees.index -> views/employees.jade
+    employees.list -> async get employees list
   */
 
   var employees = require('./employees');
   app.get('/airport/:location/:name/employees',employees.index);
+  app.post('/employees/list',employees.list);
 
   //Routes Works
   /*

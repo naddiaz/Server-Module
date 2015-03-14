@@ -10,6 +10,7 @@ block scripts
     NAME = "#{name}"
   
   script(src='/scripts/helpers.js')
+  script(src='/scripts/employees.js')
 
 block breadcrumb
   li
@@ -22,7 +23,7 @@ block breadcrumb
     i.fa.fa-angle-right
   li
     i.fa.fa-th-list 
-    | Tareas
+    | Empleados
 
 block menu_options
   include ../partials/menu.jade
@@ -30,65 +31,16 @@ block content
   .row-fluid
     .span12.box
       .box-header
-        | Crear una nueva tarea
+        | Empleados
       .box-content
-        .row-fluid
-          .span4
-            .control-group
-                label.control-label Celda
-                .controls
-                  input#cell(type='text', placeholder="ID celda", disabled)
-                  input#cell_hide.hide(name="cell_hide")
-            .control-group
-              label.control-label(for='tasksType') Categoría
-              .controls
-                select#tasksType(data-rel='chosen')
-                  option(value="null") Seleccionar una opción
-                  - each type in types
-                    option(value="#{type.name}")= type.name.toUpperCase()
-            .control-group
-                label.control-label Número de empleados
-                .controls
-                  input#nEmployees(type='number', placeholder="Número de empleados" min="1" value="1" step="1")
-          .span4
-            .control-group
-                label.control-label Prioridad
-                .controls
-                  p
-                    span.left 
-                      strong Baja
-                    span.right 
-                      strong Alta
-                  input(type="range" name="taskPriority" min="0" max="2" value="0" list="steps")
-                  datalist#steps
-                    option 0
-                    option 1
-                    option 2
-            .control-group
-              label.control-label(for="description") Descripción
-              .controls
-                textarea.no-resize#description(name="task_description" rows="6")
-          .span4
-            .control-group
-              label.control-label(for='tasksAsign') Asignación
-              .controls
-                select#tasksAsign
-                  option(value="automatico") AUTOMÁTICO
-                  option(value="manual") MANUAL
-            #manualAsignGroup
-              .control-group
-                label.control-label(for='manualAsign') Empleados asignados
-                .controls
-                  select#select-employees(name="employees" multiple)
-        .row-fluid
-          .form-actions
-            button.btn.btn-primary#saveTask Guardar
-            button.btn(type="reset") Cancelar
-  .row-fluid
-    .span12
-      .span12.box
-        .box-header
-          | Mapa de selección
-        .box-content
-          #map_canvas
+        table.table.table-bordered.table-responsive
+          thead
+            tr
+              th ID Empleado
+              th Nombre
+                i.fa.fa-info-circle(title="Click en el nombre y Enter para guardar el nuevo valor")
+              th Categoría
+              th Tipo de dispositivo
+          tbody#employee_list
+        
             
