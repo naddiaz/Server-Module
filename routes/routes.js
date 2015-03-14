@@ -53,8 +53,8 @@ module.exports = function (app,routes) {
     File: routes/work.js
   */
 
-  var work = require('./work');
-  app.post('/work/create',work.create);
+  var works = require('./works');
+  app.post('/works/create',works.create);
 
 
   //Routes Scripts
@@ -74,6 +74,7 @@ module.exports = function (app,routes) {
 
   var scripts = require('./scripts');
   app.post('/scripts/employeesByType',scripts.employeesByType);
+  app.post('/scripts/employeesByCell',scripts.employeesByCell);
   app.post('/scripts/airportData',scripts.airportData);
   app.post('/scripts/cellsData',scripts.cellsData);
   app.post('/scripts/nextCell',scripts.nextCell);

@@ -31,11 +31,13 @@ $(document).ready(function(){
       employees: $('#select-employees').val()
     };
 
-    if($('#tasksAsign').val().toString() == 'manual'){
-      manualAsign(task);
-    }
-    else{
-
+    if(checkDataTask(task)){
+      if($('#tasksAsign').val().toString() == 'manual'){
+        manualAsign(task);
+      }
+      else{
+        autoAsign(task);
+      }
     }
 
     return false;
@@ -43,31 +45,53 @@ $(document).ready(function(){
   });
 });
 
+
+function checkDataTask(task){
+  if(task.id_cell == ""){
+    genericErrorAlert('Es necesario seleccionar la celda');
+    return false;
+  }
+  if(task.type == "null"){
+    genericErrorAlert('No se ha definido la categoría');
+    return false;
+  }
+  if(task.n_employees != (task.n_employees|0)){
+    genericErrorAlert('No se puede asignar la tarea a ' + task.n_employees + ', por favor, ponga un número entero (ej: 1,2,3,4,5,...)');
+    return false;
+  }
+  return true;
+}
+
 function manualAsign(task){
+  createTask(task);
+  for(i in task.employees){
+    makeWork(LOCATION,NAME,task.id_task,task.employees[i]);
+  }
+}
+
+function autoAsign(task){
+  createTask(task);
+  var employees = bfsWorks(LOCATION,NAME,task.id_task,task.id_cell,task.n_employees);
+  for(i in employees){
+    genericSuccessAlert('Se ha asignado a: '+employees[i].worker_name+' a esta tarea','work');
+  }
+  if(task.n_employees > employees.length){
+    genericWarningAlert('Faltaron ' + (task.n_employees-employees.length) + " empleados por asignar");
+  }
+}
+
+function createTask(task){
   $.ajax({
     url:"/tasks/create",
     type:"POST",
     data: task,
     success: function(data){
-      $.gritter.add({
-        // (string | mandatory) the heading of the notification
-        title: "Tarea: " + task.id_task,
-        // (string | mandatory) the text inside the notification
-        text: 'Creada correctamente',
-        // (string | optional) the image to display on the left
-        image: false,
-        // (bool | optional) if you want it to fade out on its own or just sit there
-        sticky: false,
-        // (int | optional) the time you want it to be alive for before fading out
-        time: ''
-      });
+      genericSuccessAlert('Se ha creado la tarea correctamente','tasks');
     }
   });
-  for(i in task.employees){
-    makeWork(location,name,task.id_task,task.employees[i]);
-  }
 }
-function bfs_works(location,name,id_task,origin,n){
+
+function bfsWorks(location,name,id_task,origin,n){
   var rest = n;
   var list = [origin];
   var visit = [];
@@ -76,9 +100,9 @@ function bfs_works(location,name,id_task,origin,n){
   while(list.length > 0 && rest > 0){
     var people = employeesByCell(location,name,list[0],selected_employees);
     if(people.length > 0){
-      console.log(people[0]._id)
       rest -= people.length;
       for(var i in people){
+        console.log(people[i]._id)
         selected_employees.push(parseInt(people[i]._id.id_person));
       }
     }
@@ -93,7 +117,7 @@ function bfs_works(location,name,id_task,origin,n){
   for(var i in selected_employees){
     makeWork(location,name,id_task,selected_employees[i]);
   }
-  return rest;
+  return selected_employees;
 }
 
 function employeesByCell(location,name,actual,selected_employees){
@@ -127,8 +151,44 @@ function makeWork(location,name,id_task,id_person){
     id_person: id_person
   }
   $.ajax({
-    url:"/work/create",
+    url:"/works/create",
     type:"POST",
-    data: data
+    data: data,
+    success:function(data){
+    }
   });
+}
+
+
+function genericErrorAlert(textError){
+  $.gritter.add({
+    title: 'Error',
+    text: '<h4>'+textError+'</h4>',
+    image: '/img/error.png',
+    sticky: false,
+    time: '',
+    class_name: 'gritter-alert-error'
+  });
+}
+
+function genericWarningAlert(textError){
+  $.gritter.add({
+    title: 'Error',
+    text: '<h4>'+textError+'</h4>',
+    image: '/img/error.png',
+    sticky: false,
+    time: '',
+    class_name: 'gritter-alert-warning'
+  });
+}
+
+function genericSuccessAlert(textAlert,icon){
+  $.gritter.add({
+    title: "Completado",
+    text: '<h4>'+textAlert+'</h4>',
+    image: '/img/'+icon+'.png',
+    sticky: false,
+    time: '',
+    class_name: 'gritter-alert-success'
+    });
 }

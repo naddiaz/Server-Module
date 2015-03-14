@@ -9,7 +9,7 @@ block scripts
     LOCATION = "#{location}"
     NAME = "#{name}"
   
-  script(src='/maps/helpers.map.js')
+  script(src='/scripts/helpers.js')
   script(src='/maps/base.map.js')
   script(src='/js/jquery.multi-select.js')
   script(src='/scripts/employeesByType.js')
@@ -42,11 +42,12 @@ block content
                 label.control-label Celda
                 .controls
                   input#cell(type='text', placeholder="ID celda", disabled)
-                  input#cell_hide.hide(name="id_cell_hide")
+                  input#cell_hide.hide(name="cell_hide")
             .control-group
               label.control-label(for='tasksType') Categoría
               .controls
                 select#tasksType(data-rel='chosen')
+                  option(value="null") Seleccionar una opción
                   - each type in types
                     option(value="#{type.name}")= type.name.toUpperCase()
             .control-group

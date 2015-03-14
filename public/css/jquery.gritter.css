@@ -32,8 +32,6 @@
 }
 
 .gritter-item {
-	background-color: rgba(0,0,0,0.8);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cc000000', endColorstr='#cc000000',GradientType=0 ); /* IE6-8 */
 	color:#fff;
 	padding:15px;
 	font-size: 11px;
@@ -109,4 +107,17 @@
 .gritter-light .gritter-title {
 	color: #646464 !important;
     text-shadow: none !important;
+}
+
+.gritter-alert-error{
+  background-color: #f44336 !important;
+}
+
+
+.gritter-alert-success{
+  background-color: #009688 !important;
+}
+
+.gritter-alert-warning{
+  background-color: #ff9800 !important;
 }

@@ -7,11 +7,46 @@ var Cell     = Mongoose.model( 'Cell' );
 var Task     = Mongoose.model( 'Task' );
 var Distance     = Mongoose.model( 'Distance' );
 var Work     = Mongoose.model( 'Work' );
+var Localization     = Mongoose.model( 'Localization' );
 
 exports.employeesByType =  function(req, res){
   Airport.findOne({location: req.body.location, name: req.body.name }).exec(function(err, airport){
     Person.find({id_airport: airport.id_airport, worker_type: req.body.type}).exec(function(err, people){
       res.send(people);
+    });
+  });
+};
+
+exports.employeesByCell =  function(req, res){
+  Airport.findOne({location: req.body.location, name: req.body.name }).select('id_airport').exec(function(err, airport){
+    var rules = [
+      {id_airport: airport.id_airport},
+      {id_beacon: parseInt(req.body.id_cell)},
+      {id_person: {$nin: JSON.parse(req.body.ids_people)}},
+      {date: {$gte: new Date(req.body.last_minute)}}
+    ]
+    Localization.aggregate([
+      {$match:
+        {
+          $and: rules
+        }
+      },
+      {
+        $sort:
+          {
+            date: -1
+          }
+      },
+      {
+        $group:
+          {
+            _id: {id_person : "$id_person"},
+            lastDate: { $last: "$date" }
+          }
+      }
+    ], function(err, people){
+      console.log(people)
+      res.send(people)
     });
   });
 };

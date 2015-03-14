@@ -116,7 +116,7 @@ function bfs_works(location,name,id_task,origin,n){
   var selected_employees = [];
 
   while(list.length > 0 && rest > 0){
-    var people = get_employees_by_cell(location,name,list[0],selected_employees);
+    var people = employeesByCell(location,name,list[0],selected_employees);
     if(people.length > 0){
       console.log(people[0]._id)
       rest -= people.length;
@@ -138,7 +138,7 @@ function bfs_works(location,name,id_task,origin,n){
   return rest;
 }
 
-function get_employees_by_cell(location,name,actual,selected_employees){
+function employeesByCell(location,name,actual,selected_employees){
   var last_minute = new Date();
   last_minute.setMinutes(last_minute.getMinutes()-1);
   var data = {

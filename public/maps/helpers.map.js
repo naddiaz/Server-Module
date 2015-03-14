@@ -147,3 +147,26 @@ function adjacentsCells(location,name,actual){
   });
   return cells;
 }
+
+function employeesByCell(location,name,actual,selected_employees){
+  var last_minute = new Date();
+  last_minute.setMinutes(last_minute.getMinutes()-1);
+  var data = {
+    location: location,
+    name: name,
+    id_cell: actual,
+    ids_people: JSON.stringify(selected_employees),
+    last_minute: last_minute
+  };
+  var people;
+  $.ajax({
+    url:"/scripts/employeesByCell",
+    async: false,
+    type:"POST",
+    data: data,
+    success:function(data) {
+      people = data; 
+    }
+  });
+  return people;
+}
