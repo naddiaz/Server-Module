@@ -69,7 +69,7 @@ function deleteCell(location,name,cell){
   var data = {
     location: location,
     name: name,
-    cell: cell
+    id_cell: cell.id_cell
   }
   $.ajax({
     url:"/scripts/deleteCell",
@@ -95,7 +95,7 @@ function makeGraph(location,name,radius){
               cell_end: cells[j].id_cell,
               distance: distance
             }
-            createGraphCell(location,name,cell);
+            createGraph(location,name,cell);
           }
         }
       }
@@ -115,14 +115,14 @@ function clearGraph(location, name){
   });
 }
 
-function createGraphCell(location, name, cell){
+function createGraph(location, name, cell){
   var data = {
     location: location,
     name: name,
     cell: cell
   }
   $.ajax({
-    url:"/scripts/clearGraph",
+    url:"/scripts/createGraph",
     data: data,
     type:"POST"
   });

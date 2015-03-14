@@ -68,9 +68,11 @@ function initialize() {
   $('#sw_editmode').change(function(){
     if($(this).is(':checked')){
       edit_state = true;
+      $('#map_edit_state').html('Se ha activado la edición');
     }
     else if(edit_state){
       edit_state = false;
+      $('#map_edit_state').html('La edición no está activada');
       makeGraph(LOCATION,NAME,RADIUS);
     }
   });
@@ -134,22 +136,23 @@ function makeBeaconCircle(map,cell){
 }
 
 function confirmDelete(cell_map,label,location,name,id) {
-  $( "#dialog-confirm-cell > p" ).html("¿Desea eliminar la celda <b>" + id + "</b>?");
-  $( "#dialog-confirm-cell" ).dialog({
-    resizable: false,
-    height:180,
-    modal: true,
-    buttons: {
-      Eliminar: function() {
-        $( this ).dialog( "close" );
-        deleteCell(LOCATION,NAME,{id_cell: id});
-        cell_map.setMap(null);
-        label.setVisible(false);
-      },
-      Cancelar: function() {
-        $( this ).dialog( "close" );
-      }
-    }
+
+  var id = $.gritter.add({
+    title: "Confirmación",
+    text: "<h3>¿Desea eliminar la celda <b>" + id + "</b>?</h3><button id=\"removeCell\" class=\"btn btn-danger\">Eliminar<span id=\""+id+"\"></span></button><button id=\"cancelremoveCell\" class=\"btn btn-primary\">Cancelar</button>",
+    sticky: true,
+    class_name: 'gritter-alert-warning'
+  });
+
+  $('#removeCell').click(function(){
+    var idCell = $(this).find('span').attr('id');
+    deleteCell(LOCATION,NAME,{id_cell: idCell});
+    cell_map.setMap(null);
+    label.setVisible(false);
+    $.gritter.removeAll();
+  });
+  $('#cancelremoveCell').click(function(){
+    $.gritter.removeAll();
   });
 }
 

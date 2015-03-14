@@ -56,6 +56,16 @@ module.exports = function (app,routes) {
   var works = require('./works');
   app.post('/works/create',works.create);
 
+  //Routes Map
+  /*
+    File: routes/map.js
+    tasks.index -> views/map.jade
+  */
+
+  var map = require('./map');
+  app.get('/airport/:location/:name/map',map.index);
+
+
 
   //Routes Scripts
   /*
@@ -86,6 +96,6 @@ module.exports = function (app,routes) {
   app.post('/scripts/setCell',scripts.setCell);
   app.post('/scripts/deleteCell',scripts.deleteCell);
   app.post('/scripts/clearGraph',scripts.clearGraph);
-  app.post('/scripts/setCellGraph',scripts.setCellGraph);
+  app.post('/scripts/createGraph',scripts.createGraph);
   app.post('/scripts/adjacentsCells',scripts.adjacentsCells);
 };

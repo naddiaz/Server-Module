@@ -39,4 +39,4 @@
   pointer-events: none;
 }
 
-#map_canvas { height: 600px; }
+#map_canvas { min-height: 600px; height: 80vh; }

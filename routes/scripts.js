@@ -121,7 +121,7 @@ exports.cellsData =  function(req, res){
 exports.nextCell =  function(req, res){
   Airport.findOne({location: req.body.location, name: req.body.name }).select('id_airport').exec(function(err, airport){
     Cell.findOne({id_airport: airport.id_airport}).sort({ field: 'asc', id_cell: -1 }).exec(function(err, last) {
-      if(last == null)
+      if(last.id_cell == null)
         res.send({id_cell: 0});
       else
         res.send({id_cell:last.id_cell+1});
@@ -133,10 +133,10 @@ exports.setCell =  function(req, res){
   Airport.findOne({location: req.body.location, name: req.body.name }).select('id_airport').exec(function(err, airport){
     new Cell({
       id_airport: airport.id_airport,
-      id_cell: req.body.id_cell,
-      latitude: req.body.latitude,
-      longitude: req.body.longitude,
-      color: req.body.color
+      id_cell: req.body.cell.id_cell,
+      latitude: req.body.cell.latitude,
+      longitude: req.body.cell.longitude,
+      color: req.body.cell.color
     }).save( function( err, todo, count ){
       res.send({status: true});
     });
@@ -145,27 +145,27 @@ exports.setCell =  function(req, res){
 
 exports.deleteCell =  function(req, res){
   Airport.findOne({location: req.body.location, name: req.body.name }).select('id_airport').exec(function(err, airport){
-    Cell.remove({id_airport: airport.id_airport, id_cell: req.body.id_cell}, function(){
+    Cell.remove({id_airport: airport.id_airport, id_cell: req.body.id_cell}, function(err,cell){
       res.send({status: true});
     });
   });
 };
 
 exports.clearGraph = function(req, res){
-  Airport.findOne({location: req.params.location, name: req.params.name }).select('id_airport').exec(function(err, airport){
+  Airport.findOne({location: req.body.location, name: req.body.name }).select('id_airport').exec(function(err, airport){
     Distance.remove({id_airport: airport.id_airport},function(err){
       res.send({status: true});
     });
   });
 };
 
-exports.setCellGraph =  function(req, res){
+exports.createGraph =  function(req, res){
   Airport.findOne({location: req.body.location, name: req.body.name }).select('id_airport').exec(function(err, airport){
     new Distance({
       id_airport: airport.id_airport,
-      cell_origin: req.body.cell_origin,
-      cell_end: req.body.cell_end,
-      distance: req.body.distance
+      cell_origin: req.body.cell.cell_origin,
+      cell_end: req.body.cell.cell_end,
+      distance: req.body.cell.distance
     }).save( function( err, todo, count ){
       res.send({status: true});
     });
