@@ -25,17 +25,21 @@ module.exports = function (app,routes) {
   /*
     File: routes/airport.js
     airport.index -> views/airport.jade
+    airport.tasksStates -> async get tasks
+    airport.worksStates -> async get works
   */
 
   var airport = require('./airports');
   app.get('/airport/:location/:name',airport.index);
   app.post('/airport/tasksStates',airport.tasksStates);
   app.post('/airport/worksStates',airport.worksStates);
+  app.post('/airport/employeesStates',airport.employeesStates);
 
   //Routes Tasks
   /*
     File: routes/tasks.js
     tasks.index -> views/tasks.jade
+    tasks.create -> async create new task
   */
 
   var tasks = require('./tasks');
@@ -58,6 +62,14 @@ module.exports = function (app,routes) {
     File: routes/scripts.js
     Only can access by POST method
     employeesByType -> return employees filtering by specific param type
+    airportData -> return specific airport
+    cellsData -> return return specific cell
+    nextCell -> find next ID cell
+    setCell -> set data to cell
+    deleteCell -> remove specific cell
+    clearGraph -> clear all graph data
+    setCellGraph -> set new cell into graph
+    adjacentsCells -> return adjacents cell to a specific cell
   */
 
   var scripts = require('./scripts');

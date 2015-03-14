@@ -7,69 +7,15 @@ var Airport     = Mongoose.model( 'Airport' );
 var Work = Mongoose.model('Work');
 
 exports.index =  function(req, res){
-  Airport.findOne({location: req.params.location, name: req.params.name }).select('id_airport').exec(function(err, airport){
-    var Tasks = Task.find({id_airport: airport.id_airport}).sort({id_task: -1});
-    var People = Person.find({id_airport: airport.id_airport});
-    var Works = Work.find({id_airport: airport.id_airport}).populate('person task');
-    var Airports = Airport.find({});
-    var data = {
-      tasks: Tasks.exec.bind(Tasks),
-      people: People.exec.bind(People),
-      works: Works.exec.bind(Works),
-      airports: Airports.exec.bind(Airports)
-    };
-    async.parallel(data,function(err,results){
-      
-      /*
-        Categorización de los empleados:
-          - Desocupado: si no tiene trabajos asociados.
-          - Activo: si está ejecutando algún trabajo.
-          - Pendiente: si tiene trabajos asignados pero no los ha empezado a realizar.
-        Orden de restricción:
-          - Activo > Pendiente > Desocupado
-      */
-      var employee = new Array();
-      for(var i=0; i<results.people.length; i++){
-        var active = false;
-        var pending = false;
-        for(var j=0; j<results.works.length; j++){
-          //Si ha encontrado un trabajo para esta persona
-          if(results.works[j].id_person == results.people[i].id_person){
-            //Si el estado es activo, deja de buscar y asigna activo al estado de esta persona
-            if(results.works[j].state.toString() == 'running'){
-              active = true;
-              results.people[i].state = "ACTIVO";
-              employee.push(results.people[i]);
-            }
-            //Si tiene alguno asignado lo ponemos en pending, porque puede que tenga alguno activo y según la prioridad, estaría como activo.
-            else if(results.works[j].state.toString() == 'asign'){
-              pending = true;
-            }
-          }
-        }
-        if(pending && !active){
-          results.people[i].state = "ESPERA";
-          employee.push(results.people[i]);
-        }
-        else if(!active){
-          results.people[i].state = "DESOCUPADO";
-          employee.push(results.people[i]);
-        }
-      }
-      //console.log(employee)
-
-      res.render(
-        'airport',
-        {
-          location: req.params.location,
-          name: req.params.name,
-          people: employee,
-          airports: results.airports
-        }
-      );
+  Airport.find({}).exec(function(err,airports){
+    res.render('airport',{
+        location: req.params.location,
+        name: req.params.name,
+        airports: airports
     });
-  });
+  })
 };
+      
 
 
 exports.tasksStates =  function(req, res){
@@ -133,7 +79,6 @@ exports.tasksStates =  function(req, res){
   });
 };
 
-
 exports.worksStates =  function(req, res){
   Airport.findOne({location: req.body.location, name: req.body.name }).select('id_airport').exec(function(err, airport){
     Work.find({id_airport: airport.id_airport}).populate('person task').exec(function(err,works){
@@ -155,14 +100,61 @@ exports.worksStates =  function(req, res){
           works_stop.push(works[j]);
       }
 
-      res.send(
-        {
-          works_complete: works_complete,
-          works_active: works_active,
-          works_pending: works_pending,
-          works_stop: works_stop
+      res.send({
+        works_complete: works_complete,
+        works_active: works_active,
+        works_pending: works_pending,
+        works_stop: works_stop
+      });
+    });
+  });
+};
+
+exports.employeesStates =  function(req, res){
+  Airport.findOne({location: req.body.location, name: req.body.name }).select('id_airport').exec(function(err, airport){
+    var People = Person.find({id_airport: airport.id_airport});
+    var Works = Work.find({id_airport: airport.id_airport}).populate('person task');
+    var data = {
+      people: People.exec.bind(People),
+      works: Works.exec.bind(Works)
+    };
+    async.parallel(data,function(err,results){
+      /*
+        Categorización de los empleados:
+          - Desocupado: si no tiene trabajos asociados.
+          - Activo: si está ejecutando algún trabajo.
+          - Pendiente: si tiene trabajos asignados pero no los ha empezado a realizar.
+        Orden de restricción:
+          - Activo > Pendiente > Desocupado
+      */
+      var employee = new Array();
+      for(var i=0; i<results.people.length; i++){
+        var active = false;
+        var pending = false;
+        for(var j=0; j<results.works.length; j++){
+          //Si ha encontrado un trabajo para esta persona
+          if(results.works[j].id_person == results.people[i].id_person){
+            //Si el estado es activo, deja de buscar y asigna activo al estado de esta persona
+            if(results.works[j].state.toString() == 'running'){
+              active = true;
+              employee.push({'data':results.people[i],'state':"ACTIVO"});
+            }
+            //Si tiene alguno asignado lo ponemos en pending, porque puede que tenga alguno activo y según la prioridad, estaría como activo.
+            else if(results.works[j].state.toString() == 'asign'){
+              pending = true;
+            }
+          }
         }
-      );
+        if(pending && !active){
+          employee.push({'data':results.people[i],'state':"ESPERA"});
+        }
+        else if(!active){
+          employee.push({'data':results.people[i],'state':"DESOCUPADO"});
+        }
+      }
+      res.send({
+        people: employee
+      });
     });
   });
 };

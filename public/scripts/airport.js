@@ -1,6 +1,7 @@
 $(document).ready(function(){
   tasksStates();
   worksStates();
+  employeesStates();
 });
 
 function tasksStates(){
@@ -69,4 +70,24 @@ function getDateFormatter(str_date){
   var date = new Date(str_date);
   var months = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
   return "<strong>" + date.getHours() + ":" + date.getMinutes() + "</strong> -- <span>" + date.getDay() + " de " + months[date.getMonth()] + " de " + date.getFullYear() +"</span>";
+}
+
+function employeesStates(){
+  var data = {
+    location: LOCATION,
+    name: NAME
+  }
+  $.ajax({
+    url:"/airport/employeesStates",
+    type:"POST",
+    data: data,
+    success:function(data) {
+      var employees_state = $('#employees_state');
+      for(i in data.people){
+        var people = data.people[i];
+        var html = "<tr><td>"+people.data.worker_id+"</td><td>"+people.data.worker_name+"</td><td>"+people.data.worker_type+"</td><td class=\"" + people.state + "\">"+people.state+"</td>";
+        employees_state.append(html);
+      }
+    }
+  });
 }

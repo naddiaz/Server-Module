@@ -126,10 +126,4 @@ block content
               th Nombre
               th Categoría
               th Estado Actual
-          tbody
-            -each person in people
-              tr
-                td= person.worker_id
-                td= person.worker_name
-                td= person.worker_type
-                td(class="#{person.state}")= person.state
+          tbody#employees_state
