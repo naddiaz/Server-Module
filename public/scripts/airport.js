@@ -68,8 +68,7 @@ function worksStates(){
 
 function getDateFormatter(str_date){
   var date = new Date(str_date);
-  var months = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-  return "<strong>" + date.getHours() + ":" + date.getMinutes() + "</strong> -- <span>" + date.getDay() + " de " + months[date.getMonth()] + " de " + date.getFullYear() +"</span>";
+  return "<strong>" + date.toLocaleTimeString() + "</strong> -- <span>" + date.toLocaleDateString() +"</span>";
 }
 
 function employeesStates(){

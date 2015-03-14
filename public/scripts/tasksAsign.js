@@ -22,7 +22,7 @@ $(document).ready(function(){
     var task = {
       location: LOCATION,
       name: NAME,
-      id_task: "T-" + $('#tasksType').val().toString().substring(0,3).toUpperCase() + "-" + Math.floor(Date.now() / 100),
+      id_task: "T-" + $('#tasksType').val().toString().substring(0,3).toUpperCase() + "-" + Math.floor(Date.now() / 1000),
       id_cell: $('input[name="cell_hide"]').val(),
       type: $('#tasksType').val(),
       priority: $('input[name="taskPriority"]').val(),

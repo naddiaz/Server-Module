@@ -238,6 +238,20 @@
 .box > .box-content > ul > li{
   color: #000;
 }
+
+.table-responsive{
+  width: 100%;
+  overflow: auto !important;
+  border: none !important;
+}
+table tbody > tr:nth-child(odd){
+  background-color: rgba(120,120,120,0.4);
+}
+table tbody > tr:nth-child(even){
+  background-color: rgba(200,200,200,0.4);;
+}
+
+
 /* Basic
 =================================================================== */
 
@@ -3039,4 +3053,10 @@ ul.messagesList li span.date {
 }
 .navbar .brand{
 	font-size: 35px;
+}
+
+@media(max-width: 1450px){
+  .table-responsive{
+  display: block;
+  }
 }
