@@ -21,11 +21,30 @@ function tasksStates(){
       for(i in data.tasks_nonasign){
         var task = data.tasks_nonasign[i];
         var html = "<tr><td>"+task.task.id_task+"</td><td>"+task.pending+" / <strong>"+task.task.n_employees+"</strong></td><td>"+task.task.type+"</td><td>"+task.task.priority+"</td><td>"+task.task.description+"</td>";
-        var refresh_button = "<td><button id=refresh_\""+task.task.id_task+"\" class\"btn\" title=\"Reintentar la asignación\"><i class=\"fa fa-refresh\"></button></td></tr>";
+        var refresh_button = "<td><button id=refresh_"+task.task.id_task+" class\"btn\" title=\"Reintentar la asignación\"><i class=\"fa fa-refresh\"></button></td></tr>";
         tasks_nonasign.append(html+refresh_button);
+        reasign(task.task.id_task,task.pending,task.task.id_cell);
       }
     }
   });
+}
+
+function clearTasks(){
+  $('#tasks_active').html('');
+  $('#tasks_pending').html('');
+  $('#tasks_complete').html('');
+  $('#tasks_nonasign').html('');
+}
+
+function clearWorks(){
+  $('#works_active').html('');
+  $('#works_complete').html('');
+  $('#works_pending').html('');
+  $('#works_stop').html('');
+}
+
+function clearEmployees(){
+  $('#employees_state').html('');
 }
 
 function worksStates(){
@@ -84,9 +103,27 @@ function employeesStates(){
       var employees_state = $('#employees_state');
       for(i in data.people){
         var people = data.people[i];
-        var html = "<tr><td>"+people.data.worker_id+"</td><td>"+people.data.worker_name+"</td><td>"+people.data.worker_type+"</td><td class=\"" + people.state + "\">"+people.state+"</td>";
+        var html = "<tr><td employee-id=\""+people.data.id_person+"\">"+people.data.id_person+"</td><td>"+people.data.worker_name+"</td><td>"+people.data.worker_type+"</td><td class=\"" + people.state + "\">"+people.state+"</td>";
         employees_state.append(html);
       }
     }
+  });
+}
+
+function reasign(id,pending,cell){
+  $('#refresh_'+id).click(function(){
+    var employees = bfsWorks(LOCATION,NAME,id,cell,pending);
+    for(i in employees){
+      genericSuccessAlert('Se ha asignado a: '+employees[i].worker_name+' a esta tarea','work');
+    }
+    if(pending > employees.length){
+      genericWarningAlert('Faltaron ' + (pending-employees.length) + " empleados por asignar");
+    }
+    clearTasks();
+    clearWorks();
+    clearEmployees();
+    tasksStates();
+    worksStates();
+    employeesStates();
   });
 }

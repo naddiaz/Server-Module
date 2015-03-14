@@ -20,7 +20,7 @@ $(document).ready(function(){
     var task = {
       location: LOCATION,
       name: NAME,
-      id_task: "T-" + $('#tasksType').val().toString().substring(0,3).toUpperCase() + "-" + getNextTaskID(LOCATION,NAME),
+      id_task: "T-" + $('#tasksType').val().toString().substring(0,3).toUpperCase() + "-" + getNextTaskID(LOCATION,NAME) + '-' + Math.floor(Date.now() / 1000),
       id_cell: $('input[name="cell_hide"]').val(),
       type: $('#tasksType').val(),
       priority: $('input[name="taskPriority"]').val(),
@@ -103,7 +103,7 @@ function bfsWorks(location,name,id_task,origin,n){
       for(var i in people_cell){
         tmp.push(parseInt(people_cell[i]._id.id_person));
       }
-      var people = employeesByStateAndWork(location,name,tmp);
+      var people = employeesByStateAndWork(location,name,tmp,id_task);
       if(people.order.length > 0){
         rest -= people.order.length;
         for(var i in people.order){
@@ -120,56 +120,17 @@ function bfsWorks(location,name,id_task,origin,n){
     }
   }
   var tmp = new Array();
-  if(rest != n){
+  if(rest < n){
     var i = 0;
-    while(i < n){
+    while(i < n-rest){
       tmp.push(selected_employees[i]);
+      console.log(selected_employees[i])
       makeWork(location,name,id_task,parseInt(selected_employees[i].id_person));
       i++;
     }
   }
   return tmp;
 }
-
-function employeesByCell(location,name,actual,selected_employees){
-  var last_minute = new Date();
-  last_minute.setMinutes(last_minute.getMinutes()-1);
-  var data = {
-    location: location,
-    name: name,
-    id_cell: actual,
-    ids_people: JSON.stringify(selected_employees),
-    last_minute: last_minute
-  };
-  var people;
-  $.ajax({
-    url:"/scripts/employeesByCell",
-    async: false,
-    type:"POST",
-    data: data,
-    success:function(data) {
-      people = data; 
-    }
-  });
-  return people;
-}
-
-function makeWork(location,name,id_task,id_person){
-  var data = {
-    location: location,
-    name: name,
-    id_task: id_task,
-    id_person: id_person
-  }
-  $.ajax({
-    url:"/works/create",
-    type:"POST",
-    data: data,
-    success:function(data){
-    }
-  });
-}
-
 
 function genericErrorAlert(textError){
   $.gritter.add({
@@ -184,7 +145,7 @@ function genericErrorAlert(textError){
 
 function genericWarningAlert(textError){
   $.gritter.add({
-    title: 'Error',
+    title: 'Alerta',
     text: '<h4>'+textError+'</h4>',
     image: '/img/error.png',
     sticky: false,

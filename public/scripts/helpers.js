@@ -227,11 +227,12 @@ function employeesData(location,name,id){
 }
 
 
-function employeesByStateAndWork(location,name,employees){
+function employeesByStateAndWork(location,name,employees,id_task){
   var data = {
     location: location,
     name: name,
-    people: employees
+    people: employees,
+    id_task: id_task
   }
   var people;
   $.ajax({
@@ -244,4 +245,20 @@ function employeesByStateAndWork(location,name,employees){
     }
   });
   return people;
+}
+
+function makeWork(location,name,id_task,id_person){
+  var data = {
+    location: location,
+    name: name,
+    id_task: id_task,
+    id_person: id_person
+  }
+  $.ajax({
+    url:"/works/create",
+    type:"POST",
+    data: data,
+    success:function(data){
+    }
+  });
 }

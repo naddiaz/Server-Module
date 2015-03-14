@@ -72,17 +72,23 @@ exports.employeesByStateAndWork =  function(req, res){
       for(var i=0; i<results.people.length; i++){
         var active = false;
         var count_works = 0;
+        var is_asign = false;
         for(var j=0; j<results.works.length; j++){
           if(results.works[j].id_person == results.people[i].id_person){
+            if(results.works[j].id_task == req.body.id_task){
+              is_asign = true;
+            }
             active = true;
             count_works++;
           }
         }
-        if(!active){
-          order_asign.unshift({"works":0,"employee":results.people[i]});
-        }
-        else{
-          order_asign.unshift({"works":count_works,"employee":results.people[i]});
+        if(!is_asign){
+          if(!active){
+            order_asign.unshift({"works":0,"employee":results.people[i]});
+          }
+          else{
+            order_asign.unshift({"works":count_works,"employee":results.people[i]});
+          }
         }
       }
       order_asign.sort(orderByWorksAsign);
