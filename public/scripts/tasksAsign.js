@@ -17,12 +17,10 @@ $(document).ready(function(){
   });
 
   $('#saveTask').click(function(){
-
-
     var task = {
       location: LOCATION,
       name: NAME,
-      id_task: "T-" + $('#tasksType').val().toString().substring(0,3).toUpperCase() + "-" + Math.floor(Date.now() / 1000),
+      id_task: "T-" + $('#tasksType').val().toString().substring(0,3).toUpperCase() + "-" + getNextTaskID(LOCATION,NAME),
       id_cell: $('input[name="cell_hide"]').val(),
       type: $('#tasksType').val(),
       priority: $('input[name="taskPriority"]').val(),
@@ -121,12 +119,14 @@ function bfsWorks(location,name,id_task,origin,n){
       }
     }
   }
-  var i = 0;
   var tmp = new Array();
-  while(i < n){
-    tmp.push(selected_employees[i]);
-    makeWork(location,name,id_task,parseInt(selected_employees[i].id_person));
-    i++;
+  if(rest != n){
+    var i = 0;
+    while(i < n){
+      tmp.push(selected_employees[i]);
+      makeWork(location,name,id_task,parseInt(selected_employees[i].id_person));
+      i++;
+    }
   }
   return tmp;
 }

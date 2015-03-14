@@ -32,7 +32,6 @@ var Person = new Schema({
   id_person: Number,
   id_push: Number,
   worker_name: String,
-  worker_id: Number,
   worker_type: String,
   device_type: {type: String, default: 'ANDROID'}
 });

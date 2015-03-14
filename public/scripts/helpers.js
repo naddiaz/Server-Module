@@ -52,6 +52,42 @@ function getNextCellID(location,name){
   return id;
 }
 
+function getNextTaskID(location,name){
+  var id;
+  var data = {
+    location: location,
+    name: name
+  }
+  $.ajax({
+    url:"/scripts/nextTask",
+    data: data,
+    async: false,
+    type:"POST",
+    success:function(data) {
+      id = data.id_task;
+    }
+  });
+  return id;
+}
+
+function getNextEmployeeID(location,name){
+  var id;
+  var data = {
+    location: location,
+    name: name
+  }
+  $.ajax({
+    url:"/scripts/nextEmployee",
+    data: data,
+    async: false,
+    type:"POST",
+    success:function(data) {
+      id = data.id_person;
+    }
+  });
+  return id;
+}
+
 function setCell(location,name,cell){
   var data = {
     location: location,
