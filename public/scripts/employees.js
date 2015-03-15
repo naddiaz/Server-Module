@@ -83,8 +83,6 @@ function listCategories(self,actual){
     type:"POST",
     data: data,
     success: function(data){
-      console.log(data)
-      console.log(self)
       var input = "<select>";
       input += "<optgroup label=\"ACTUAL\"><option value=\""+actual+"\">"+actual+"</option></optgroup>";
       input += "<optgroup label=\"DISPONIBLES\">";
@@ -93,6 +91,8 @@ function listCategories(self,actual){
       }
       input += "</optgroup></select>";
       self.html(input);
+      self.children().focus();
+      self.children().attr('size',data.categories.length+5);
       self.children().change(function(){
         if($(this).val() != actual){
           updateEmployeeType($(this).parent().parent().attr('id'),actual,$(this).val().toUpperCase());
