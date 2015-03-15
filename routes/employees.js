@@ -8,7 +8,7 @@ var Work = Mongoose.model('Work');
 var Type = Mongoose.model('Type');
 
 exports.index =  function(req, res){
-  Airport.find({location: req.params.location, name: req.params.name }).exec(function(err, airports){
+  Airport.find({}).exec(function(err, airports){
     res.render('employees',
     {
       location: req.params.location,
