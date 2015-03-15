@@ -53,3 +53,19 @@ exports.updateType =  function(req, res){
     });
   });
 };
+
+exports.create =  function(req, res){
+  Airport.findOne({location: req.body.location, name: req.body.name }).select('id_airport').exec(function(err, airport){
+    new Person({
+      id_airport: airport.id_airport,
+      id_person: req.body.id_person,
+      worker_name: req.body.worker_name,
+      worker_type: req.body.worker_type,
+      worker_device: req.body.worker_device
+    }).save( function( err ){
+      if(err)
+        res.send(err);
+      res.send({status: true});
+    });
+  });
+};

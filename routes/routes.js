@@ -57,6 +57,7 @@ module.exports = function (app,routes) {
   var employees = require('./employees');
   app.get('/airport/:location/:name/employees',employees.index);
   app.post('/employees/list',employees.list);
+  app.post('/employees/create',employees.create);
   app.post('/employees/update/name',employees.updateName);
   app.post('/employees/update/type',employees.updateType);
 

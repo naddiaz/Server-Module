@@ -29,7 +29,7 @@ Distance.index({id_airport: 1, cell_origin: 1, cell_end: 1}, {unique: true});
 
 var Person = new Schema({
   id_airport: Number,
-  id_person: Number,
+  id_person: String,
   id_push: Number,
   worker_name: String,
   worker_type: String,
@@ -39,7 +39,7 @@ Person.index({id_airport: 1, id_person: 1}, {unique: true});
 
 var Localization = new Schema({
   id_airport: Number,
-  id_person: Number,
+  id_person: String,
   id_beacon: Number,
   date: Date
 });
@@ -70,7 +70,7 @@ Type.index({id_airport: 1, name: 1}, {unique: true});
 
 var Work = new Schema({
   id_airport: Number,
-  id_person: Number,
+  id_person: String,
   id_task: String,
   state: {type: String, enum: ["no_asign", "asign", "running", "finish", "pause", "cancel"]},
   created_at: Date,

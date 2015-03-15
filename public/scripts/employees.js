@@ -20,6 +20,7 @@ function employeesList(){
         editName(id);
         editCategory(id);
       }
+      list.prepend(editFields());
     }
   });
 }
@@ -125,4 +126,91 @@ function updateEmployeeType(id,typeOld, typeNew){
         genericErrorAlert('Ha habido un error al cambiar la categoría, por favor, inténtelo de nuevo.');
     }
   });
+}
+
+function editFields(){
+  var new_id = nextEmployeeID();
+  var tr_beign = "<tr>";
+  var tr_end = "</td>";
+  var td_input_id = "<td><input id=\"ed_"+new_id+"\" type=\"text\" name=\"newEmployeeID\" value=\""+new_id+"\" disabled></td>";
+  var td_input_name = "<td><input type=\"text\" name=\"newEmployeeName\" placeholder=\"NOMBRE\"></td>";
+  var td_input_type = "<td id=\"selectCategories\"></td>";
+  var td_input_device = "<td><input type=\"text\" name=\"newEmployeeDevice\" value=\"ANDROID\" disabled></td>";
+  var td_buttons = "<td><button onclick=\"saveEmployee("+new_id+")\" class=\"btn btn-primary\" title=\"Registrar empleado\"><i class=\"fa fa-save\"></button></td>";
+  listCategoriesEdit(new_id);
+  return (tr_beign+td_input_id+td_input_name+td_input_type+td_input_device+td_buttons+tr_end);
+}
+
+function listCategoriesEdit(id){
+  var data ={
+    location: LOCATION,
+    name: NAME
+  };
+  $.ajax({
+    url:"/categories/list",
+    type:"POST",
+    data: data,
+    success: function(data){
+      var input = "<select name=\"newEmployeeType\"><optgroup label=\"DISPONIBLES\">";
+      for(i in data.categories){
+        input += "<option value=\""+data.categories[i].name.toUpperCase()+"\">"+data.categories[i].name.toUpperCase()+"</option>"
+      }
+      input += "</optgroup></select>";
+      $('#selectCategories').html(input);
+      $('#ed_'+id).val("E-"+$('#selectCategories').children().val().substring(0,3).toUpperCase()+"-"+id);
+      $('#selectCategories').children().change(function(){
+        $('#ed_'+id).val("E-"+$(this).val().substring(0,3).toUpperCase()+"-"+id);
+      });
+    }
+  });
+}
+
+function nextEmployeeID(){
+  var data ={
+    location: LOCATION,
+    name: NAME
+  };
+  var id;
+  $.ajax({
+    url:"/scripts/nextEmployee",
+    type:"POST",
+    data: data,
+    async: false,
+    success: function(data){
+      id = data.id_person;
+    }
+  });
+  return id;
+}
+
+function saveEmployee(id){
+  var data = {
+    location: LOCATION,
+    name: NAME,
+    id_person: $('input[name="newEmployeeID"]').val(),
+    worker_name: $('input[name="newEmployeeName"]').val().toUpperCase(),
+    worker_type: $('select[name="newEmployeeType"]').val(),
+    worker_device: $('input[name="newEmployeeDevice"]').val()
+  };
+  if(data.worker_name == "")
+    genericErrorAlert('No se ha indicado el nombre del empleado');
+  else{
+    $.ajax({
+      url:"/employees/create",
+      type:"POST",
+      data: data,
+      success: function(dat){
+        if(dat.status){
+          $('#ed_'+id).val("E-"+$('#selectCategories').children().val().substring(0,3).toUpperCase()+"-"+(id+1));
+          $('input[name="newEmployeeName"]').val('');
+          var html = "<tr id=\""+data.id_person+"\"><td>"+data.id_person+"</td><td class=\"cursor-edit\"><spanname>"+data.worker_name+"</spanname></td><td><spantype class=\"cursor-edit\">"+data.worker_type+"</spantype></td><td>"+data.worker_device+"</td>";
+          $(html).insertAfter($('#employee_list>tr:first'));
+          genericSuccessAlert('Se ha registrado al empleado','fa-user');
+        }
+        else{
+          genericErrorAlert('Ha habido un error al registrar el nuevo empleado, por favor, inténtelo de nuevo.');
+        }
+      }
+    });
+  }
 }
