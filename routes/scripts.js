@@ -145,8 +145,11 @@ exports.nextTask =  function(req, res){
 
 exports.nextEmployee =  function(req, res){
   Airport.findOne({location: req.body.location, name: req.body.name }).select('id_airport').exec(function(err, airport){
-    Person.findOne({id_airport: airport.id_airport}).count().exec(function(err, count) {
-      res.send({id_person:count+1});
+    Person.findOne({id_airport: airport.id_airport}, {}, { sort: { 'created_at' : -1 } }, function(err, last) {
+      if(last == null)
+        res.send({id_person:'E-0'});
+      else
+        res.send({id_person:last.id_person});
     });
   });
 };

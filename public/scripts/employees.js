@@ -158,7 +158,7 @@ function listCategoriesEdit(id){
       }
       input += "</optgroup></select>";
       $('#selectCategories').html(input);
-      $('#ed_'+id).val("E-"+id);
+      $('#ed_'+id).val("E-"+(nextEmployeeID()));
     }
   });
 }
@@ -175,7 +175,7 @@ function nextEmployeeID(){
     data: data,
     async: false,
     success: function(data){
-      id = data.id_person;
+      id = parseInt(data.id_person.split('-')[1])+1;
     }
   });
   return id;
@@ -199,11 +199,10 @@ function saveEmployee(id){
       data: data,
       success: function(dat){
         if(dat.status){
-          $('#ed_'+id).val("E-"+(id+1));
+          $('#ed_'+id).val("E-"+(nextEmployeeID()));
           $('input[name="newEmployeeName"]').val('');
-          var html = "<tr id=\""+data.id_person+"\"><td>"+data.id_person+"</td><td class=\"cursor-edit\"><spanname>"+data.worker_name+"</spanname></td><td><spantype class=\"cursor-edit\">"+data.worker_type+"</spantype></td><td>"+data.worker_device+"</td>";
+          var html = "<tr id=\""+data.id_person+"\"><td>"+data.id_person+"</td><td class=\"cursor-edit\"><spanname>"+data.worker_name+"</spanname></td><td><spantype class=\"cursor-edit\">"+data.worker_type+"</spantype></td><td>"+data.worker_device+"</td><td><button onclick=\"deleteEmployee('"+data.id_person+"')\" class=\"btn btn-danger\" title=\"Eliminar empleado\"><i class=\"fa fa-trash\"></button></td>";
           $.when($(html).insertAfter($('#employee_list>tr:first'))).done(function(){
-            console.log("WHEN")
             var id = $('tr#'+data.id_person+">td");
             editName(id);
             editCategory(id);
@@ -241,6 +240,8 @@ function deleteEmployee(id){
         if(data.status){
           genericSuccessAlert('Se ha eliminado al empleado','fa-user');
           $('tr#'+id).remove();
+          var resest_id = nextEmployeeID();
+          $('#employee_list>tr:first>td:first>input').val("E-"+resest_id);
         }
         else
           genericErrorAlert('Ha habido un error al eliminar el empleado, por favor, inténtelo de nuevo.');

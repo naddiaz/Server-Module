@@ -61,7 +61,8 @@ exports.create =  function(req, res){
       id_person: req.body.id_person,
       worker_name: req.body.worker_name,
       worker_type: req.body.worker_type,
-      worker_device: req.body.worker_device
+      worker_device: req.body.worker_device,
+      created_at: Date.now()
     }).save( function( err ){
       if(err)
         res.send(err);
