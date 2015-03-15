@@ -15,7 +15,8 @@ function employeesList(){
       var list = $('#employee_list');
       for(i in data.people){
         var html = "<tr id=\""+data.people[i].id_person+"\"><td>"+data.people[i].id_person+"</td><td class=\"cursor-edit\"><spanname>"+data.people[i].worker_name+"</spanname></td><td><spantype class=\"cursor-edit\">"+data.people[i].worker_type+"</spantype></td><td>"+data.people[i].device_type+"</td>";
-        list.append(html);
+        var button = "<td><button onclick=\"deleteEmployee('"+data.people[i].id_person+"')\" class=\"btn btn-danger\" title=\"Eliminar empleado\"><i class=\"fa fa-trash\"></button></td>";
+        list.append(html+button);
         var id = $('tr#'+data.people[i].id_person+">td");
         editName(id);
         editCategory(id);
@@ -157,10 +158,7 @@ function listCategoriesEdit(id){
       }
       input += "</optgroup></select>";
       $('#selectCategories').html(input);
-      $('#ed_'+id).val("E-"+$('#selectCategories').children().val().substring(0,3).toUpperCase()+"-"+id);
-      $('#selectCategories').children().change(function(){
-        $('#ed_'+id).val("E-"+$(this).val().substring(0,3).toUpperCase()+"-"+id);
-      });
+      $('#ed_'+id).val("E-"+id);
     }
   });
 }
@@ -201,10 +199,15 @@ function saveEmployee(id){
       data: data,
       success: function(dat){
         if(dat.status){
-          $('#ed_'+id).val("E-"+$('#selectCategories').children().val().substring(0,3).toUpperCase()+"-"+(id+1));
+          $('#ed_'+id).val("E-"+(id+1));
           $('input[name="newEmployeeName"]').val('');
           var html = "<tr id=\""+data.id_person+"\"><td>"+data.id_person+"</td><td class=\"cursor-edit\"><spanname>"+data.worker_name+"</spanname></td><td><spantype class=\"cursor-edit\">"+data.worker_type+"</spantype></td><td>"+data.worker_device+"</td>";
-          $(html).insertAfter($('#employee_list>tr:first'));
+          $.when($(html).insertAfter($('#employee_list>tr:first'))).done(function(){
+            console.log("WHEN")
+            var id = $('tr#'+data.id_person+">td");
+            editName(id);
+            editCategory(id);
+          });
           genericSuccessAlert('Se ha registrado al empleado','fa-user');
         }
         else{
@@ -213,4 +216,39 @@ function saveEmployee(id){
       }
     });
   }
+}
+
+function deleteEmployee(id){
+  var data = {
+    location: LOCATION,
+    name: NAME,
+    id_person: id
+  };
+  
+  var gritter_id = $.gritter.add({
+    title: "Confirmación",
+    text: "<h3>¿Desea eliminar al empleado con ID: <b>" + id + "</b>?</h3><button id=\"removeEmployee\" class=\"btn btn-danger\">Eliminar<span id=\""+id+"\"></span></button><button id=\"cancelremoveEmployee\" class=\"btn btn-primary\">Cancelar</button>",
+    sticky: true,
+    class_name: 'gritter-alert-warning'
+  });
+
+  $('#removeEmployee').click(function(){
+    $.ajax({
+      url:"/employees/delete",
+      type:"POST",
+      data: data,
+      success: function(data){
+        if(data.status){
+          genericSuccessAlert('Se ha eliminado al empleado','fa-user');
+          $('tr#'+id).remove();
+        }
+        else
+          genericErrorAlert('Ha habido un error al eliminar el empleado, por favor, inténtelo de nuevo.');
+      }
+    });
+    $.gritter.removeAll();
+  });
+  $('#cancelremoveEmployee').click(function(){
+    $.gritter.removeAll();
+  });
 }

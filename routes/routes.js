@@ -58,6 +58,7 @@ module.exports = function (app,routes) {
   app.get('/airport/:location/:name/employees',employees.index);
   app.post('/employees/list',employees.list);
   app.post('/employees/create',employees.create);
+  app.post('/employees/delete',employees.delete);
   app.post('/employees/update/name',employees.updateName);
   app.post('/employees/update/type',employees.updateType);
 

@@ -69,3 +69,13 @@ exports.create =  function(req, res){
     });
   });
 };
+
+exports.delete =  function(req, res){
+  Airport.findOne({location: req.body.location, name: req.body.name }).select('id_airport').exec(function(err, airport){
+    Person.remove({id_airport: airport.id_airport, id_person: req.body.id_person}, function(){
+      if(err)
+        res.send(err);
+      res.send({status: true});
+    });
+  });
+};

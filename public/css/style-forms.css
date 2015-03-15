@@ -939,3 +939,7 @@ legend + .control-group {
   cursor: hand;
   cursor: pointer;
 }
+
+#employee_list > tr:nth-child(1){
+  background-color: #F1F8E9 !important;
+}
