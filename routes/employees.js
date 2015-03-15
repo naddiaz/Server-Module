@@ -27,3 +27,29 @@ exports.list =  function(req, res){
     });
   });
 };
+
+exports.updateName =  function(req, res){
+  Airport.findOne({location: req.body.location, name: req.body.name }).select('id_airport').exec(function(err, airport){
+    var conditions = {id_airport: airport.id_airport, id_person: req.body.id_person};
+    var query = {};
+    query.worker_name = req.body.worker_name;
+    Person.update(conditions, query, function(err,person){
+      if(err)
+        res.send(err);
+      res.send({status: true});
+    });
+  });
+};
+
+exports.updateType =  function(req, res){
+  Airport.findOne({location: req.body.location, name: req.body.name }).select('id_airport').exec(function(err, airport){
+    var conditions = {id_airport: airport.id_airport, id_person: req.body.id_person};
+    var query = {};
+    query.worker_type = req.body.worker_type;
+    Person.update(conditions, query, function(err,person){
+      if(err)
+        res.send(err);
+      res.send({status: true});
+    });
+  });
+};

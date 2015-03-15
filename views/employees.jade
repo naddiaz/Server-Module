@@ -9,6 +9,7 @@ block scripts
     LOCATION = "#{location}"
     NAME = "#{name}"
   
+  script(src='/scripts/alerts.js')
   script(src='/scripts/helpers.js')
   script(src='/scripts/employees.js')
 
@@ -38,8 +39,9 @@ block content
             tr
               th ID Empleado
               th Nombre
-                i.fa.fa-info-circle(title="Click en el nombre y Enter para guardar el nuevo valor")
+                i.fa.fa-info-circle(title="Click en el nombre para editar, Enter para guardar el nuevo valor")
               th Categoría
+                i.fa.fa-info-circle(title="Click en la categoría, Seleccionar el nuevo valor de la lista de DISPONIBLES")
               th Tipo de dispositivo
           tbody#employee_list
         

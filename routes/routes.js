@@ -57,6 +57,17 @@ module.exports = function (app,routes) {
   var employees = require('./employees');
   app.get('/airport/:location/:name/employees',employees.index);
   app.post('/employees/list',employees.list);
+  app.post('/employees/update/name',employees.updateName);
+  app.post('/employees/update/type',employees.updateType);
+
+  //Routes Catergories
+  /*
+    File: routes/categories.js
+    categories.list -> async get categories list
+  */
+
+  var categories = require('./categories');
+  app.post('/categories/list',categories.list);
 
   //Routes Works
   /*
