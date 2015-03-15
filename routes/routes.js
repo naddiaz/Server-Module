@@ -69,6 +69,7 @@ module.exports = function (app,routes) {
   */
 
   var categories = require('./categories');
+  app.get('/airport/:location/:name/categories',categories.index);
   app.post('/categories/list',categories.list);
 
   //Routes Works

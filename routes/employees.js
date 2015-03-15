@@ -20,7 +20,7 @@ exports.index =  function(req, res){
 
 exports.list =  function(req, res){
   Airport.findOne({location: req.body.location, name: req.body.name }).select('id_airport').exec(function(err, airport){
-    var People = Person.find({id_airport: airport.id_airport}).exec(function(err, people){
+    var People = Person.find({id_airport: airport.id_airport}, {}, { sort: { 'created_at' : -1 } }, function(err, people) {
       res.send({
         people: people
       });

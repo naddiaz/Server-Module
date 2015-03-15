@@ -23,28 +23,24 @@ block breadcrumb
   li #{name}
     i.fa.fa-angle-right
   li
-    i.fa.fa-users 
-    | Empleados
+    i.fa.fa-th-list 
+    | Categorías
 
 block menu_options
   include ../partials/menu.jade
 block content
   .row-fluid
-    .span12.box
+    .span5.box
       .box-header
-        | Empleados
+        | Categorías
       .box-content
         table.table.table-bordered.table-responsive
           thead
             tr
-              th ID Empleado
-              th Nombre
-                i.fa.fa-info-circle(title="Click en el nombre para editar, Enter para guardar el nuevo valor")
               th Categoría
-                i.fa.fa-info-circle(title="Click en la categoría, Seleccionar el nuevo valor de la lista de DISPONIBLES")
-              th Tipo de dispositivo
+                i.fa.fa-info-circle(title="Click en el nombre para editar, Enter para guardar el nuevo valor")
               th Acciones
-                i.fa.fa-info-circle(title="Las acciones solo están disponibles para el registro de un nuevo empleado. Las modificaciones se realizan automáticamente como indican los otros puntos de información.")
-          tbody#employee_list
+                i.fa.fa-info-circle(title="")
+          tbody#categories_list
         
             

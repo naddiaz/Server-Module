@@ -11,3 +11,14 @@ exports.list =  function(req, res){
     });
   });
 };
+
+exports.index =  function(req, res){
+  Airport.find({}).exec(function(err, airports){
+    res.render('categories',
+    {
+      location: req.params.location,
+      name: req.params.name,
+      airports: airports
+    });
+  });
+};
