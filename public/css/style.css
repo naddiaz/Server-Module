@@ -3094,3 +3094,52 @@ ul.messagesList li span.date {
     display: none !important;
   }
 }
+
+ul.list{
+  list-style: none;
+}
+
+ul.list > li{
+  padding: 15px;
+}
+
+ul.list > li > p{
+  margin-left: 3%;
+  clear: both;
+}
+
+ul.list > li > h2{
+  padding: 3px;
+  float: left;
+}
+
+ul.list > li > h2 > i{
+  margin: 0 10px;
+}
+
+ul.list .row-fluid{
+  margin-bottom: 25px;
+}
+
+#topAction{
+  width: 48px;
+  height: 48px;
+  position: fixed;
+  bottom: 25px;
+  left: 25px;
+  z-index: 10000;
+  background: #ddd;
+  color:#222;
+  border-radius: 48px;
+  font-size: 2.5em;
+  text-align: center;
+  display: table;
+}
+
+#topAction:hover{
+  text-decoration: none;
+}
+#topAction > i{
+  display: table-cell;
+  vertical-align: middle;
+}
