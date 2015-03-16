@@ -46,3 +46,36 @@ exports.updateName =  function(req, res){
     });
   });
 };
+
+exports.create =  function(req, res){
+  Airport.findOne({location: req.body.location, name: req.body.name }).select('id_airport').exec(function(err, airport){
+    new Type({
+      id_airport: airport.id_airport,
+      name: req.body.category_name
+    }).save( function( err ){
+      if(err)
+        res.send(err);
+      res.send({status: true});
+    });
+  });
+};
+
+exports.delete =  function(req, res){
+  Airport.findOne({location: req.body.location, name: req.body.name }).select('id_airport').exec(function(err, airport){
+
+    var Types= Type.remove({id_airport: airport.id_airport, name: req.body.category_name});
+    var Tasks = Task.update({id_airport: airport.id_airport, type: req.body.category_name},{type:'NO DEFINIDA'},{multi:true});
+    var People = Person.update({id_airport: airport.id_airport, worker_type: req.body.category_name},{worker_type:'NO DEFINIDA'},{multi:true});
+
+    var data = {
+      tasks: Tasks.exec.bind(Tasks),
+      types: Types.exec.bind(Types),
+      people: People.exec.bind(People)
+    };
+    async.parallel(data,function(err){
+      if(err)
+        res.send(err);
+      res.send({status: true});
+    });
+  });
+};
