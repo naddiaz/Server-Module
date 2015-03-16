@@ -108,7 +108,7 @@ a.mdc-text-red-A700:focus {
   color: #a20000;
 }
 .mdc-bg-red {
-  background-color: #f44336;
+  background-color: #f44336 !important;
 }
 a.mdc-bg-red:hover,
 a.mdc-bg-red:focus {
