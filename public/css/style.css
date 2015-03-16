@@ -3064,3 +3064,30 @@ ul.messagesList li span.date {
   display: block;
   }
 }
+@media(max-width: 780px){
+  .desktop{
+    display: none !important;
+  }
+
+  .tablet{
+    display: inline-block !important;
+  }
+  a.tablet{
+    float: right;
+    padding: 0 10px;
+    margin: 0 5px;
+  }
+  a.tablet i{
+    color: #FFF;
+  }
+}
+
+@media(min-width: 781px){
+  .desktop{
+    display: block !important;
+  }
+
+  .tablet{
+    display: none !important;
+  }
+}

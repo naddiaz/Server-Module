@@ -12,12 +12,22 @@ block content
         .box-header
           h2 #{airport.location}
           strong - #{airport.name}
-        .box-content
-          .span2
+            a.btn.black.tablet(title="Categorías" href="/airport/#{airport.location}/#{airport.name}/categories")
+              i.fa.fa-th-list
+            a.btn.red.tablet(title="Empleados" href="/airport/#{airport.location}/#{airport.name}/employees")
+              i.fa.fa-users
+            a.btn.blue.tablet(title="Mapa" href="/airport/#{airport.location}/#{airport.name}/map")
+              i.fa.fa-globe
+            a.btn.green.tablet(title="Tareas" href="/airport/#{airport.location}/#{airport.name}/tasks")
+              i.fa.fa-tasks
+            a.btn.yellow.tablet(title="Panel de Control" href="/airport/#{airport.location}/#{airport.name}")
+              i.fa.fa-gears
+        .box-content.desktop
+          .span3
             a.quick-button.metro.yellow(href="/airport/#{airport.location}/#{airport.name}")
               i.fa.fa-gears
               p Panel de control
-          .span2
+          .span3
             a.quick-button.metro.green(href="/airport/#{airport.location}/#{airport.name}/tasks")
               i.fa.fa-tasks
               p Tareas
@@ -29,11 +39,11 @@ block content
             a.quick-button.metro.red(href="/airport/#{airport.location}/#{airport.name}/employees")
               i.fa.fa-users
               p Empleados
-          .span2
+          //.span2
             a.quick-button.metro.purple(href="/airport/#{airport.location}/#{airport.name}/devices")
               i.fa.fa-signal
               p Dispositivos
           .span2
             a.quick-button.metro.black(href="/airport/#{airport.location}/#{airport.name}/categories")
               i.fa.fa-th-list
-              p Categorias
+              p Categorías
