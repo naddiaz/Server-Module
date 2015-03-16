@@ -3069,13 +3069,16 @@ ul.messagesList li span.date {
     display: none !important;
   }
 
-  .tablet{
+  .box-content.tablet{
+    width: 95%;
+    text-align: center;
     display: inline-block !important;
   }
+  .tablet{
+    margin-top: 0 !important;
+  }
   a.tablet{
-    float: right;
-    padding: 0 10px;
-    margin: 0 5px;
+    margin: 10px;
   }
   a.tablet i{
     color: #FFF;
