@@ -101,14 +101,40 @@ function setCell(location,name,cell){
   });
 }
 
+function setBeacon(location,name,beacon){
+  var data = {
+    location: location,
+    name: name,
+    beacon: beacon
+  }
+  $.ajax({
+    url:"/scripts/setBeacon",
+    data: data,
+    type:"POST"
+  });
+}
+
 function deleteCell(location,name,cell){
   var data = {
     location: location,
     name: name,
-    id_cell: cell.id_cell
+    cell: cell
   }
   $.ajax({
     url:"/scripts/deleteCell",
+    data: data,
+    type:"POST"
+  });
+}
+
+function deleteBeacon(location,name,beacon){
+  var data = {
+    location: location,
+    name: name,
+    beacon: beacon
+  }
+  $.ajax({
+    url:"/scripts/deleteBeacon",
     data: data,
     type:"POST"
   });

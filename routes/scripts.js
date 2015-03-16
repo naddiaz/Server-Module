@@ -4,6 +4,7 @@ var Mongoose = require( 'mongoose' );
 var Person     = Mongoose.model( 'Person' );
 var Airport     = Mongoose.model( 'Airport' );
 var Cell     = Mongoose.model( 'Cell' );
+var Beacon     = Mongoose.model( 'Beacon' );
 var Task     = Mongoose.model( 'Task' );
 var Distance     = Mongoose.model( 'Distance' );
 var Work     = Mongoose.model( 'Work' );
@@ -127,7 +128,7 @@ exports.cellsData =  function(req, res){
 exports.nextCell =  function(req, res){
   Airport.findOne({location: req.body.location, name: req.body.name }).select('id_airport').exec(function(err, airport){
     Cell.findOne({id_airport: airport.id_airport}).sort({ field: 'asc', id_cell: -1 }).exec(function(err, last) {
-      if(last.id_cell == null)
+      if(last == null)
         res.send({id_cell: 0});
       else
         res.send({id_cell:last.id_cell+1});
@@ -162,7 +163,19 @@ exports.setCell =  function(req, res){
       latitude: req.body.cell.latitude,
       longitude: req.body.cell.longitude,
       color: req.body.cell.color
-    }).save( function( err, todo, count ){
+    }).save( function( err ){
+      res.send({status: true});
+    });
+  });
+};
+
+exports.setBeacon =  function(req, res){
+  Airport.findOne({location: req.body.location, name: req.body.name }).select('id_airport').exec(function(err, airport){
+    new Beacon({
+      id_airport: airport.id_airport,
+      id_beacon: req.body.beacon.id_beacon,
+      id_cell: req.body.beacon.id_cell,
+    }).save( function( err ){
       res.send({status: true});
     });
   });
@@ -170,7 +183,15 @@ exports.setCell =  function(req, res){
 
 exports.deleteCell =  function(req, res){
   Airport.findOne({location: req.body.location, name: req.body.name }).select('id_airport').exec(function(err, airport){
-    Cell.remove({id_airport: airport.id_airport, id_cell: req.body.id_cell}, function(err,cell){
+    Cell.remove({id_airport: airport.id_airport, id_cell: req.body.cell.id_cell}, function(err,cell){
+      res.send({status: true});
+    });
+  });
+};
+
+exports.deleteBeacon =  function(req, res){
+  Airport.findOne({location: req.body.location, name: req.body.name }).select('id_airport').exec(function(err, airport){
+    Beacon.remove({id_airport: airport.id_airport, id_beacon: req.body.beacon.id_beacon}, function(err,cell){
       res.send({status: true});
     });
   });

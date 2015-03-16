@@ -62,6 +62,11 @@ function initialize() {
       }
       makeBeaconCircle(map,cell);
       setCell(LOCATION,NAME,cell);
+      var beacon = {
+        id_cell: getNextCellID(LOCATION,NAME),
+        id_beacon: getNextCellID(LOCATION,NAME),
+      }
+      setBeacon(LOCATION,NAME,beacon);
     }
   });
 
@@ -147,6 +152,7 @@ function confirmDelete(cell_map,label,location,name,id) {
   $('#removeCell').click(function(){
     var idCell = $(this).find('span').attr('id');
     deleteCell(LOCATION,NAME,{id_cell: idCell});
+    deleteBeacon(LOCATION,NAME,{id_beacon: idCell});
     cell_map.setMap(null);
     label.setVisible(false);
     $.gritter.removeAll();

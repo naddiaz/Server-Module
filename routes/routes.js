@@ -103,8 +103,10 @@ module.exports = function (app,routes) {
     airportData             -> return specific airport
     cellsData               -> return return specific cell
     nextCell                -> find next ID cell
-    setCell                 -> set data to cell
+    setCell                 -> create new cell
+    setBeacon               -> create new beacon
     deleteCell              -> remove specific cell
+    deleteBeacon            -> remove specific beacon
     clearGraph              -> clear all graph data
     createGraph             -> set new cell into graph
     adjacentsCells          -> return adjacents cell to a specific cell
@@ -121,7 +123,9 @@ module.exports = function (app,routes) {
   app.post('/scripts/cellsData',scripts.cellsData);
   app.post('/scripts/nextCell',scripts.nextCell);
   app.post('/scripts/setCell',scripts.setCell);
+  app.post('/scripts/setBeacon',scripts.setBeacon);
   app.post('/scripts/deleteCell',scripts.deleteCell);
+  app.post('/scripts/deleteBeacon',scripts.deleteBeacon);
   app.post('/scripts/clearGraph',scripts.clearGraph);
   app.post('/scripts/createGraph',scripts.createGraph);
   app.post('/scripts/adjacentsCells',scripts.adjacentsCells);
