@@ -12,7 +12,7 @@ function getEmployeesByType(location, name, type){
       $('#select-employees').empty();
       $('#select-employees').multiSelect("destroy");
       for(i in data){
-        $('#select-employees').append("<option value=" + data[i].id_person + ">" + data[i].worker_name + " ("+ data[i].worker_id + ")</option>");
+        $('#select-employees').append("<option value=" + data[i].id_person + ">" + data[i].worker_name + " ("+ data[i].id_person + ")</option>");
       }
       ms_employees();
     }
