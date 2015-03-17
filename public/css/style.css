@@ -244,6 +244,9 @@
   overflow: auto !important;
   border: none !important;
 }
+.table-responsive td{
+  vertical-align: middle;
+}
 table tbody > tr:nth-child(odd){
   background-color: rgba(120,120,120,0.4);
 }

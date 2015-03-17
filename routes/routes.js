@@ -93,6 +93,15 @@ module.exports = function (app,routes) {
   app.get('/airport/:location/:name/map',map.index);
 
 
+  //Routes Localizations
+  /*
+    File: routes/localizations.js
+    localizations.create -> async create new localizations
+  */
+
+  var localizations = require('./localizations');
+  app.post('/localizations/create',localizations.create);
+  app.get('/airport/:location/:name/history/:id_person',localizations.history);
 
   //Routes Scripts
   /*

@@ -103,8 +103,9 @@ function employeesStates(){
       var employees_state = $('#employees_state');
       for(i in data.people){
         var people = data.people[i];
-        var html = "<tr><td employee-id=\""+people.data.id_person+"\">"+people.data.id_person+"</td><td>"+people.data.worker_name+"</td><td>"+people.data.worker_type+"</td><td class=\"" + people.state + "\">"+people.state+"</td>";
+        var html = "<tr><td><button title=\"Ver historial de: "+people.data.worker_name+"\" id=\"history_"+people.data.id_person+"\" class=\"btn btn-primary\"><i class=\"fa fa-history\"></button></td><td>"+people.data.id_person+"</td><td>"+people.data.worker_name+"</td><td>"+people.data.worker_type+"</td><td class=\"" + people.state + "\">"+people.state+"</td>";
         employees_state.append(html);
+        historyAction(people.data.id_person);
       }
     }
   });
@@ -125,5 +126,11 @@ function reasign(id,pending,cell){
     tasksStates();
     worksStates();
     employeesStates();
+  });
+}
+
+function historyAction(id){
+  $("#history_"+id).click(function(){
+    window.location.pathname = "/airport/"+LOCATION+"/"+NAME+"/history/"+id;
   });
 }
