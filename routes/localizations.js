@@ -82,20 +82,50 @@ exports.history = function(req, res){
       */
       var frequency = new Array();
       var actual = position[0].id_beacon;
-      var count = 0;
+      var count = -1;
 
       for(var i=0; i<position.length; i++){
-        if(actual == position[i].id_beacon){
-          count++;
-        }
-        else{
+        count++;
+        if(actual != position[i].id_beacon){
           frequency.push({id_beacon:actual,frequency:count});
           actual = position[i].id_beacon;
           count = 0;
         }
       }
+      if(count > 0){
+        frequency.push({id_beacon:actual,frequency:count});
+      }
       console.log(frequency);
 
+      console.log(position.length/frequency.length)
+
+      /*
+        Tomamos como puntos significativos todos aquellos que superen la media de la frecuencia
+        y volvemos a agrupar, para hacer coincidir los grupos
+      */
+      var avg_points = new Array();
+      for(i in frequency){
+        if(frequency[i].frequency >=position.length/frequency.length){
+          avg_points.push({id_beacon:frequency[i].id_beacon,frequency:frequency[i].frequency});
+        }
+      }
+      console.log(avg_points);
+      
+      var points = new Array();
+      var prev = 0;
+      var frequency_acc = avg_points[0].frequency;
+      for(var i=1; i<avg_points.length; i++){
+        if(avg_points[prev].id_beacon == avg_points[i].id_beacon){
+          frequency_acc += avg_points[i].frequency;
+        }
+        else{
+          points.push({id_beacon:avg_points[prev].id_beacon,frequency:frequency_acc});
+          frequency_acc = avg_points[i+1].frequency;
+        }
+        prev++;
+      }
+      points.push({id_beacon:avg_points[prev].id_beacon,frequency:frequency_acc});
+      console.log(points)
       res.send(locale);
     });
   });
