@@ -102,6 +102,7 @@ module.exports = function (app,routes) {
   var localizations = require('./localizations');
   app.post('/localizations/create',localizations.create);
   app.post('/localizations/history',localizations.history);
+  app.post('/localizations/beaconToLatLon',localizations.beaconToLatLon);
   app.get('/airport/:location/:name/history/:id_person',localizations.index);
 
   //Routes Scripts

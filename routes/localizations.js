@@ -4,6 +4,7 @@ var Mongoose = require( 'mongoose' );
 var Airport     = Mongoose.model( 'Airport' );
 var Localization     = Mongoose.model( 'Localization' );
 var Person     = Mongoose.model( 'Person' );
+var Cell     = Mongoose.model( 'Cell' );
 
 exports.create =  function(req, res){
   Airport.findOne({location: req.body.location, name: req.body.name }).select('id_airport').exec(function(err, airport){
@@ -120,13 +121,25 @@ exports.history = function(req, res){
         }
         else{
           points.push({id_beacon:avg_points[prev].id_beacon,frequency:frequency_acc});
-          frequency_acc = avg_points[i+1].frequency;
+          if(i+1< avg_points.length)
+            frequency_acc = avg_points[i+1].frequency;
         }
         prev++;
       }
       points.push({id_beacon:avg_points[prev].id_beacon,frequency:frequency_acc});
       console.log(points)
-      res.send(locale);
+      res.send(points);
+    });
+  });
+};
+
+
+exports.beaconToLatLon = function(req, res){
+  Airport.findOne({location: req.body.location, name: req.body.name }).select('id_airport').exec(function(err, airport){
+    Cell.findOne({id_airport: airport.id_airport,id_cell:req.body.id_beacon}).select('latitude longitude').exec(function(err,cell){
+      if(err)
+        res.send(err)
+      res.send(cell);
     });
   });
 };
