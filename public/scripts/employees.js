@@ -14,12 +14,13 @@ function employeesList(){
     success:function(data) {
       var list = $('#employee_list');
       for(i in data.people){
-        var html = "<tr id=\""+data.people[i].id_person+"\"><td>"+data.people[i].id_person+"</td><td class=\"cursor-edit\"><spanname>"+data.people[i].worker_name+"</spanname></td><td><spantype class=\"cursor-edit\">"+data.people[i].worker_type+"</spantype></td><td>"+data.people[i].device_type+"</td>";
+        var html = "<tr id=\""+data.people[i].id_person+"\"><td><button title=\"Ver historial de: "+data.people[i].worker_name+"\" id=\"history_"+data.people[i].id_person+"\" class=\"btn btn-primary\"><i class=\"fa fa-history\"></button></td><td>"+data.people[i].id_person+"</td><td class=\"cursor-edit\"><spanname>"+data.people[i].worker_name+"</spanname></td><td><spantype class=\"cursor-edit\">"+data.people[i].worker_type+"</spantype></td><td>"+data.people[i].device_type+"</td>";
         var button = "<td><button onclick=\"deleteEmployee('"+data.people[i].id_person+"')\" class=\"btn btn-danger\" title=\"Eliminar empleado\"><i class=\"fa fa-trash\"></button></td>";
         list.append(html+button);
         var id = $('tr#'+data.people[i].id_person+">td");
         editName(id);
         editCategory(id);
+        historyAction(data.people[i].id_person);
       }
       list.prepend(editFields());
     }
@@ -251,5 +252,11 @@ function deleteEmployee(id){
   });
   $('#cancelremoveEmployee').click(function(){
     $.gritter.removeAll();
+  });
+}
+
+function historyAction(id){
+  $("#history_"+id).click(function(){
+    window.location.pathname = "/airport/"+LOCATION+"/"+NAME+"/history/"+id;
   });
 }

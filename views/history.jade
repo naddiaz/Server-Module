@@ -11,6 +11,8 @@ block scripts
   
   script(src='/scripts/alerts.js')
   script(src='/scripts/helpers.js')
+  script(src='/scripts/localizations.js')
+  script(src='/maps/localization.map.js')
 
 block breadcrumb
   li
@@ -28,16 +30,17 @@ block breadcrumb
   li
     i.fa.fa-history 
     | Histórico
+  - if(person != null)
     i.fa.fa-angle-right
-  li
-    i.fa.fa-user 
-    | #{person.worker_name}
+    li#id_person(data="#{person.id_person}")
+      i.fa.fa-user 
+        | #{person.worker_name}
 
 block menu_options
   include ../partials/menu.jade
 block content
   .row-fluid
-    - if(person.worker_name == null)
+    - if(person == null)
       .statbox.span12.red
         h1 Este empleado no existe.
         h2 Intente utilizar las funciones desde el panel de control y no introducir la dirección URL en la barra de direcciones del navegador.
@@ -52,11 +55,18 @@ block content
                 th ID Empleado
                 th Nombre
                 th Categoría
+                th Dispositivo
             tbody
               tr
                 td= person.id_person
                 td= person.worker_name
                 td= person.worker_type
-
+                td= person.device_type
+      .row-fluid
+        .span12.box
+          .box-header
+            | Mapa de actividad
+          .box-content
+            #map_canvas
         
             

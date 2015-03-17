@@ -101,7 +101,8 @@ module.exports = function (app,routes) {
 
   var localizations = require('./localizations');
   app.post('/localizations/create',localizations.create);
-  app.get('/airport/:location/:name/history/:id_person',localizations.history);
+  app.post('/localizations/history',localizations.history);
+  app.get('/airport/:location/:name/history/:id_person',localizations.index);
 
   //Routes Scripts
   /*
