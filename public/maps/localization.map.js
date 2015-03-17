@@ -100,7 +100,7 @@ function hot_beacons_map(beacons,map) {
   for(i in beacons){
     var circle = new google.maps.Circle({
       center: new google.maps.LatLng(beacons[i].position.latitude, beacons[i].position.longitude),
-      radius: ((beacons[i].frequency/100)*base)*0.25,
+      radius: ((beacons[i].frequency/base)*100)*0.6,
       strokeColor: hot_colors(beacons[i].frequency,base),
       strokeOpacity: 0.8,
       strokeWeight: 2,
