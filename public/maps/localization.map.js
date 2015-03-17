@@ -7,10 +7,10 @@ LABELOPTIONS = {
         background: '#FFFFFF',
         textAlign: "center",
         fontSize: "10pt",
-        width: "90px"
+        width: "15px"
     },
     disableAutoPan: true,
-    pixelOffset: new google.maps.Size(-45, 0),
+    pixelOffset: new google.maps.Size(-30, 0),
     closeBoxURL: "",
     isHidden: false,
     pane: "mapPane",
@@ -37,12 +37,7 @@ function initialize(beacons) {
   };
   var map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
 
-  var lineSymbol = {
-    path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
-    strokeColor: "#FF0000",
-    strokeOpacity: 1.0,
-    strokeWeight: 2
-  };
+
 
   new google.maps.Circle({
     center: new google.maps.LatLng(beacons[0].position.latitude, beacons[0].position.longitude),
@@ -66,7 +61,17 @@ function initialize(beacons) {
     map:map
   });
 
-  for(var i= 1; i<beacons.length; i++){
+  addArrow(beacons,1,map)
+}
+
+function addArrow(beacons,i,map){
+  if(i<=beacons.length-1){
+    var lineSymbol = {
+      path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+      strokeColor: "#FF0000",
+      strokeOpacity: 1.0,
+      strokeWeight: 2
+    };
     var lineCoords = new Array();
     lineCoords.push(new google.maps.LatLng(beacons[i-1].position.latitude, beacons[i-1].position.longitude));
     lineCoords.push(new google.maps.LatLng(beacons[i].position.latitude, beacons[i].position.longitude));
@@ -82,10 +87,20 @@ function initialize(beacons) {
       strokeOpacity: 1.0,
       strokeWeight: 2
     });
-  }  
+
+    LABELOPTIONS.content = i-1;
+    LABELOPTIONS.position = new google.maps.LatLng(beacons[i-1].position.latitude+addCoords(), beacons[i-1].position.longitude+addCoords());
+    var label = new InfoBox(LABELOPTIONS);
+    label.open(map);
+    setTimeout(function(){addArrow(beacons,i+1,map)},750)
+  }
 }
 
 function randColor(){
   // #CCCCCC to #222222
   return Math.floor(Math.random() * (13421772 - 2236962) + 2236962).toString(16);
+}
+
+function addCoords(){
+  return Math.random() * (0.000009) + 0.000001;
 }

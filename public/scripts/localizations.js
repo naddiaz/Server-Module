@@ -1,5 +1,8 @@
 $(document).ready(function(){
   history(LOCATION,NAME);
+  $('#map_refresh').click(function(){
+    history(LOCATION,NAME);
+  })
 });
 
 function history(location, name){
