@@ -64,11 +64,14 @@ block content
                 td= person.device_type
       .row-fluid
         .span12.box
-          .box-header
+          .box-header.double
             | Mapa de actividad
             .box-icon
-              a#map_refresh(title="Recargar actividad")
+              a.btn.btn-success#map_refresh(title="Recargar actividad")
                 i.fa.fa-refresh
+              span.break
+              a.btn.btn-success#hot_zone(title="Mostrar / Ocultar mapa de calor")
+                i.fa.fa-fire
           .box-content
             #map_canvas
         

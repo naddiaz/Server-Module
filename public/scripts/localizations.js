@@ -1,11 +1,29 @@
 $(document).ready(function(){
-  history(LOCATION,NAME);
+  var airport = getAirport(LOCATION,NAME);
+  var mapOptions = {
+    center: new google.maps.LatLng(airport.latitude,airport.longitude),
+    zoom: 19,
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    styles: STYLE
+  };
+  var map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
+
+  history(LOCATION,NAME,map);
+
+  var state = true;
   $('#map_refresh').click(function(){
-    history(LOCATION,NAME);
-  })
+    history(LOCATION,NAME, map);
+  });
+  $('#hot_zone').click(function(){
+    if(state)
+      state = false
+    else
+      state = true;
+    view_hot_zone(state, map);
+  });
 });
 
-function history(location, name){
+function history(location, name,map){
   var data = {
     location: location,
     name: name,
@@ -16,11 +34,16 @@ function history(location, name){
     type:"POST",
     data: data,
     success:function(data) {
-      var beacons = new Array()
-      for(i in data)
-        beacons.push({position:beaconToLatLon(location,name,data[i].id_beacon),frequency:data[i].frequency});
-      console.log(beacons);
-      initialize(beacons)
+      var beacons = new Array();
+      var hot = new Array();
+      for(i in data.sig_points)
+        beacons.push({position:beaconToLatLon(location,name,data.sig_points[i].id_beacon),frequency:data.sig_points[i].frequency});
+      for(i in data.hot_points)
+        hot.push({position:beaconToLatLon(location,name,data.hot_points[i].id_beacon),frequency:data.hot_points[i].frequency});
+      trace_beacons(beacons,map)
+      setTimeout(function(){
+        hot_beacons_map(hot,map);
+      },(beacons.length-1)*750);
     }
   });
 }

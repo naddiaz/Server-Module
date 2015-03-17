@@ -27,37 +27,28 @@ STYLE =[
 ];
 //END FIXED PARAMS
 
-function initialize(beacons) {
-  var airport = getAirport(LOCATION,NAME);
-  var mapOptions = {
-    center: new google.maps.LatLng(airport.latitude,airport.longitude),
-    zoom: 19,
-    mapTypeId: google.maps.MapTypeId.ROADMAP,
-    styles: STYLE
-  };
-  var map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
-
-
-
+var lines_arr = new Array();
+var circles_arr = new Array();
+function trace_beacons(beacons,map) {
+  for(i in lines_arr){
+    lines_arr[i].setMap(null);
+  }
+  lines_arr = [];
   new google.maps.Circle({
     center: new google.maps.LatLng(beacons[0].position.latitude, beacons[0].position.longitude),
-    radius: 2,
-    strokeColor: "#00FF00",
-    strokeOpacity: 0.8,
-    strokeWeight: 2,
+    radius: 1,
     fillColor: "#00FF00",
     fillOpacity: 0.7,
+    strokeWeight: 0,
     map:map
   });
 
   new google.maps.Circle({
     center: new google.maps.LatLng(beacons[beacons.length-1].position.latitude, beacons[beacons.length-1].position.longitude),
-    radius: 2,
-    strokeColor: "#0000FF",
-    strokeOpacity: 0.8,
-    strokeWeight: 2,
+    radius: 1,
     fillColor: "#0000FF",
     fillOpacity: 0.7,
+    strokeWeight: 0,
     map:map
   });
 
@@ -87,11 +78,7 @@ function addArrow(beacons,i,map){
       strokeOpacity: 1.0,
       strokeWeight: 2
     });
-
-    LABELOPTIONS.content = i-1;
-    LABELOPTIONS.position = new google.maps.LatLng(beacons[i-1].position.latitude+addCoords(), beacons[i-1].position.longitude+addCoords());
-    var label = new InfoBox(LABELOPTIONS);
-    label.open(map);
+    lines_arr.push(line);
     setTimeout(function(){addArrow(beacons,i+1,map)},750)
   }
 }
@@ -101,6 +88,52 @@ function randColor(){
   return Math.floor(Math.random() * (13421772 - 2236962) + 2236962).toString(16);
 }
 
-function addCoords(){
-  return Math.random() * (0.000009) + 0.000001;
+function hot_beacons_map(beacons,map) {
+  for(i in circles_arr)
+    circles_arr[i].setMap(null)
+  circles_arr = [];
+  var base = 0;
+  for(i in beacons){
+    if(base < beacons[i].frequency)
+      base = beacons[i].frequency;
+  }
+  for(i in beacons){
+    var circle = new google.maps.Circle({
+      center: new google.maps.LatLng(beacons[i].position.latitude, beacons[i].position.longitude),
+      radius: ((beacons[i].frequency/100)*base)*0.25,
+      strokeColor: hot_colors(beacons[i].frequency,base),
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: hot_colors(beacons[i].frequency,base),
+      fillOpacity: 0.7,
+      zIndex: 10
+    });
+    circles_arr.push(circle);
+    circle.setMap(map);
+  }
+}
+
+function view_hot_zone(show,map){
+  for(i in circles_arr){
+    if(show){
+      circles_arr[i].setMap(map);
+    }
+    else{
+      circles_arr[i].setMap(null);
+    }
+  }
+}
+
+function hot_colors(value,base){
+  value = (value * 100) / base;
+  if(value > 0 && value <= 20)
+    return "#8BC34A";
+  if(value > 20 && value <= 40)
+    return "#4CAF50";
+  if(value > 40 && value <= 60)
+    return "#FFEB3B";
+  if(value > 60 && value <= 80)
+    return "#FF9800";
+  if(value > 80 && value <= 100)
+    return "#F44336";
 }

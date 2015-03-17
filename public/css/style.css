@@ -895,6 +895,9 @@ ul.messages li .message {
 	overflow: hidden;
 }
 
+.box-header.double{
+  height: 32px;
+}
 .box-header h2{
 	float:left;
 	margin-top: 0px;
