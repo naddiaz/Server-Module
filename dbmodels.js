@@ -93,6 +93,13 @@ var GCMRegistrationID = new Schema({
 });
 GCMRegistrationID.index({id_airport: 1, id_person: 1}, {unique: true});
 
+
+var Parameter = new Schema({
+  name: String,
+  value: String
+});
+Parameter.index({name: 1}, {unique: true});
+
 var db = Mongoose.connect('mongodb://localhost/bletaskerDB');
 db.model('Airport', Airport);
 db.model('Person', Person);
@@ -104,3 +111,4 @@ db.model('Cell', Cell);
 db.model('Distance', Distance);
 db.model('Type', Type);
 db.model('GCMRegistrationID', GCMRegistrationID);
+db.model('Parameter', Parameter);

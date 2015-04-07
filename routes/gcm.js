@@ -3,6 +3,7 @@ gcm = require('node-gcm');
 
 var Mongoose = require( 'mongoose' );
 var GCM     = Mongoose.model( 'GCMRegistrationID' );
+var Parameter     = Mongoose.model( 'Parameter' );
 
 exports.registrationGCM =  function(req, res){
   new GCM({
@@ -20,14 +21,32 @@ exports.registrationGCM =  function(req, res){
 exports.sendNotificationTest =  function(req, res){
   var message = new gcm.Message();
   message.addData('BLE Tasker','TEST!');
-  var regIds = ["APA91bF_HduSEIBrH0YG3hQQVT9zpa_G7bcOLTeQTpECt5mQvgV1OXLk7VdhN3Uqoj0s139bS8GuYTVrECG_rCrr3oTckg5fenbXcpnVQYj1XPZ-zDdVT_-q2ox3IzUksG-nKkc51hZEqO0yoR98viMNXZMR_meAWA"];
-  var sender = new gcm.Sender("AIzaSyAra20M9PTtUj1QXoCaTq-FrzVRsdl4SlA");
-  sender.send(message, regIds, function (err, result) {
-    if(err){
-      console.log(err);
-      res.send(err);
+
+  var Parameters = Parameter.findOne({name: "api_key"});
+  var GCMs = GCM.find({});
+
+  var data = {
+    parameters: Parameter.exec.bind(Parameters),
+    gcms: GCMs.exec.bind(GCMs)
+  };
+  async.parallel(data,function(err,results){
+    if(err)
+      res.send({status: err});
+    else{
+      var sender = new gcm.Sender(results.parameters.value);
+      var regIds = [];
+      for(reg in results.gcms){
+        regIds.push(reg.id_push);
+      }
+      sender.send(message, regIds, function (err, result) {
+        if(err){
+          console.log(err);
+          res.send(err);
+        }
+        console.log(result);
+        res.send({status: true});
+      });
     }
-    console.log(result);
-    res.send({status: true});
   });
+
 };
