@@ -144,4 +144,13 @@ module.exports = function (app,routes) {
   app.post('/scripts/adjacentsCells',scripts.adjacentsCells);
   app.post('/scripts/nextTask',scripts.nextTask);
   app.post('/scripts/nextEmployee',scripts.nextEmployee);
+
+  //Routes GCM
+  /*
+    File: routes/gcm.js
+    gcm.registrationGCM -> create new entry with id registration ID send by app
+  */
+
+  var gcm = require('./gcm');
+  app.post('/gcm/registration',gcm.registrationGCM);
 };

@@ -85,6 +85,14 @@ var Work = new Schema({
   task: { type: Schema.ObjectId, ref: 'Task' }
 });
 
+var GCMRegistrationID = new Schema({
+  id_airport: Number,
+  id_person: String,
+  id_push: String,
+  created_at: Date
+});
+GCMRegistrationID.index({id_airport: 1, id_person: 1}, {unique: true});
+
 var db = Mongoose.connect('mongodb://localhost/bletaskerDB');
 db.model('Airport', Airport);
 db.model('Person', Person);
@@ -95,3 +103,4 @@ db.model('Work', Work);
 db.model('Cell', Cell);
 db.model('Distance', Distance);
 db.model('Type', Type);
+db.model('GCMRegistrationID', GCMRegistrationID);
