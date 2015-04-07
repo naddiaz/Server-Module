@@ -153,4 +153,5 @@ module.exports = function (app,routes) {
 
   var gcm = require('./gcm');
   app.post('/gcm/registration',gcm.registrationGCM);
+  app.get('/gcm/test',gcm.sendNotificationTest)
 };
