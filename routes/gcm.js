@@ -26,7 +26,7 @@ exports.sendNotificationTest =  function(req, res){
   var GCMs = GCM.find({});
 
   var data = {
-    parameters: Parameter.exec.bind(Parameters),
+    parameters: Parameters.exec.bind(Parameters),
     gcms: GCMs.exec.bind(GCMs)
   };
   async.parallel(data,function(err,results){
@@ -35,8 +35,9 @@ exports.sendNotificationTest =  function(req, res){
     else{
       var sender = new gcm.Sender(results.parameters.value);
       var regIds = [];
-      for(reg in results.gcms){
-        regIds.push(reg.id_push);
+      for(i in results.gcms){
+        regIds.push(results.gcms[i].id_push);
+	console.log(results.gcms[i].id_push)
       }
       sender.send(message, regIds, function (err, result) {
         if(err){
