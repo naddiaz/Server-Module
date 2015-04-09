@@ -30,7 +30,6 @@ Distance.index({id_airport: 1, cell_origin: 1, cell_end: 1}, {unique: true});
 var Person = new Schema({
   id_airport: Number,
   id_person: String,
-  id_push: Number,
   worker_name: String,
   worker_type: String,
   device_type: {type: String, default: 'ANDROID'},
@@ -93,6 +92,14 @@ var GCMRegistrationID = new Schema({
 });
 GCMRegistrationID.index({id_airport: 1, id_person: 1}, {unique: true});
 
+var HashRegistration = new Schema({
+  id_airport: Number,
+  id_person: String,
+  worker_name: String,
+  hash: String,
+  update_at: Date
+});
+HashRegistration.index({id_airport: 1, id_person: 1}, {unique: true});
 
 var Parameter = new Schema({
   name: String,
@@ -111,4 +118,5 @@ db.model('Cell', Cell);
 db.model('Distance', Distance);
 db.model('Type', Type);
 db.model('GCMRegistrationID', GCMRegistrationID);
+db.model('HashRegistration', HashRegistration);
 db.model('Parameter', Parameter);

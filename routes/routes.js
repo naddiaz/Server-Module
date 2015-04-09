@@ -62,6 +62,9 @@ module.exports = function (app,routes) {
   app.post('/employees/update/name',employees.updateName);
   app.post('/employees/update/type',employees.updateType);
 
+
+  app.post('/hash/confirm',employees.hash);
+
   //Routes Catergories
   /*
     File: routes/categories.js

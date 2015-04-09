@@ -132,7 +132,7 @@ function updateEmployeeType(id,typeOld, typeNew){
 
 function editFields(){
   var new_id = nextEmployeeID();
-  var tr_beign = "<tr>";
+  var tr_beign = "<tr><td></td>";
   var tr_end = "</td>";
   var td_input_id = "<td><input id=\"ed_"+new_id+"\" type=\"text\" name=\"newEmployeeID\" value=\""+new_id+"\" disabled></td>";
   var td_input_name = "<td><input type=\"text\" name=\"newEmployeeName\" placeholder=\"NOMBRE\"></td>";
@@ -202,8 +202,10 @@ function saveEmployee(id){
         if(dat.status){
           $('#ed_'+id).val("E-"+(nextEmployeeID()));
           $('input[name="newEmployeeName"]').val('');
-          var html = "<tr id=\""+data.id_person+"\"><td>"+data.id_person+"</td><td class=\"cursor-edit\"><spanname>"+data.worker_name+"</spanname></td><td><spantype class=\"cursor-edit\">"+data.worker_type+"</spantype></td><td>"+data.worker_device+"</td><td><button onclick=\"deleteEmployee('"+data.id_person+"')\" class=\"btn btn-danger\" title=\"Eliminar empleado\"><i class=\"fa fa-trash\"></button></td>";
-          $.when($(html).insertAfter($('#employee_list>tr:first'))).done(function(){
+          var html = "<tr id=\""+data.id_person+"\"><td><button title=\"Ver historial de: "+data.worker_name+"\" id=\"history_"+data.id_person+"\" class=\"btn btn-primary\"><i class=\"fa fa-history\"></button></td><td>"+data.id_person+"</td><td class=\"cursor-edit\"><spanname>"+data.worker_name+"</spanname></td><td><spantype class=\"cursor-edit\">"+data.worker_type+"</spantype></td><td>"+data.device_type+"</td>";
+          var button = "<td><button onclick=\"deleteEmployee('"+data.id_person+"')\" class=\"btn btn-danger\" title=\"Eliminar empleado\"><i class=\"fa fa-trash\"></button></td>";
+          
+          $.when($(html+button).insertAfter($('#employee_list>tr:first'))).done(function(){
             var id = $('tr#'+data.id_person+">td");
             editName(id);
             editCategory(id);

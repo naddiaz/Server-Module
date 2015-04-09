@@ -37,7 +37,6 @@ exports.sendNotificationTest =  function(req, res){
       var regIds = [];
       for(i in results.gcms){
         regIds.push(results.gcms[i].id_push);
-	console.log(results.gcms[i].id_push)
       }
       sender.send(message, regIds, function (err, result) {
         if(err){
