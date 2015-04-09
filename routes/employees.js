@@ -129,7 +129,8 @@ exports.hash =  function(req, res){
         res.send({
           id_airport: hash.id_airport,
           id_person: hash.id_person,
-          worker_name: hash.worker_name
+          worker_name: hash.worker_name,
+          hash: hash.hash
         });
       });
     }
