@@ -113,7 +113,7 @@ exports.create =  function(req, res){
   });
 };
 
-exports.hash =  function(req, res){
+exports.hashCheck =  function(req, res){
   HashRegistration.findOne({hash: req.body.hash}).exec(function(err, hash){
     if(err)
       res.send({status:false});
@@ -137,6 +137,17 @@ exports.hash =  function(req, res){
     else{
       res.send({status:false});
     }
+  });
+};
+
+exports.hashVerify =  function(req, res){
+  HashRegistration.findOne({hash: req.body.hash}).exec(function(err, hash){
+    if(err)
+      res.send({status:false});
+    else if(hash == null)
+      res.send({status:false});
+    else
+      res.send({status:true});
   });
 };
 

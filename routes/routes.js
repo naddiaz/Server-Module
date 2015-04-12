@@ -63,7 +63,8 @@ module.exports = function (app,routes) {
   app.post('/employees/update/type',employees.updateType);
 
 
-  app.post('/hash/confirm',employees.hash);
+  app.post('/hash/confirm',employees.hashCheck);
+  app.post('/hash/verify',employees.hashVerify);
 
   //Routes Catergories
   /*
