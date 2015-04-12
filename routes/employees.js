@@ -160,3 +160,53 @@ exports.delete =  function(req, res){
     });
   });
 };
+
+
+exports.tasks =  function(req, res){
+  HashRegistration.findOne({hash:req.body.hash}).exec(function(err, hash){
+    if(err)
+      res.send({status:false});
+    else if(hash == null)
+      res.send({status:false});
+    else{
+      Work.find({id_airport: hash.id_airport, id_person: hash.id_person}).populate('person task').exec(function(err,works){
+        console.log(works)
+        var works_active = new Array();
+        var works_pending = new Array();
+        var works_complete = new Array();
+        var works_pause = new Array();
+        var works_stop = new Array();
+        for(var j=0; j<works.length; j++){
+          if(works[j].state.toString() == 'finish')
+            works_complete.push(worksData(works[j]));
+          else if(works[j].state.toString() == 'running')
+            works_active.push(worksData(works[j]));
+          else if(works[j].state.toString() == 'asign')
+            works_pending.push(worksData(works[j]));
+          else if(works[j].state.toString() == 'cancel')
+            works_stop.push(worksData(works[j]));
+          else if(works[j].state.toString() == 'pause')
+            works_pause.push(worksData(works[j]));
+        }
+
+        res.send({
+          works_complete: works_complete,
+          works_active: works_active,
+          works_pending: works_pending,
+          works_pause: works_pause,
+          works_stop: works_stop
+        });
+      });
+    }
+  });
+};
+
+function worksData(work){
+  return {
+    id_task: work.id_task,
+    description: work.task.description,
+    priority: work.task.priority,
+    n_employees: work.task.n_employees,
+    created_at: work.created_at
+  }
+}

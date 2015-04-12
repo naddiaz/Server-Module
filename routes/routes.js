@@ -62,6 +62,8 @@ module.exports = function (app,routes) {
   app.post('/employees/update/name',employees.updateName);
   app.post('/employees/update/type',employees.updateType);
 
+  app.post('/employee/get/tasks',employees.tasks);
+
 
   app.post('/hash/confirm',employees.hashCheck);
   app.post('/hash/verify',employees.hashVerify);
