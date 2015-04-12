@@ -130,7 +130,7 @@ exports.hash =  function(req, res){
           id_airport: hash.id_airport,
           id_person: hash.id_person,
           worker_name: hash.worker_name,
-          hash: hash.hash
+          hash: query.hash
         });
       });
     }
