@@ -5,6 +5,7 @@ var Mongoose = require( 'mongoose' );
 var GCM     = Mongoose.model( 'GCMRegistrationID' );
 var Parameter     = Mongoose.model( 'Parameter' );
 var Airport     = Mongoose.model( 'Airport' );
+var Task     = Mongoose.model( 'Task' );
 
 exports.registrationGCM =  function(req, res){
   GCM.find({id_airport: req.body.id_airport, id_person: req.body.id_person}).exec(function(err,gcm){
