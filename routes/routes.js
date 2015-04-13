@@ -64,6 +64,7 @@ module.exports = function (app,routes) {
 
   app.post('/employee/get/tasks',employees.tasks);
 
+  app.post('/employee/set/task/state',employees.taskState);
 
   app.post('/hash/confirm',employees.hashCheck);
   app.post('/hash/verify',employees.hashVerify);

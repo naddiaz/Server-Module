@@ -60,7 +60,9 @@ function worksStates(){
       var works_stop = $('#works_stop');
       for(i in data.works_stop){
         var work = data.works_stop[i];
-        var html = "<tr><td>"+work.task.id_task+"</td><td>"+work.person.worker_name+"</td><td>"+work.task.type.toUpperCase()+"</td><td>"+work.task.priority+"</td><td>"+getDateFormatter(work.asign_at)+"</td><td>"+work.task.description.toUpperCase()+"</td>";
+        if(work.state.toUpperCase() == "CANCEL") state = "CANCELADO";
+        if(work.state.toUpperCase() == "PAUSE") state = "PAUSADO";
+        var html = "<tr><td>"+work.task.id_task+"</td><td>"+work.person.worker_name+"</td><td>"+work.task.type.toUpperCase()+"</td><td>"+work.task.priority+"</td><td>"+getDateFormatter(work.asign_at)+"</td><td>" + state + "</td><td>"+work.task.description.toUpperCase()+"</td>";
         works_stop.append(html);
       }
       var works_pending = $('#works_pending');

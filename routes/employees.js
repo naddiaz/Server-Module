@@ -188,7 +188,8 @@ exports.tasks =  function(req, res){
           else if(works[j].state.toString() == 'pause')
             works_pause.push(worksData(works[j]));
         }
-
+        if(err)
+          res.send({status:false});
         res.send({
           works_complete: works_complete,
           works_active: works_active,
@@ -196,6 +197,43 @@ exports.tasks =  function(req, res){
           works_pause: works_pause,
           works_stop: works_stop
         });
+      });
+    }
+  });
+};
+
+exports.taskState =  function(req, res){
+  HashRegistration.findOne({hash:req.body.hash}).exec(function(err, hash){
+    if(err)
+      res.send({status:false});
+    else if(hash == null)
+      res.send({status:false});
+    else{
+      var conditions = {id_airport: hash.id_airport, id_person: hash.id_person, id_task: req.body.id_task};
+      var query = {};
+      query.state = req.body.state;
+
+      switch (query.state){
+        case "running":
+          query.running_at = Date.now();
+          break;
+        case "finish":
+          query.finish_at = Date.now();
+          break;
+        case "pause":
+          query.pause_at = Date.now();
+          break;
+        case "cancel":
+          query.cancel_at = Date.now();
+          break;
+        default:
+          res.send({status:false});
+          break;
+      }
+      Work.update(conditions, query, function(err,work){
+        if(err)
+          res.send(err);
+        res.send({status: true});
       });
     }
   });
