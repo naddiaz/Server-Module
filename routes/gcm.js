@@ -39,7 +39,7 @@ exports.create =  function(req, res){
   //Airport.findOne({location: req.body.location, name: req.body.name }).select('id_airport').exec(function(err, airport){
 
     var message = new gcm.Message();
-    message.addData({'title':req.body.id_task,'description':req.body.description});
+    message.addData('description',req.body.id_task + "," + req.body.description);
 
     var Parameters = Parameter.findOne({name: "api_key"});
     var GCMs = GCM.find({id_airport: req.body.id_airport, id_person: req.body.id_person});
