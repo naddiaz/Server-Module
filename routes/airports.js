@@ -47,9 +47,9 @@ exports.tasksStates =  function(req, res){
         for(var j=0; j<results.works.length; j++){
           if(results.tasks[i]._id.toString() == results.works[j].task._id.toString()){
             partial_asign++;
-            if(results.works[j].state.toString() == 'finish' )
+            if(results.works[j].state.toString() == 'complete' )
               full_completed++;
-            else if(results.works[j].state.toString() == 'running' )
+            else if(results.works[j].state.toString() == 'active' )
               running++;
           }
         }
@@ -90,9 +90,9 @@ exports.worksStates =  function(req, res){
       var works_complete = new Array();
       var works_stop = new Array();
       for(var j=0; j<works.length; j++){
-        if(works[j].state.toString() == 'finish')
+        if(works[j].state.toString() == 'complete')
           works_complete.push(works[j]);
-        else if(works[j].state.toString() == 'running')
+        else if(works[j].state.toString() == 'active')
           works_active.push(works[j]);
         else if(works[j].state.toString() == 'asign')
           works_pending.push(works[j]);
@@ -135,7 +135,7 @@ exports.employeesStates =  function(req, res){
           //Si ha encontrado un trabajo para esta persona
           if(results.works[j].id_person == results.people[i].id_person){
             //Si el estado es activo, deja de buscar y asigna activo al estado de esta persona
-            if(results.works[j].state.toString() == 'running'){
+            if(results.works[j].state.toString() == 'active'){
               active = true;
               employee.push({'data':results.people[i],'state':"ACTIVO"});
             }

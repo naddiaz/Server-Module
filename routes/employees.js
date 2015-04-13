@@ -177,9 +177,9 @@ exports.tasks =  function(req, res){
         var works_pause = new Array();
         var works_stop = new Array();
         for(var j=0; j<works.length; j++){
-          if(works[j].state.toString() == 'finish')
+          if(works[j].state.toString() == 'complete')
             works_complete.push(worksData(works[j]));
-          else if(works[j].state.toString() == 'running')
+          else if(works[j].state.toString() == 'active')
             works_active.push(worksData(works[j]));
           else if(works[j].state.toString() == 'asign')
             works_pending.push(worksData(works[j]));
@@ -214,11 +214,11 @@ exports.taskState =  function(req, res){
       query.state = req.body.state;
 
       switch (query.state){
-        case "running":
-          query.running_at = Date.now();
+        case "active":
+          query.active_at = Date.now();
           break;
-        case "finish":
-          query.finish_at = Date.now();
+        case "complete":
+          query.complete_at = Date.now();
           break;
         case "pause":
           query.pause_at = Date.now();
