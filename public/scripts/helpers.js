@@ -288,3 +288,20 @@ function makeWork(location,name,id_task,id_person){
     }
   });
 }
+
+function sendGcmNotification(location,name,id_task,description,id_person){
+  var data = {
+    location: location,
+    name: name,
+    id_task: id_task,
+    id_person: id_person,
+    description: description
+  }
+  $.ajax({
+    url:"/gcm/create",
+    type:"POST",
+    data: data,
+    success:function(data){
+    }
+  });
+}
