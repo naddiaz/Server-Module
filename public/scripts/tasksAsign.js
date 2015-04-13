@@ -65,7 +65,7 @@ function manualAsign(task){
   createTask(task);
   for(i in task.employees){
     makeWork(LOCATION,NAME,task.id_task,task.employees[i]);
-    sendGcmNotification(LOCATION,NAME,task.id_task,task.description,task.employees[i]);
+    //sendGcmNotification(LOCATION,NAME,task.id_task,task.description,task.employees[i]);
   }
 }
 
@@ -74,7 +74,7 @@ function autoAsign(task){
   var employees = bfsWorks(LOCATION,NAME,task.id_task,task.id_cell,task.n_employees);
   for(i in employees){
     genericSuccessAlert('Se ha asignado a: '+employees[i].worker_name+' a esta tarea','work');
-    sendGcmNotification(LOCATION,NAME,task.id_task,task.description,employees[i].id_person);
+    //sendGcmNotification(LOCATION,NAME,task.id_task,task.description,employees[i].id_person);
   }
   if(task.n_employees > employees.length){
     genericWarningAlert('Faltaron ' + (task.n_employees-employees.length) + " empleados por asignar");

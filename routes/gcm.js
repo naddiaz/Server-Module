@@ -36,14 +36,14 @@ exports.registrationGCM =  function(req, res){
 };
 
 exports.create =  function(req, res){
-  Airport.findOne({location: req.body.location, name: req.body.name }).select('id_airport').exec(function(err, airport){
+  //Airport.findOne({location: req.body.location, name: req.body.name }).select('id_airport').exec(function(err, airport){
 
     var message = new gcm.Message();
     message.addData('title',req.body.id_task);
     message.addData('description',req.body.description);
 
     var Parameters = Parameter.findOne({name: "api_key"});
-    var GCMs = GCM.find({id_airport: airport.id_airport, id_person: req.body.id_person});
+    var GCMs = GCM.find({id_airport: req.body.id_airport, id_person: req.body.id_person});
 
     var data = {
       parameters: Parameters.exec.bind(Parameters),
@@ -67,7 +67,7 @@ exports.create =  function(req, res){
         });
       }
     });
-  });
+  //});
 };
 
 exports.sendNotificationTest =  function(req, res){

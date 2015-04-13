@@ -28,7 +28,7 @@ exports.create = function(req, res){
       }).save( function( err, works ){
         if(err)
           console.log(err)
-        res.send(true);
+        res.send(works);
       });
     });
   });

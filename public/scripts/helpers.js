@@ -285,14 +285,14 @@ function makeWork(location,name,id_task,id_person){
     type:"POST",
     data: data,
     success:function(data){
+      sendGcmNotification(data.id_airport,data.id_task,data.id_person,data.description)
     }
   });
 }
 
-function sendGcmNotification(location,name,id_task,description,id_person){
+function sendGcmNotification(id_airport,id_task,id_person,description){
   var data = {
-    location: location,
-    name: name,
+    id_airport: id_airport,
     id_task: id_task,
     id_person: id_person,
     description: description
