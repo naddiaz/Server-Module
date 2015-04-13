@@ -39,7 +39,7 @@ exports.registrationGCM =  function(req, res){
 exports.create =  function(req, res){
 
   var Parameters = Parameter.findOne({name: "api_key"});
-  var GCMs = GCM.find({id_airport: req.body.id_airport, id_person: req.body.id_person});
+  var GCMs = GCM.findOne({id_airport: req.body.id_airport, id_person: req.body.id_person});
   var Tasks = Task.findOne({id_airport: req.body.id_airport,id_task: req.body.id_task});
 
   var data = {
@@ -52,14 +52,12 @@ exports.create =  function(req, res){
       res.send({status: err});
     else{
       var message = new gcm.Message();
-      console.log
-      message.addData('description',results.tasks[0].id_task + "," + results.tasks[0].description);
+      message.addData('description',results.tasks.id_task + "," + results.tasks.description);
 
       var sender = new gcm.Sender(results.parameters.value);
       var regIds = [];
-      for(i in results.gcms){
-        regIds.push(results.gcms[i].id_push);
-      }
+      regIds.push(results.gcms.id_push);
+
       sender.send(message, regIds, function (err, result) {
         if(err){
           console.log(err);
