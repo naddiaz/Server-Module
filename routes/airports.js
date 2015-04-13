@@ -133,7 +133,7 @@ exports.employeesStates =  function(req, res){
         var pending = false;
         for(var j=0; j<results.works.length; j++){
           //Si ha encontrado un trabajo para esta persona
-          if(results.works[j].id_person == results.people[i].id_person){
+          if(results.works[j].id_person == results.people[i].id_person && !active){
             //Si el estado es activo, deja de buscar y asigna activo al estado de esta persona
             if(results.works[j].state.toString() == 'active'){
               active = true;
