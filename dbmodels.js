@@ -73,7 +73,7 @@ var Work = new Schema({
   id_airport: Number,
   id_person: String,
   id_task: String,
-  state: {type: String, enum: ["no_asign", "asign", "running", "finish", "pause", "cancel"]},
+  state: type: String,
   created_at: Date,
   asign_at: Date,
   running_at: Date,
