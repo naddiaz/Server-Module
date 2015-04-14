@@ -58,7 +58,7 @@ exports.create =  function(req, res){
   async.parallel(data,function(err,results){
     if(err)
       res.send({status: err});
-    else{
+    else if(results.gcms != null){
       var message = new gcm.Message();
       message.addData('description',results.tasks.id_task + "," + results.tasks.description);
 
