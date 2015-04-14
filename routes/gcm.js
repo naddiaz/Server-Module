@@ -66,22 +66,18 @@ exports.create =  function(req, res){
         id_task: results.tasks.id_task,
         description: results.tasks.description
       })
-      message.collapseKey = 'taskPush';
-      message.delayWhileIdle = true;
-      message.timeToLive = 3;
-      message.dryRun = true;
+      //message.collapseKey = 'taskPush';
 
       var sender = new gcm.Sender(results.parameters.value);
 
       var regIds = [];
       regIds.push(results.gcms.id_push);
 
-      sender.send(message, regIds, false, function(err, data) {
-        if (!err) {
-          console.log(err) 
-        } else {
-          console.log(data)
+      sender.send(message, regIds, function(err, data) {
+        if(err){
+          res.send(err);
         }
+        res.send({status: true});
       });
     }
   });
