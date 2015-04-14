@@ -44,6 +44,7 @@ exports.tasksStates =  function(req, res){
         var full_completed = 0;
         var running = 0;
         var partial_asign = 0;
+        var pending = 0;
         for(var j=0; j<results.works.length; j++){
           if(results.tasks[i]._id.toString() == results.works[j].task._id.toString()){
             partial_asign++;
@@ -51,6 +52,8 @@ exports.tasksStates =  function(req, res){
               full_completed++;
             else if(results.works[j].state.toString() == 'active' )
               running++;
+            else if(results.works[j].state.toString() == 'asign' || results.works[j].state.toString() == 'pause')
+              pending++;
           }
         }
         if(full_completed == results.tasks[i].n_employees){
@@ -59,7 +62,7 @@ exports.tasksStates =  function(req, res){
         else if(running > 0){
           tasks_active.push(results.tasks[i]);
         }
-        else{
+        else if(pending > 0){
           tasks_pending.push(results.tasks[i]);
         }
         if(results.tasks[i].n_employees - partial_asign != 0){

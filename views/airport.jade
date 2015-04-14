@@ -24,111 +24,112 @@ block breadcrumb
 block menu_options
   include ../partials/menu.jade
 block content
-  .row-fluid
-    .span4.statbox.green
-      h1 Tareas Activas
-      .footer Tareas que se están realizando por algún empleado
-      .number
-        span#tasks_active
-      
-    .span4.statbox.yellow
-      h1 Tareas Pendientes
-      .footer Tareas creadas pendientes de que empiece a ser realizada
-      .number
-        span#tasks_pending
-    .span4.statbox.blue
-      h1 Tareas Completadas
-      .footer Tareas acabadas por cada una de las partes
-      .number
-        span#tasks_complete
-  .row-fluid
-    .span8.box
-      .box-header
-        | Asignaciones
-      .box-content
-        ul.dashboard-list.metro
-          li.orangeDark
-            h3 
-              i.fa.fa-times.orangeDark
-              | Tareas sin asignación o parcialmente asignadas
-          table.table.table-bordered.table-responsive
-            thead
-              tr
-                th ID Tarea
-                th Pendientes
-                th Categoría
-                th Prioridad
-                th Descripción
-                th Acciones
-            tbody#tasks_nonasign
-              
-          li.red
-            h3 
-              i.fa.fa-times.red
-              | Trabajos Pausados o Cancelados
-          table.table.table-bordered.table-responsive
-            thead
-              tr
-                th ID Tarea
-                th Empleado
-                th Categoría
-                th Prioridad
-                th Registro
-                th Estado
-                th Descripción
-            tbody#works_stop
-          li.yellow
-            h3
-              i.fa.fa-minus.yellow
-              | Trabajos Pendientes
-          table.table.table-bordered.table-responsive.flexy
-            thead
-              tr
-                th ID Tarea
-                th Empleado
-                th Categoría
-                th Prioridad
-                th Registro
-                th Descripción
-            tbody#works_pending
-          li.green
-            h3 
-              i.fa.fa-plus.green
-              | Trabajos Activos
-          table.table.table-bordered.table-responsive
-            thead
-              tr
-                th ID Tarea
-                th Empleado
-                th Categoría
-                th Prioridad
-                th Registro
-                th Descripción
-            tbody#works_active
-          li.blue
-            h3 
-              i.fa.fa-check.blue
-              | Trabajos Completados
-          table.table.table-bordered.table-responsive
-            thead
-              tr
-                th ID Tarea
-                th Empleado
-                th Categoría
-                th Prioridad
-                th Registro
-                th Descripción
-            tbody#works_complete
-    .span4.box
-      .box-header
-        | Empleados
-      .box-content
-        table.table.table-bordered.table-responsive.flexy
-          thead
-            tr
-              th Hist
-              th ID
-              th Nombre
-              th Categoría
-              th Estado
-          tbody#employees_state
+  .span8
+    .row-fluid
+      .span4.statbox.green
+        h1 Activas
+        .footer Tareas
+        .number
+          span#tasks_active
+        
+      .span4.statbox.yellow
+        h1 Pendientes
+        .footer Tareas
+        .number
+          span#tasks_pending
+      .span4.statbox.blue
+        h1 Completadas
+        .footer Tareas
+        .number
+          span#tasks_complete
+    .row-fluid
+      .span12.box
+        .box-header
+          | Asignaciones
+        .box-content
+          ul.dashboard-list.metro
+            li.orangeDark
+              h3 
+                i.fa.fa-times.orangeDark
+                | Tareas sin asignación o parcialmente asignadas
+            table.table.table-bordered.table-responsive
+              thead
+                tr
+                  th ID Tarea
+                  th Pendientes
+                  th Categoría
+                  th Prioridad
+                  th Descripción
+                  th Acciones
+              tbody#tasks_nonasign
+                
+            li.red
+              h3 
+                i.fa.fa-times.red
+                | Trabajos Pausados o Cancelados
+            table.table.table-bordered.table-responsive
+              thead
+                tr
+                  th ID Tarea
+                  th Empleado
+                  th Categoría
+                  th Prioridad
+                  th Registro
+                  th Estado
+                  th Descripción
+              tbody#works_stop
+            li.yellow
+              h3
+                i.fa.fa-minus.yellow
+                | Trabajos Pendientes
+            table.table.table-bordered.table-responsive.flexy
+              thead
+                tr
+                  th ID Tarea
+                  th Empleado
+                  th Categoría
+                  th Prioridad
+                  th Registro
+                  th Descripción
+              tbody#works_pending
+            li.green
+              h3 
+                i.fa.fa-plus.green
+                | Trabajos Activos
+            table.table.table-bordered.table-responsive
+              thead
+                tr
+                  th ID Tarea
+                  th Empleado
+                  th Categoría
+                  th Prioridad
+                  th Registro
+                  th Descripción
+              tbody#works_active
+            li.blue
+              h3 
+                i.fa.fa-check.blue
+                | Trabajos Completados
+            table.table.table-bordered.table-responsive
+              thead
+                tr
+                  th ID Tarea
+                  th Empleado
+                  th Categoría
+                  th Prioridad
+                  th Registro
+                  th Descripción
+              tbody#works_complete
+  .span4.box
+    .box-header
+      | Empleados
+    .box-content
+      table.table.table-bordered.table-responsive.flexy
+        thead
+          tr
+            th Hist
+            th ID
+            th Nombre
+            th Categoría
+            th Estado
+        tbody#employees_state
