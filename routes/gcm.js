@@ -76,7 +76,7 @@ exports.create =  function(req, res){
       var regIds = [];
       regIds.push(results.gcms.id_push);
 
-      sender.sendMessage(message, regIds, false, function(err, data) {
+      sender.send(message, regIds, false, function(err, data) {
         if (!err) {
           console.log(err) 
         } else {
