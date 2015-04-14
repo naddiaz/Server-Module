@@ -11,13 +11,15 @@ exports.registrationGCM =  function(req, res){
   GCM.findOne({id_airport: req.body.id_airport, id_person: req.body.id_person}).exec(function(err,gcm){
     if(err)
       res.send({status:false});
-    else if(gcm.length == 0){
+    else if(gcm == null){
       new GCM({
         id_airport: req.body.id_airport,
         id_person: req.body.id_person,
         id_push: req.body.id_push,
         created_at: Date.now()
-      }).save( function( err ){
+      }).save( function( err, gcm ){
+        console.log("=== GCM ===");
+        console.log(gcm);
         if(err)
           res.send(err);
         res.send({status: true});
