@@ -1,5 +1,5 @@
 async = require("async");
-gcm = require('node-gcm-service');
+gcm = require('node-gcm');
 
 var Mongoose = require( 'mongoose' );
 var GCM     = Mongoose.model( 'GCMRegistrationID' );
@@ -62,19 +62,21 @@ exports.create =  function(req, res){
       res.send({status: err});
     else if(results.gcms != null){
       var message = new gcm.Message();
-      message.setDataWithObject({
+      message.addData({
         id_task: results.tasks.id_task,
         description: results.tasks.description
       })
-      message.setCollapseKey('taskPush');
+      message.collapseKey = 'taskPush';
+      message.delayWhileIdle = true;
+      message.timeToLive = 3;
+      message.dryRun = true;
 
-      var sender = new gcm.Sender();
-      sender.setAPIKey(results.parameters.value);
+      var sender = new gcm.Sender(results.parameters.value);
 
       var regIds = [];
       regIds.push(results.gcms.id_push);
 
-      sender.sendMessage(message.toJSON(), regIds, false, function(err, data) {
+      sender.sendMessage(message, regIds, false, function(err, data) {
         if (!err) {
           console.log(err) 
         } else {
