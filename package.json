@@ -1,5 +1,5 @@
 {
-  "name": "Ble Taskser, SErver module",
+  "name": "BleTaskserServerModule",
   "version": "0.1.0",
   "private": true,
   "scripts": {
