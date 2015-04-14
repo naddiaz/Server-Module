@@ -11,7 +11,7 @@ exports.registrationGCM =  function(req, res){
   GCM.findOne({id_airport: req.body.id_airport, id_person: req.body.id_person}).exec(function(err,gcm){
     if(err)
       res.send({status:false});
-    else{
+    else if(gcm.length == 0){
       new GCM({
         id_airport: req.body.id_airport,
         id_person: req.body.id_person,
