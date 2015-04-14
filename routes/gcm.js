@@ -66,7 +66,7 @@ exports.create =  function(req, res){
         id_task: results.tasks.id_task,
         description: results.tasks.description
       })
-      //message.collapseKey = 'taskPush';
+      message.collapseKey = 'taskPush';
 
       var sender = new gcm.Sender(results.parameters.value);
 
