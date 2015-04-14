@@ -160,6 +160,7 @@ module.exports = function (app,routes) {
 
   var gcm = require('./gcm');
   app.post('/gcm/registration',gcm.registrationGCM);
+  app.post('/gcm/registration/unlink',gcm.unlinkGCM);
   app.post('/gcm/create',gcm.create);
 
 

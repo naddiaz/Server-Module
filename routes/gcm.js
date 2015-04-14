@@ -36,6 +36,14 @@ exports.registrationGCM =  function(req, res){
   });
 };
 
+exports.unlinkGCM =  function(req, res){
+  GCM.findOneAndRemove({id_airport: req.body.id_airport, id_person: req.body.id_person}).exec(function(err,gcm){
+    if(err)
+      res.send({status:false});
+    res.send({status:true});
+  });
+};
+
 exports.create =  function(req, res){
 
   var Parameters = Parameter.findOne({name: "api_key"});
