@@ -1,5 +1,5 @@
 async = require("async");
-gcm = require('node-gcm');
+gcm = require('node-gcm-service');
 
 var Mongoose = require( 'mongoose' );
 var GCM     = Mongoose.model( 'GCMRegistrationID' );
@@ -62,17 +62,25 @@ exports.create =  function(req, res){
       res.send({status: err});
     else if(results.gcms != null){
       var message = new gcm.Message();
-      message.addData('description',results.tasks.id_task + "," + results.tasks.description);
+      message.setDataWithObject({
+        id_task: results.tasks.id_task,
+        description: results.tasks.description
+      })
+      message.setCollapseKey('taskPush');
+      
+      var sender = new gcm.Sender({
+        key: results.parameters.value
+      });
 
-      var sender = new gcm.Sender(results.parameters.value);
       var regIds = [];
       regIds.push(results.gcms.id_push);
 
-      sender.send(message, regIds, function (err, result) {
-        if(err){
-          res.send(err);
+      sender.sendMessage(message.toJSON(), regIds, true, function(err, data) {
+        if (!err) {
+          // do something 
+        } else {
+          // handle error 
         }
-        res.send({status: true});
       });
     }
   });
