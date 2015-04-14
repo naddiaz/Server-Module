@@ -164,7 +164,7 @@ function checkChanges(work_table,newTr,id){
 }
 
 function cleanAfter(work,data,id){
-  if(data.length == work.find("tr").length)
+  if(data.length == 0)
     $(work.find("tr")).remove()
   else{
     for(var j=0; j<work.find("tr").length; j++){
@@ -175,7 +175,7 @@ function cleanAfter(work,data,id){
           cont++;
         }
       }
-      if(cont < data.length)
+      if(cont == 0)
         $(work.find("tr")[j]).remove()
       cont = 0;
     }
