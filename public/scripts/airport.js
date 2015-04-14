@@ -171,7 +171,7 @@ function cleanAfter(work,data,id){
       var cont = 0;
       for(i in data){
         console.log("tr_"+data[i].id_task+"_"+data[i].id_person+"_"+id);
-        if($(work.find("tr")[i]).attr('id') == "tr_"+data[i].id_task+"_"+data[i].id_person+"_"+id){
+        if($(work.find("tr")[j]).attr('id') == "tr_"+data[i].id_task+"_"+data[i].id_person+"_"+id){
           cont++;
         }
       }
