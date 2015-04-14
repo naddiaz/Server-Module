@@ -67,19 +67,18 @@ exports.create =  function(req, res){
         description: results.tasks.description
       })
       message.setCollapseKey('taskPush');
-      
-      var sender = new gcm.Sender({
-        key: results.parameters.value
-      });
+
+      var sender = new gcm.Sender();
+      sender.setAPIKey(results.parameters.value);
 
       var regIds = [];
       regIds.push(results.gcms.id_push);
 
-      sender.sendMessage(message.toJSON(), regIds, true, function(err, data) {
+      sender.sendMessage(message.toJSON(), regIds, false, function(err, data) {
         if (!err) {
-          // do something 
+          console.log(err) 
         } else {
-          // handle error 
+          console.log(data)
         }
       });
     }
