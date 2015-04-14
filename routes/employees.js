@@ -170,7 +170,6 @@ exports.tasks =  function(req, res){
       res.send({status:false});
     else{
       Work.find({id_airport: hash.id_airport, id_person: hash.id_person}).populate('person task').exec(function(err,works){
-        console.log(works)
         var works_active = new Array();
         var works_pending = new Array();
         var works_complete = new Array();

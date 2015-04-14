@@ -114,7 +114,7 @@ exports.history = function(req, res){
         }
         //console.log(avg_points);
         
-        console.log("SIGNIFICANT POINTS")
+        //console.log("SIGNIFICANT POINTS")
         var points = new Array();
         var prev = 0;
         var frequency_acc = avg_points[0].frequency;
@@ -130,13 +130,13 @@ exports.history = function(req, res){
           prev++;
         }
         points.push({id_beacon:avg_points[prev].id_beacon,frequency:frequency_acc});
-        console.log(points)
+        //console.log(points)
         
         /*
           Para el mapa de calor reagrupamos indistintamente del orden,
           solo nos interesa la frecuencia por punto
         */
-        console.log("HOT POINTS")
+        //console.log("HOT POINTS")
         var order_points = points.slice();
         order_points.sort(function(a,b){
           if(a.id_beacon<b.id_beacon) return -1;
@@ -158,7 +158,7 @@ exports.history = function(req, res){
           prev++;
         }
         hot_points.push({id_beacon:order_points[prev].id_beacon,frequency:acc});
-        console.log(hot_points);
+        //console.log(hot_points);
 
         res.send({sig_points: points, hot_points: hot_points});
       }

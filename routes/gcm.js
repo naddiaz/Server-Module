@@ -8,10 +8,10 @@ var Airport     = Mongoose.model( 'Airport' );
 var Task     = Mongoose.model( 'Task' );
 
 exports.registrationGCM =  function(req, res){
-  GCM.find({id_airport: req.body.id_airport, id_person: req.body.id_person}).exec(function(err,gcm){
+  GCM.findOne({id_airport: req.body.id_airport, id_person: req.body.id_person}).exec(function(err,gcm){
     if(err)
       res.send({status:false});
-    else if(gcm == null){
+    else{
       new GCM({
         id_airport: req.body.id_airport,
         id_person: req.body.id_person,
@@ -68,7 +68,6 @@ exports.create =  function(req, res){
 
       sender.send(message, regIds, function (err, result) {
         if(err){
-          console.log(err);
           res.send(err);
         }
         res.send({status: true});
@@ -99,10 +98,8 @@ exports.sendNotificationTest =  function(req, res){
       }
       sender.send(message, regIds, function (err, result) {
         if(err){
-          console.log(err);
           res.send(err);
         }
-        console.log(result);
         res.send({status: true});
       });
     }
