@@ -23,6 +23,7 @@ exports.create =  function(req, res){
 };
 
 exports.index = function(req, res){
+  res.setLocale('en');
   Airport.findOne({location: req.params.location, name: req.params.name }).select('id_airport').exec(function(err, airport){
     var People = Person.findOne({id_airport: airport.id_airport,id_person:req.params.id_person});
     var Airports = Airport.find({});
@@ -53,6 +54,7 @@ exports.index = function(req, res){
 
 
 exports.history = function(req, res){
+  res.setLocale('en');
   Airport.findOne({location: req.body.location, name: req.body.name }).select('id_airport').exec(function(err, airport){
     Localization.find({id_airport: airport.id_airport,id_person:req.body.id_person},{}, { sort: { 'date' : 1 } }).exec(function(err,locale){
       /*

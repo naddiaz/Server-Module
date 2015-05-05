@@ -5,19 +5,19 @@ li
 li
   a(href="/airport/#{location}/#{name}/")
     i.fa.fa-gears
-    span.hidden-tablet  Panel de Control
+    span.hidden-tablet= __("menu.control_panel")
 li
   a(href="/airport/#{location}/#{name}/tasks")
     i.fa.fa-tasks
-    span.hidden-tablet  Tareas
+    span.hidden-tablet= __("menu.tasks")
 li
   a(href="/airport/#{location}/#{name}/map")
     i.fa.fa-globe
-    span.hidden-tablet  Mapa
+    span.hidden-tablet= __("menu.map")
 li
   a(href="/airport/#{location}/#{name}/employees")
     i.fa.fa-users
-    span.hidden-tablet  Empleados
+    span.hidden-tablet= __("menu.employees")
 // li
   a(href="/airport/#{location}/#{name}/devices")
     i.fa.fa-signal
@@ -25,11 +25,11 @@ li
 li
   a(href="/airport/#{location}/#{name}/categories")
     i.fa.fa-th-list
-    span.hidden-tablet  Categorías
+    span.hidden-tablet= __("menu.categories")
 li 
   a.tag(href="#")
     i.fa.fa-th
-    span Todas las instalaciones
+    span= __("menu.all_installations")
 - each airport in airports
   li.nonmark 
     a(href="/airport/#{airport.location}/#{airport.name}/")
@@ -38,4 +38,4 @@ li
 li 
   a.tag(href="#")
     i.fa.fa-th
-    span Más opciones
+    span= __("menu.more_options")

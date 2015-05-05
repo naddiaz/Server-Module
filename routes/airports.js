@@ -7,6 +7,7 @@ var Airport     = Mongoose.model( 'Airport' );
 var Work = Mongoose.model('Work');
 
 exports.index =  function(req, res){
+  res.setLocale('en');
   Airport.find({}).exec(function(err,airports){
     res.render('airport',{
         location: req.params.location,

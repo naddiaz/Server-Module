@@ -38,11 +38,11 @@ html
                   span.caret
                 ul.dropdown-menu
                   li.dropdown-menu-title
-                    span Opciones
+                    span= __("menu.options")
                   li
                     a(href='/')
                       i.halflings-icon.off
-                      |  Salir
+                      = __("menu.logout")
     .container-fluid-full
       .row-fluid
         #sidebar-left.span2
@@ -51,12 +51,12 @@ html
               li
                 a(href='/index')
                   i.fa.fa-home
-                  span.hidden-tablet  Inicio
+                  span.hidden-tablet= __("menu.index")
               block menu_options
               li
                 a(href='/help')
                   i.fa.fa-question
-                  span.hidden-tablet  Ayuda
+                  span.hidden-tablet=  __("menu.help")
               block menu_options_help
         #content.span10
           ul.breadcrumb

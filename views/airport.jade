@@ -11,7 +11,7 @@ block scripts
 block breadcrumb
   li
     i.fa.fa-home
-    a(href='/index') Inicio
+    a(href='/index')= __("breadcrumb.index")
     i.fa.fa-angle-right
   li #{location}
     i.fa.fa-angle-right
@@ -19,7 +19,7 @@ block breadcrumb
     i.fa.fa-angle-right
   li
     i.fa.fa-gears 
-    | Panel de Control
+    = __("breadcrumb.control_panel")
 
 block menu_options
   include ../partials/menu.jade
@@ -27,109 +27,109 @@ block content
   .span8
     .row-fluid
       .span4.statbox.green
-        h1 Activas
-        .footer Tareas
+        h1= __("panel.tasks.active")
+        .footer= __("panel.tasks.tasks")
         .number
           span#tasks_active
         
       .span4.statbox.yellow
-        h1 Pendientes
-        .footer Tareas
+        h1= __("panel.tasks.pending")
+        .footer= __("panel.tasks.tasks")
         .number
           span#tasks_pending
       .span4.statbox.blue
-        h1 Completadas
-        .footer Tareas
+        h1= __("panel.tasks.complete")
+        .footer= __("panel.tasks.tasks")
         .number
           span#tasks_complete
     .row-fluid
       .span12.box
         .box-header
-          | Asignaciones
+          = __("panel.tasks.assign")
         .box-content
           ul.dashboard-list.metro
             li.orangeDark
               h3 
                 i.fa.fa-times.orangeDark
-                | Tareas sin asignación o parcialmente asignadas
+                = __("panel.tasks.assign.partial")
             table.table.table-bordered.table-responsive
               thead
                 tr
-                  th ID Tarea
-                  th Pendientes
-                  th Categoría
-                  th Prioridad
-                  th Descripción
-                  th Acciones
+                  th= __("panel.tasks.table.id")
+                  th= __("panel.tasks.table.pending")
+                  th= __("panel.tasks.table.category")
+                  th= __("panel.tasks.table.priority")
+                  th= __("panel.tasks.table.description")
+                  th= __("panel.tasks.table.actions")
               tbody#tasks_nonasign
                 
             li.red
               h3 
                 i.fa.fa-times.red
-                | Trabajos Pausados o Cancelados
+                = __("panel.works.pause")
             table.table.table-bordered.table-responsive
               thead
                 tr
-                  th ID Tarea
-                  th Empleado
-                  th Categoría
-                  th Prioridad
-                  th Registro
-                  th Estado
-                  th Descripción
+                  th= __("panel.tasks.table.id")
+                  th= __("panel.tasks.table.employee")
+                  th= __("panel.tasks.table.category")
+                  th= __("panel.tasks.table.priority")
+                  th= __("panel.tasks.table.register")
+                  th= __("panel.tasks.table.state")
+                  th= __("panel.tasks.table.description")
               tbody#works_stop
             li.yellow
               h3
                 i.fa.fa-minus.yellow
-                | Trabajos Pendientes
+                = __("panel.works.pending")
             table.table.table-bordered.table-responsive.flexy
               thead
                 tr
-                  th ID Tarea
-                  th Empleado
-                  th Categoría
-                  th Prioridad
-                  th Registro
-                  th Descripción
+                  th= __("panel.tasks.table.id")
+                  th= __("panel.tasks.table.employee")
+                  th= __("panel.tasks.table.category")
+                  th= __("panel.tasks.table.priority")
+                  th= __("panel.tasks.table.register")
+                  th= __("panel.tasks.table.description")
               tbody#works_pending
             li.green
               h3 
                 i.fa.fa-plus.green
-                | Trabajos Activos
+                = __("panel.works.active")
             table.table.table-bordered.table-responsive
               thead
                 tr
-                  th ID Tarea
-                  th Empleado
-                  th Categoría
-                  th Prioridad
-                  th Registro
-                  th Descripción
+                  th= __("panel.tasks.table.id")
+                  th= __("panel.tasks.table.employee")
+                  th= __("panel.tasks.table.category")
+                  th= __("panel.tasks.table.priority")
+                  th= __("panel.tasks.table.register")
+                  th= __("panel.tasks.table.description")
               tbody#works_active
             li.blue
               h3 
                 i.fa.fa-check.blue
-                | Trabajos Completados
+                = __("panel.works.complete")
             table.table.table-bordered.table-responsive
               thead
                 tr
-                  th ID Tarea
-                  th Empleado
-                  th Categoría
-                  th Prioridad
-                  th Registro
-                  th Descripción
+                  th= __("panel.tasks.table.id")
+                  th= __("panel.tasks.table.employee")
+                  th= __("panel.tasks.table.category")
+                  th= __("panel.tasks.table.priority")
+                  th= __("panel.tasks.table.register")
+                  th= __("panel.tasks.table.description")
               tbody#works_complete
   .span4.box
     .box-header
-      | Empleados
+      = __("panel.employees.employees")
     .box-content
       table.table.table-bordered.table-responsive.flexy
         thead
           tr
-            th Hist
-            th ID
-            th Nombre
-            th Categoría
-            th Estado
+            th= __("panel.employees.table.history")
+            th= __("panel.employees.table.id")
+            th= __("panel.employees.table.name")
+            th= __("panel.employees.table.category")
+            th= __("panel.employees.table.state")
         tbody#employees_state
