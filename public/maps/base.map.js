@@ -56,8 +56,8 @@ function initialize() {
     if($('#sw_editmode').is(':checked')){
       var cell = {
         id_cell: getNextCellID(LOCATION,NAME),
-        latitude: e.latLng.k,
-        longitude: e.latLng.D,
+        latitude: e.latLng.A,
+        longitude: e.latLng.F,
         color: randColor()
       }
       makeBeaconCircle(map,cell);
