@@ -27,7 +27,7 @@ i18n.configure({
 // all environments
 app.configure(function(){
   app.set('address', 'localhost');
-  app.set('port', process.env.PORT || 10000);
+  app.set('port', process.env.PORT || 8080);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
   app.use(express.favicon());
