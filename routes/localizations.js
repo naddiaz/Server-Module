@@ -5,6 +5,7 @@ var Airport     = Mongoose.model( 'Airport' );
 var Localization     = Mongoose.model( 'Localization' );
 var Person     = Mongoose.model( 'Person' );
 var Cell     = Mongoose.model( 'Cell' );
+var Beacon     = Mongoose.model( 'Beacon' );
 var HashRegistration = Mongoose.model('HashRegistration');
 
 exports.create =  function(req, res){
@@ -196,10 +197,12 @@ exports.history = function(req, res){
 
 exports.beaconToLatLon = function(req, res){
   Airport.findOne({location: req.body.location, name: req.body.name }).select('id_airport').exec(function(err, airport){
-    Cell.findOne({id_airport: airport.id_airport,id_cell:req.body.id_beacon}).select('latitude longitude').exec(function(err,cell){
-      if(err)
-        res.send(err)
-      res.send(cell);
-    });
+    Beacon.findOne({id_airport: airport.id_airport,id_beacon:req.body.id_beacon}).exec(function(err,beacon){
+      Cell.findOne({id_airport: airport.id_airport,id_cell:beacon.id_cell}).select('latitude longitude').exec(function(err,cell){
+        if(err)
+          res.send(err)
+        res.send(cell);
+      });
+    })
   });
 };
