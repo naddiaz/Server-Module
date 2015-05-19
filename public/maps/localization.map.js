@@ -139,19 +139,19 @@ function hot_colors(value,base){
 }
 
 function radiusNorm(value){
-  if(value => 30){
+  if(value >= 30){
     return 30;
   }
-  else if(value => 25){
+  else if(value >= 25){
     return 25;
   }
-  else if(value => 20){
+  else if(value >= 20){
     return 20;
   }
-  else if(value => 15){
+  else if(value >= 15){
     return 15;
   }
-  else if(value => 10){
+  else if(value >= 10){
     return 10;
   }
   else{
