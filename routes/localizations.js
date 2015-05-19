@@ -132,8 +132,8 @@ exports.history = function(req, res){
           Tomamos como puntos significativos todos aquellos que superen la media de la frecuencia
           y volvemos a agrupar, para hacer coincidir los grupos
         */
-        var avg_points = new Array();
-        for(i in frequency){
+        var points = groupedUpToAvg(frequency, position.length/frequency.length);
+        /*for(i in frequency){
           if(frequency[i].frequency >=position.length/frequency.length){
             avg_points.push({id_beacon:frequency[i].id_beacon,frequency:frequency[i].frequency});
           }
@@ -157,26 +157,22 @@ exports.history = function(req, res){
           final_frequency += avg_points[i].frequency;
           prev++;
         }
-        points.push({id_beacon:avg_points[prev].id_beacon,frequency:frequency_acc});
-        console.log(points)
+        points.push({id_beacon:avg_points[prev].id_beacon,frequency:frequency_acc});*/
+        console.log("SIGNIFICANT POINTS");
+        console.log(points);
         
-        /* Volver a filtrar por la media de los significativos y agrupar */
+        /* Volver a filtrar por el 60% de media de los significativos y agrupar */
 
-        var final_points = new Array();
-        var avg_frequency = final_frequency / points.length;
-        for(var i=0; i<points.length; i++){
-          if(points[i].frequency >= avg_frequency){
-            final_points.push({id_beacon:points[i].id_beacon,frequency:points[i].frequency});
-          }
-        }
+        var final_points = groupedUpToAvg(points, (getPointsFrequency(points)/points.length * 0.6));
         console.log("FINAL POINTS");
-        console.log(final_points);
+        console.log(points);
+
         /*
           Para el mapa de calor reagrupamos indistintamente del orden,
           solo nos interesa la frecuencia por punto
         */
         console.log("HOT POINTS")
-        var order_points = points.slice();
+        var order_points = final_points.slice();
         order_points.sort(function(a,b){
           if(a.id_beacon<b.id_beacon) return -1;
           if(a.id_beacon>b.id_beacon) return 1
@@ -219,3 +215,37 @@ exports.beaconToLatLon = function(req, res){
     })
   });
 };
+
+function groupedUpToAvg(arr,avg){
+  var avg_points = new Array();
+    for(i in arr){
+      if(arr[i].frequency >= avg){
+        avg_points.push({id_beacon:arr[i].id_beacon,frequency:arr[i].frequency});
+      }
+    }
+    
+    var points = new Array();
+    var prev = 0;
+    var frequency_acc = avg_points[0].frequency;
+    for(var i=1; i<avg_points.length; i++){
+      if(avg_points[prev].id_beacon == avg_points[i].id_beacon){
+        frequency_acc += avg_points[i].frequency;
+      }
+      else{
+        points.push({id_beacon:avg_points[prev].id_beacon,frequency:frequency_acc});
+        if(i+1< avg_points.length)
+          frequency_acc = avg_points[i+1].frequency;
+      }
+      prev++;
+    }
+    points.push({id_beacon:avg_points[prev].id_beacon,frequency:frequency_acc});
+    return points;
+}
+
+function getPointsFrequency(arr){
+  var frequency = 0;
+  for(var i=0; i<arr.length; i++){
+    frequency += arr[i].frequency;
+  }
+  return frequency;
+}
