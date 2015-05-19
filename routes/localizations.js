@@ -104,7 +104,6 @@ exports.history = function(req, res){
           }
           prev++;
         }
-        console.log(position);
 
         /*
           Obteniendo la frecuencia para cada id_beacons seguido igual
@@ -124,46 +123,18 @@ exports.history = function(req, res){
         if(count > 0){
           frequency.push({id_beacon:actual,frequency:count});
         }
-        console.log(frequency);
-
-        console.log(position.length/frequency.length)
 
         /*
           Tomamos como puntos significativos todos aquellos que superen la media de la frecuencia
           y volvemos a agrupar, para hacer coincidir los grupos
         */
         var points = groupedUpToAvg(frequency, position.length/frequency.length);
-        /*for(i in frequency){
-          if(frequency[i].frequency >=position.length/frequency.length){
-            avg_points.push({id_beacon:frequency[i].id_beacon,frequency:frequency[i].frequency});
-          }
-        }
-        console.log(avg_points);
-        
-        console.log("SIGNIFICANT POINTS")
-        var points = new Array();
-        var prev = 0;
-        var frequency_acc = avg_points[0].frequency;
-        var final_frequency = frequency_acc;
-        for(var i=1; i<avg_points.length; i++){
-          if(avg_points[prev].id_beacon == avg_points[i].id_beacon){
-            frequency_acc += avg_points[i].frequency;
-          }
-          else{
-            points.push({id_beacon:avg_points[prev].id_beacon,frequency:frequency_acc});
-            if(i+1< avg_points.length)
-              frequency_acc = avg_points[i+1].frequency;
-          }
-          final_frequency += avg_points[i].frequency;
-          prev++;
-        }
-        points.push({id_beacon:avg_points[prev].id_beacon,frequency:frequency_acc});*/
         console.log("SIGNIFICANT POINTS");
         console.log(points);
         
         /* Volver a filtrar por el 60% de media de los significativos y agrupar */
 
-        var final_points = groupedUpToAvg(points, (getPointsFrequency(points)/points.length * 0.6));
+        var final_points = groupedUpToAvg(points, (getPointsFrequency(points)/points.length * 0.4));
         console.log("FINAL POINTS");
         console.log(final_points);
 

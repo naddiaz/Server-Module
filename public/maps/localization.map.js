@@ -138,24 +138,16 @@ function hot_colors(value,base){
     return "#F44336";
 }
 
-function radiusNorm(value){
-  if(value >= 30){
-    return 30;
-  }
-  else if(value >= 25){
-    return 25;
-  }
-  else if(value >= 20){
-    return 20;
-  }
-  else if(value >= 15){
-    return 15;
-  }
-  else if(value >= 10){
+function radiusNorm(value,base){
+  value = (value * 100) / base;
+  if(value > 0 && value <= 20)
     return 10;
-  }
-  else{
-    return 8;
-  }
-
+  if(value > 20 && value <= 40)
+    return 15;
+  if(value > 40 && value <= 60)
+    return 20;
+  if(value > 60 && value <= 80)
+    return 25;
+  if(value > 80 && value <= 100)
+    return 30;
 }
