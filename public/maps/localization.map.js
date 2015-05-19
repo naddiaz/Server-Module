@@ -100,7 +100,7 @@ function hot_beacons_map(beacons,map) {
   for(i in beacons){
     var circle = new google.maps.Circle({
       center: new google.maps.LatLng(beacons[i].position.latitude, beacons[i].position.longitude),
-      radius: ((beacons[i].frequency/base)*100)*0.4,
+      radius: radiusNorm(((beacons[i].frequency/base)*100)*0.3),
       strokeColor: hot_colors(beacons[i].frequency,base),
       strokeOpacity: 0.8,
       strokeWeight: 2,
@@ -136,4 +136,26 @@ function hot_colors(value,base){
     return "#FF9800";
   if(value > 80 && value <= 100)
     return "#F44336";
+}
+
+function radiusNorm(value){
+  if(value => 30){
+    return 30;
+  }
+  else if(value => 25){
+    return 25;
+  }
+  else if(value => 20){
+    return 20;
+  }
+  else if(value => 15){
+    return 15;
+  }
+  else if(value => 10){
+    return 10;
+  }
+  else{
+    return 8;
+  }
+
 }
