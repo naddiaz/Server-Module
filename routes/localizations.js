@@ -144,6 +144,7 @@ exports.history = function(req, res){
         var points = new Array();
         var prev = 0;
         var frequency_acc = avg_points[0].frequency;
+        var final_frequency = frequency_acc;
         for(var i=1; i<avg_points.length; i++){
           if(avg_points[prev].id_beacon == avg_points[i].id_beacon){
             frequency_acc += avg_points[i].frequency;
@@ -153,11 +154,23 @@ exports.history = function(req, res){
             if(i+1< avg_points.length)
               frequency_acc = avg_points[i+1].frequency;
           }
+          final_frequency += avg_points[i].frequency;
           prev++;
         }
         points.push({id_beacon:avg_points[prev].id_beacon,frequency:frequency_acc});
         console.log(points)
         
+        /* Volver a filtrar por la media de los significativos y agrupar */
+
+        var final_points = new Array();
+        var avg_frequency = final_frequency / points.length;
+        for(var i=0; i<points.length; i++){
+          if(points[i].frequency >= avg_frequency){
+            final_points.push({id_beacon:points[i].id_beacon,frequency:points[i].frequency});
+          }
+        }
+        console.log("FINAL POINTS");
+        console.log(final_points);
         /*
           Para el mapa de calor reagrupamos indistintamente del orden,
           solo nos interesa la frecuencia por punto
@@ -186,7 +199,7 @@ exports.history = function(req, res){
         hot_points.push({id_beacon:order_points[prev].id_beacon,frequency:acc});
         console.log(hot_points);
 
-        res.send({sig_points: points, hot_points: hot_points});
+        res.send({sig_points: final_points, hot_points: hot_points});
       }
       else{
         res.send({error:'nodata'});
