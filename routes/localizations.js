@@ -165,7 +165,7 @@ exports.history = function(req, res){
 
         var final_points = groupedUpToAvg(points, (getPointsFrequency(points)/points.length * 0.6));
         console.log("FINAL POINTS");
-        console.log(points);
+        console.log(final_points);
 
         /*
           Para el mapa de calor reagrupamos indistintamente del orden,
