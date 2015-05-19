@@ -225,20 +225,23 @@ function groupedUpToAvg(arr,avg){
     }
     
     var points = new Array();
-    var prev = 0;
-    var frequency_acc = avg_points[0].frequency;
-    for(var i=1; i<avg_points.length; i++){
-      if(avg_points[prev].id_beacon == avg_points[i].id_beacon){
-        frequency_acc += avg_points[i].frequency;
+    var acc = 0;
+    for(var i=0; i<avg_points.length; i++){
+      if(i < avg_points.length-1){
+        if(avg_points[i].id_beacon == avg_points[i+1].id_beacon){
+          acc += avg_points[i].frequency;
+        }
+        else{
+          acc += avg_points[i].frequency;
+          points.push({id_beacon:avg_points[i].id_beacon,frequency:acc});
+          acc = 0;
+        }
       }
       else{
-        points.push({id_beacon:avg_points[prev].id_beacon,frequency:frequency_acc});
-        if(i+1< avg_points.length)
-          frequency_acc = avg_points[i+1].frequency;
+        acc += avg_points[i].frequency;
+        points.push({id_beacon:avg_points[i].id_beacon,frequency:acc});
       }
-      prev++;
     }
-    points.push({id_beacon:avg_points[prev].id_beacon,frequency:frequency_acc});
     return points;
 }
 
