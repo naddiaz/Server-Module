@@ -40,14 +40,14 @@ Person.index({id_airport: 1, id_person: 1}, {unique: true});
 var Localization = new Schema({
   id_airport: Number,
   id_person: String,
-  id_beacon: Number,
+  id_beacon: String,
   rssi: Number,
   date: Date
 });
 
 var Beacon = new Schema({
   id_airport: Number,
-  id_beacon: Number,
+  id_beacon: String,
   id_cell: String
 });
 Beacon.index({id_airport: 1, id_beacon: 1}, {unique: true});

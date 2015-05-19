@@ -5,6 +5,7 @@ var Airport     = Mongoose.model( 'Airport' );
 var Localization     = Mongoose.model( 'Localization' );
 var Person     = Mongoose.model( 'Person' );
 var Cell     = Mongoose.model( 'Cell' );
+var HashRegistration = Mongoose.model('HashRegistration');
 
 exports.create =  function(req, res){
   Airport.findOne({location: req.body.location, name: req.body.name }).select('id_airport').exec(function(err, airport){
@@ -21,6 +22,28 @@ exports.create =  function(req, res){
     });
   });
 };
+
+exports.saveLocation =  function(req, res){
+  HashRegistration.findOne({hash:req.body.hash}).exec(function(err, hash){
+    if(err)
+      res.send({status:false});
+    else if(hash == null)
+      res.send({status:false});
+    else{
+      new Localization({
+        id_airport: hash.id_airport,
+        id_person: hash.id_person,
+        id_beacon: req.body.id_beacon,
+        rssi: req.body.rssi,
+        date: Date.now()
+      }).save( function( err ){
+        if(err)
+          res.send(err);
+        res.send({status: true});
+      });
+    }
+  });
+}
 
 exports.index = function(req, res){
   res.setLocale('en');
