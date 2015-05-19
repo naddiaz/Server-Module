@@ -61,12 +61,16 @@ function initialize() {
         color: randColor()
       }
       makeBeaconCircle(map,cell);
-      setCell(LOCATION,NAME,cell);
-      var beacon = {
-        id_cell: getNextCellID(LOCATION,NAME),
-        id_beacon: getNextCellID(LOCATION,NAME),
+      var beaconId = prompt("Inserte el identificador del dispositivo");
+    
+      if (beaconId != null) {
+        setCell(LOCATION,NAME,cell);
+        var beacon = {
+          id_cell: getNextCellID(LOCATION,NAME),
+          id_beacon: beaconId,
+        }
+        setBeacon(LOCATION,NAME,beacon);
       }
-      setBeacon(LOCATION,NAME,beacon);
     }
   });
 
