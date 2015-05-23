@@ -166,4 +166,7 @@ module.exports = function (app,routes) {
 
 
   app.get('/gcm/test',gcm.sendNotificationTest);
+
+  var test = require('./testCrypt');
+  app.get('/test/crypt/:id_airport/:id_person/:message',test.index);
 };
