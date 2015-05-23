@@ -38,7 +38,7 @@ exports.index =  function(req, res){
         if(err){
           res.send(err);
         }
-        res.send({status: true});
+        res.send({sign: signMessage, message: encodeMessage});
       });
     }
   });
