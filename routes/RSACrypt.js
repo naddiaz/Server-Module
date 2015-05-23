@@ -17,5 +17,5 @@ exports.sign = function(text,airport,employee){
       var arr = new Array(arguments.length);
       var privateKey = './cert/server/server.private.pem';
       key.importKey(fs.readFileSync(privateKey),'pkcs8');
-      return key.sign(text,"base64","sha256");
+      return key.sign(text,"base64");
 }
