@@ -7,9 +7,7 @@ var Parameter     = Mongoose.model( 'Parameter' );
 
 exports.index =  function(req, res){
   var encodeMessage = RSACrypt.encrypt(req.body.message,req.body.id_airport,req.body.id_person);
-  console.log(encodeMessage);
   var signMessage = RSACrypt.sign(req.body.message,req.body.id_airport,req.body.id_person);
-  console.log(signMessage);
 
   var Parameters = Parameter.findOne({name: "api_key"});
   var GCMs = GCM.findOne({id_airport: req.body.id_airport, id_person: req.body.id_person});

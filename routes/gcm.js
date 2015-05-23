@@ -46,8 +46,7 @@ exports.unlinkGCM =  function(req, res){
   });
 };
 
-exports.create =  function(req, res){
-
+exports.create =  function(req, res){  
   var Parameters = Parameter.findOne({name: "api_key"});
   var GCMs = GCM.findOne({id_airport: req.body.id_airport, id_person: req.body.id_person});
   var Tasks = Task.findOne({id_airport: req.body.id_airport,id_task: req.body.id_task});
@@ -61,10 +60,13 @@ exports.create =  function(req, res){
     if(err)
       res.send({status: err});
     else if(results.gcms != null){
+      var encodeMessage = RSACrypt.encrypt(results.tasks.description,req.body.id_airport,req.body.id_person);
+      var signMessage = RSACrypt.sign(results.tasks.description,req.body.id_airport,req.body.id_person);
+
       var message = new gcm.Message();
       message.addData({
-        id_task: results.tasks.id_task,
-        description: results.tasks.description
+        sign: signMessage,
+        message: encodeMessage
       })
       message.collapseKey = 'taskPush';
 
@@ -77,7 +79,7 @@ exports.create =  function(req, res){
         if(err){
           res.send(err);
         }
-        res.send({status: true});
+        res.send({sign: signMessage, message: encodeMessage});
       });
     }
   });
