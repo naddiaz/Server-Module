@@ -141,6 +141,9 @@ exports.hashCheck =  function(req, res){
 };
 
 exports.hashVerify =  function(req, res){
+  console.log(req.body.data);
+  res.send({status:true});
+/*
   HashRegistration.findOne({hash: req.body.hash}).exec(function(err, hash){
     if(err)
       res.send({status:false});
@@ -149,6 +152,7 @@ exports.hashVerify =  function(req, res){
     else
       res.send({status:true});
   });
+*/
 };
 
 exports.delete =  function(req, res){
