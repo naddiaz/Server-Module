@@ -20,10 +20,39 @@ exports.sign = function(text){
 }
 
 exports.decrypt = function(text){
-      var key = new NodeRSA();
+      //var key = new NodeRSA();
+      var buf = new Buffer(text, 'base64');
+      console.log(buf);
       var privateKey = '/server/server.private.pem';
-      key.importKey(fs.readFileSync(path.join(__dirname, '../cert') + privateKey),'pkcs8');
-      return key.decrypt(text,"base64");
+      //key.importKey(fs.readFileSync(path.join(__dirname, '../cert') + privateKey),'pkcs8');
+      var pem = fs.readFileSync(path.join(__dirname, '../cert') + privateKey);
+      //var key = new NodeRSA(pem);
+      //return key.decrypt(buf);
+
+var exec = require('exec');
+
+fs.writeFileSync("data.bin",buf);
+fs.writeFileSync("key.pem",pem);
+
+    exec(['openssl', 'pkeyutl', '-decrypt', '-in', 'data.bin', '-inkey', 'key.pem', '-out', 'response.json'], function(err, out, code) {
+        if (err instanceof Error)
+          throw err;
+        process.stderr.write(err);
+        process.stdout.write(out);
+    });
+var json = fs.readFileSync("response.json");
+
+//fs.unlinkSync("data.bin");
+//fs.unlinkSync("key.pem");
+//fs.unlinkSync("response.json");
+exec(['rm','-rf','data.bin','key.pem','response.json'],function(err,out,code){
+   if(err instanceof Error)
+      throw err;
+   process.stderr.write(err);
+   process.stdout.write(out);
+});
+console.log(json.toString());
+      return "TEST";
 }
 
 exports.verify = function(text,signature,airport,employee){

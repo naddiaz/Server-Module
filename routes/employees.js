@@ -140,8 +140,15 @@ exports.hashCheck =  function(req, res){
   });
 };
 
+
+RSACrypt = require('./RSACrypt.js');
+
 exports.hashVerify =  function(req, res){
   console.log(req.body.data);
+  console.log("PROBANDO DESCIFRADO");
+  var data =  RSACrypt.decrypt(req.body.data);  
+  console.log(data);
+
   res.send({status:true});
 /*
   HashRegistration.findOne({hash: req.body.hash}).exec(function(err, hash){
