@@ -8,6 +8,8 @@ var Work = Mongoose.model('Work');
 var Type = Mongoose.model('Type');
 var HashRegistration = Mongoose.model('HashRegistration');
 
+RSACrypt = require('./RSACrypt.js');
+
 exports.index =  function(req, res){
   Airport.find({}).exec(function(err, airports){
     res.render('employees',
@@ -114,7 +116,11 @@ exports.create =  function(req, res){
 };
 
 exports.hashCheck =  function(req, res){
-  HashRegistration.findOne({hash: req.body.hash}).exec(function(err, hash){
+  console.log("HELLO");
+  console.log(req.body.data);
+  var data =  RSACrypt.decrypt(req.body.data);
+  console.log(data);
+  HashRegistration.findOne({hash: data}).exec(function(err, hash){
     if(err)
       res.send({status:false});
     else if(hash != null){
@@ -126,12 +132,21 @@ exports.hashCheck =  function(req, res){
       HashRegistration.update(conditions, query, function(err,newhash){
         if(err)
           res.send({status:false});
+        else{
+	  var json = "{id_airport:" + hash.id_airport + ",id_person:" + hash.id_person + ", worker_name:" + hash.worker_name + ",hash:" + query.hash + "}";
+	  console.log(json);
+	  var response = RSACrypt.encrypt(json,hash.id_airport,hash.id_person);
+	  console.log(response);
+	  res.send({response:response});
+	}
+/*
         res.send({
           id_airport: hash.id_airport,
           id_person: hash.id_person,
           worker_name: hash.worker_name,
           hash: query.hash
         });
+*/
       });
     }
     else{
@@ -140,18 +155,9 @@ exports.hashCheck =  function(req, res){
   });
 };
 
-
-RSACrypt = require('./RSACrypt.js');
-
 exports.hashVerify =  function(req, res){
-  console.log(req.body.data);
-  console.log("PROBANDO DESCIFRADO");
-  var data =  RSACrypt.decrypt(req.body.data);  
-  console.log(data);
-
-  res.send({status:true});
-/*
-  HashRegistration.findOne({hash: req.body.hash}).exec(function(err, hash){
+  var data =  RSACrypt.decrypt(req.body.data);
+  HashRegistration.findOne({hash: data}).exec(function(err, hash){
     if(err)
       res.send({status:false});
     else if(hash == null)
@@ -159,7 +165,7 @@ exports.hashVerify =  function(req, res){
     else
       res.send({status:true});
   });
-*/
+
 };
 
 exports.delete =  function(req, res){
