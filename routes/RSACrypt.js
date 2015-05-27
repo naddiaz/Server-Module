@@ -6,10 +6,24 @@ var fs = require('fs')
   ;
 
 exports.encrypt = function(text,airport,employee){
-      var key = new NodeRSA();
+     /* var key = new NodeRSA();
       var publicKey = '/employees/a' + airport + 'e' + employee + '/a' + airport + 'e' + employee + '.public.der';
       key.importKey(fs.readFileSync(path.join(__dirname, '../cert') + publicKey),'pkcs8-public-der');
       return key.encrypt(text,"base64");
+     */
+     var exec = require('exec');
+     var execSync = require('exec-sync');
+     // Construct public employee key path
+     var publicKeyPath = 'cert/a' + airport + 'e' + employee + '/a' + airport + 'e' + employee + '.public.pem';
+     var dirname = "d" + random();
+     var response = null;
+     //Creamos el subdirectorio (dirname) dentro de temp
+     execSync('mkdir temp/' + dirname);
+     fs.writeFileSync('temp/' + dirname + '/message.raw',text);
+     execSync('openssl pkeyutl -encrypt -in temp/' + dirname + '/message.raw -pubin -inKey ' + publicKeyPath + ' -out cipher.bin');
+     response = fs.readFileSync('temp/' + dirname + '/cipher.bin');
+     console.log('RESPONSE: ' + new Base64(response,'utf-8'));
+     return new Base64(response,'utf-8');
 }
 
 exports.sign = function(text){
