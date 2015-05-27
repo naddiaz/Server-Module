@@ -49,19 +49,20 @@ exports.decrypt = function(text){
           json = fs.readFileSync('temp/' + dirname + '/response.json');
           //Eliminamos el directorio temporal
           exec(['rm','-rf','temp/' + dirname],function(err,out,code){
-             if(err instanceof Error)
+             if(err instanceof Error){
                 throw err;
-             process.stderr.write(err);
-             process.stdout.write(out);
+             }
+             else{
+              if(json != null)
+                return json;
+              else
+                return "TEST";
+             }
           });
         }
       });
     }
   });
-  if(json != null)
-    return json;
-  else
-    return "TEST";
 }
 
 exports.verify = function(text,signature,airport,employee){
