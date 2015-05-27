@@ -22,13 +22,14 @@ exports.sign = function(text){
 exports.decrypt = function(text){
   //Base 64 to Buffer encrypted text
   var exec = require('exec');
+  var execSync = require('exec-sync');  
   var buffer = new Buffer(text, 'base64');
   //Read private server key
   var privateKey = fs.readFileSync(path.join(__dirname, '../cert') + '/server/server.private.pem');
   var dirname = "d" + random();
   //Creamos el subdirectorio (dirname) dentro de temp
   var json = null;
-  exec(['mkdir','temp/' + dirname],function(err,out,code){
+  execSync(['mkdir','temp/' + dirname],function(err,out,code){
     if(err instanceof Error){
       throw err;
     }
@@ -36,7 +37,7 @@ exports.decrypt = function(text){
       //Creamos un archivo que contiene los datos del buffer
       fs.writeFileSync(path.join(__dirname, '../temp/') + dirname + "/data.bin",buffer);
       //Con la clave y los datos en ficheros ejecutamos openssl
-      exec(['openssl', 'pkeyutl',
+      execSync(['openssl', 'pkeyutl',
         '-decrypt', '-in', 'temp/' + dirname + '/data.bin',
         '-inkey', 'cert/server/server.private.pem',
         '-out', 'temp/' + dirname + '/response.json'],
@@ -47,18 +48,17 @@ exports.decrypt = function(text){
         else{
           //Guardamos la aplicacion en la variable json
           json = fs.readFileSync('temp/' + dirname + '/response.json');
+          console.log(json.toString());
           //Eliminamos el directorio temporal
           exec(['rm','-rf','temp/' + dirname],function(err,out,code){
              if(err instanceof Error){
                 throw err;
              }
-             else{
-              if(json != null)
-                return json;
-              else
-                return "TEST";
-             }
           });
+          if(json != null)
+            return json;
+          else
+            return "TEST";
         }
       });
     }
