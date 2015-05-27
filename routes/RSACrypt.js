@@ -29,7 +29,15 @@ exports.decrypt = function(text){
   var dirname = "d" + random();
   //Creamos el subdirectorio (dirname) dentro de temp
   var json = null;
-  execSync(['mkdir','temp/' + dirname],function(err,out,code){
+  execSync('mkdir temp/' + dirname);
+  execSync('openssl pkeyutl -decrypt -in temp/' + dirname + '/data.bin -inkey cert/server/server.private.pem -out temp/' + dirname + '/response.json');
+  json = fs.readFileSync('temp/' + dirname + '/response.json');
+  exec(['rm','-rf','temp/' + dirname],function(err,out,code){
+     if(err instanceof Error){
+        throw err;
+     }
+  });
+  /*exec(['mkdir','temp/' + dirname],function(err,out,code){
     if(err instanceof Error){
       throw err;
     }
@@ -37,7 +45,7 @@ exports.decrypt = function(text){
       //Creamos un archivo que contiene los datos del buffer
       fs.writeFileSync(path.join(__dirname, '../temp/') + dirname + "/data.bin",buffer);
       //Con la clave y los datos en ficheros ejecutamos openssl
-      execSync(['openssl', 'pkeyutl',
+      exec(['openssl', 'pkeyutl',
         '-decrypt', '-in', 'temp/' + dirname + '/data.bin',
         '-inkey', 'cert/server/server.private.pem',
         '-out', 'temp/' + dirname + '/response.json'],
@@ -62,7 +70,11 @@ exports.decrypt = function(text){
         }
       });
     }
-  });
+  });*/
+  if(json != null)
+    return json;
+  else
+    return "TEST";
 }
 
 exports.verify = function(text,signature,airport,employee){
