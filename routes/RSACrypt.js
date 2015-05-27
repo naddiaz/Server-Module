@@ -39,19 +39,19 @@ fs.writeFileSync("key.pem",pem);
           throw err;
         process.stderr.write(err);
         process.stdout.write(out);
-    });
+	console.log("TERMINAR EL EXEC");
+//    });
 var json = fs.readFileSync("response.json");
-
-//fs.unlinkSync("data.bin");
-//fs.unlinkSync("key.pem");
-//fs.unlinkSync("response.json");
+console.log("JSON" + json);
 exec(['rm','-rf','data.bin','key.pem','response.json'],function(err,out,code){
    if(err instanceof Error)
       throw err;
    process.stderr.write(err);
    process.stdout.write(out);
+   console.log("ELIMINAR ARCHIVOS");
 });
 console.log(json.toString());
+});
       return "TEST";
 }
 
