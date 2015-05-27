@@ -30,6 +30,7 @@ exports.decrypt = function(text){
   //Creamos el subdirectorio (dirname) dentro de temp
   var json = null;
   execSync('mkdir temp/' + dirname);
+  fs.writeFileSync(path.join(__dirname, '../temp/') + dirname + "/data.bin",buffer);
   execSync('openssl pkeyutl -decrypt -in temp/' + dirname + '/data.bin -inkey cert/server/server.private.pem -out temp/' + dirname + '/response.json');
   json = fs.readFileSync('temp/' + dirname + '/response.json');
   exec(['rm','-rf','temp/' + dirname],function(err,out,code){
@@ -37,42 +38,8 @@ exports.decrypt = function(text){
         throw err;
      }
   });
-  /*exec(['mkdir','temp/' + dirname],function(err,out,code){
-    if(err instanceof Error){
-      throw err;
-    }
-    else{
-      //Creamos un archivo que contiene los datos del buffer
-      fs.writeFileSync(path.join(__dirname, '../temp/') + dirname + "/data.bin",buffer);
-      //Con la clave y los datos en ficheros ejecutamos openssl
-      exec(['openssl', 'pkeyutl',
-        '-decrypt', '-in', 'temp/' + dirname + '/data.bin',
-        '-inkey', 'cert/server/server.private.pem',
-        '-out', 'temp/' + dirname + '/response.json'],
-      function(err, out, code) {
-        if(err instanceof Error){
-          throw err;
-        }
-        else{
-          //Guardamos la aplicacion en la variable json
-          json = fs.readFileSync('temp/' + dirname + '/response.json');
-          console.log(json.toString());
-          //Eliminamos el directorio temporal
-          exec(['rm','-rf','temp/' + dirname],function(err,out,code){
-             if(err instanceof Error){
-                throw err;
-             }
-          });
-          if(json != null)
-            return json;
-          else
-            return "TEST";
-        }
-      });
-    }
-  });*/
   if(json != null)
-    return json;
+    return json.toString();
   else
     return "TEST";
 }
