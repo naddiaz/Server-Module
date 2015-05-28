@@ -9,6 +9,7 @@ var Type = Mongoose.model('Type');
 var HashRegistration = Mongoose.model('HashRegistration');
 
 RSACrypt = require('./RSACrypt.js');
+Token = require('./Token.js');
 
 exports.index =  function(req, res){
   Airport.find({}).exec(function(err, airports){
@@ -116,10 +117,7 @@ exports.create =  function(req, res){
 };
 
 exports.hashCheck =  function(req, res){
-  console.log("HELLO");
-  console.log(req.body.data);
   var data =  RSACrypt.decrypt(req.body.data);
-  console.log(data);
   HashRegistration.findOne({hash: data}).exec(function(err, hash){
     if(err)
       res.send({status:false});
@@ -133,20 +131,15 @@ exports.hashCheck =  function(req, res){
         if(err)
           res.send({status:false});
         else{
-	  var json = "{id_airport:" + hash.id_airport + ",id_person:" + hash.id_person + ", worker_name:" + hash.worker_name + ",hash:" + query.hash + "}";
-	  console.log(json);
-	  var response = RSACrypt.encrypt(json,hash.id_airport,hash.id_person);
-	  console.log(response);
+	  var json = {
+            id_airport: hash.id_airport,
+            id_person: hash.id_person,
+            worker_name: hash.worker_name,
+            hash: query.hash
+          };
+	  var response = RSACrypt.encrypt(JSON.stringify(json),hash.id_airport,hash.id_person);
 	  res.send({response:response});
 	}
-/*
-        res.send({
-          id_airport: hash.id_airport,
-          id_person: hash.id_person,
-          worker_name: hash.worker_name,
-          hash: query.hash
-        });
-*/
       });
     }
     else{
@@ -180,7 +173,9 @@ exports.delete =  function(req, res){
 
 
 exports.tasks =  function(req, res){
-  HashRegistration.findOne({hash:req.body.hash}).exec(function(err, hash){
+  var data =  RSACrypt.decrypt(req.body.data);
+  var token = RSACrypt.decrypt(req.body.token);
+  HashRegistration.findOne({hash:data}).exec(function(err, hash){
     if(err)
       res.send({status:false});
     else if(hash == null)
@@ -206,13 +201,24 @@ exports.tasks =  function(req, res){
         }
         if(err)
           res.send({status:false});
-        res.send({
+        var json = {
           works_complete: works_complete,
           works_active: works_active,
           works_pending: works_pending,
           works_pause: works_pause,
           works_stop: works_stop
-        });
+        };
+	var jsonText = JSON.stringify(json);
+	var tokenServer = Token.generate(jsonText);
+        if(tokenServer == token){
+          res.send({status:true});
+        }
+	else{
+          res.send({
+	    response:RSACrypt.encrypt(jsonText),
+	    token:RSACrypt.encrypt(tokenServer)
+          });
+	}
       });
     }
   });
