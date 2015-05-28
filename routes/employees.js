@@ -215,8 +215,8 @@ exports.tasks =  function(req, res){
         }
 	else{
           res.send({
-	    response:RSACrypt.encrypt(jsonText),
-	    token:RSACrypt.encrypt(tokenServer)
+	    response:RSACrypt.encrypt(jsonText,hash.id_airport,hash.id_person),
+	    token:RSACrypt.encrypt(tokenServer,hash.id_airport,hash.id_person)
           });
 	}
       });

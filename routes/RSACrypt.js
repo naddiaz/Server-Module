@@ -4,23 +4,43 @@ var fs = require('fs')
   , NodeRSA = require('node-rsa')
   , path = require('path') 
   ;
+var MAX_LENGTH = 127;
 
 exports.encrypt = function(text,airport,employee){
      var exec = require('exec');
      var execSync = require('exec-sync');
-     var publicKeyPath = 'cert/employees/a' + airport + 'e' + employee + '/a' + airport + 'e' + employee + '.public.pem';
+     var publicKeyPath = 'cert/employees/a' + airport + 'e' + employee + '/a' + airport + 'e' + employee + '.public.der';
      var dirname = "d" + random();
      var response = null;
      execSync('mkdir temp/' + dirname);
      fs.writeFileSync('temp/' + dirname + '/message.raw',text);
-     execSync('openssl pkeyutl -encrypt -in temp/' + dirname + '/message.raw -pubin -inkey ' + publicKeyPath + ' -out temp/' + dirname + '/cipher.bin');
-     execSync('openssl enc -base64 -in temp/' + dirname + '/cipher.bin -out temp/' + dirname + '/cipher.b64');
+     var message = fs.readFileSync('temp/' + dirname + '/message.raw');
+     console.log(message);
+     console.log(message.length);
+     if(message.length <= MAX_LENGTH){
+       execSync('openssl pkeyutl -encrypt -in temp/' + dirname + '/message.raw -pubin -keyform der -inkey ' + publicKeyPath + ' -out temp/' + dirname + '/cipher.bin');
+       execSync('openssl enc -base64 -in temp/' + dirname + '/cipher.bin -out temp/' + dirname + '/cipher.b64');
+     }
+     else{
+        var i = 0;
+	while(i<message.length){
+	   var sliceMessage = message.slice(i,i+MAX_LENGTH);
+	   console.log("SLICE: " + sliceMessage);
+	   fs.writeFileSync('temp/' + dirname + '/cipher.part.' + i,sliceMessage); 
+	   execSync('openssl pkeyutl -encrypt -in temp/' + dirname + '/cipher.part.' + i + ' -pubin -keyform der -inkey ' + publicKeyPath + ' -out temp/' + dirname + '/cipher.bin.' + i);
+           execSync('openssl enc -base64 -in temp/' + dirname + '/cipher.bin.' + i + ' -out temp/' + dirname + '/cipher.b64.' + i);
+	   i = i+MAX_LENGTH;
+	}
+	var merge = execSync('head -c -1 -q temp/' + dirname + '/cipher.b64.*');
+        console.log("MERGE: " + merge);
+     	fs.writeFileSync('temp/' + dirname + '/cipher.b64',merge);
+     }
      response = fs.readFileSync('temp/' + dirname + '/cipher.b64');
-     exec(['rm','-rf','temp/' + dirname],function(err,out,code){
+/*     exec(['rm','-rf','temp/' + dirname],function(err,out,code){
        if(err instanceof Error){
           throw err;
        }
-     });
+     });*/
      return response.toString();
 }
 
