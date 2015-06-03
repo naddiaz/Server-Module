@@ -22,13 +22,13 @@ exports.index =  function(req, res){
   });
 };
 
-function hashCalculate(id_airport,id_person,name,date){
+function hashCalculate(id_airport,id_person,worker_name,date){
   var input = id_airport + id_person + worker_name + date.toString();
-  var a =  Math.floor(Math.random() * (13421772 - 0) + 0);
-  var b =  Math.floor(Math.random() * (13421772 - a) + a);
+  var a =  127;
+  var b =  8191;
   for(var i = 0; i<input.length; i++){
     a = a ^ input.charCodeAt(i);
-    b = b ^ a ^ 55;
+    b = b ^ a ^ 13;
   }
   return (a.toString(16) + b.toString(16));
 }
@@ -94,7 +94,7 @@ exports.create =  function(req, res){
           if(err)
             res.send(err);
           res.send({status: true});
-        })
+        });
       }
     });
   });
