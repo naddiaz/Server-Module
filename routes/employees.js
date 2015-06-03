@@ -22,31 +22,15 @@ exports.index =  function(req, res){
   });
 };
 
-String.prototype.hashCode = function() {
-  var hash = 0, i, chr, len;
-  if (this.length == 0) return hash;
-  for (i = 0, len = this.length; i < len; i++) {
-    chr   = this.charCodeAt(i);
-    hash  = ((hash << 5) - hash) + chr;
-    hash |= 0;
-  }
-  return hash;
-};
-
-function intToHex(i){
-    return ((i>>24)&0xFF).toString(16) + 
-           ((i>>16)&0xFF).toString(16) + 
-           ((i>>8)&0xFF).toString(16) + 
-           (i&0xFF).toString(16);
-}
-
 function hashCalculate(id_airport,id_person,name,date){
-  var hash = 1;
-  hash = hash * 11 + id_airport;
-  hash = hash * 17 + id_person.hashCode();
-  hash = hash * 31 + name.hashCode();
-  hash = hash * 13 + date.toString().hashCode();
-  return intToHex(hash);
+  var input = id_airport + id_person + worker_name + date.toString();
+  var a =  Math.floor(Math.random() * (13421772 - 0) + 0);
+  var b =  Math.floor(Math.random() * (13421772 - a) + a);
+  for(var i = 0; i<input.length; i++){
+    a = a ^ input.charCodeAt(i);
+    b = b ^ a ^ 55;
+  }
+  return (a.toString(16) + b.toString(16));
 }
 
 exports.list =  function(req, res){
