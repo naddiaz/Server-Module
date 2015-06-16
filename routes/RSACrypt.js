@@ -5,14 +5,15 @@ var fs = require('fs')
   , path = require('path') 
   ;
 var MAX_LENGTH = 127;
+var PATH = "/var/www/tfg.naddiaz.com/Server-Module/";
 
 exports.encrypt = function(text,airport,employee){
      var exec = require('exec');
      var execSync = require('exec-sync');
-     var publicKeyPath = 'cert/employees/a' + airport + 'e' + employee + '/a' + airport + 'e' + employee + '.public.der';
+     var publicKeyPath = PATH + 'cert/employees/a' + airport + 'e' + employee + '/a' + airport + 'e' + employee + '.public.der';
      var dirname = "d" + random();
      var response = null;
-     execSync('mkdir temp/' + dirname);
+     execSync('mkdir ' +  PATH + 'temp/' + dirname);
      fs.writeFileSync('temp/' + dirname + '/message.raw',text);
      var message = fs.readFileSync('temp/' + dirname + '/message.raw');
      console.log(message);

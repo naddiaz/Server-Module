@@ -50,6 +50,7 @@
   "panel.tasks.table.register": "Register",
 
   "panel.employees.employees": "Employees",
+  "panel.employees.messages": "Messages",
   "panel.employees.table.history": "Hist",
   "panel.employees.table.id": "ID",
   "panel.employees.table.name": "Name",

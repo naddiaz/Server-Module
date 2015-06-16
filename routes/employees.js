@@ -22,16 +22,39 @@ exports.index =  function(req, res){
   });
 };
 
-function hashCalculate(id_airport,id_person,worker_name,date){
-  var input = id_airport + id_person + worker_name + date.toString();
-  var a =  127;
-  var b =  8191;
-  for(var i = 0; i<input.length; i++){
-    a = a ^ input.charCodeAt(i);
-    b = b ^ a ^ 13;
+  function isPrime(n) {
+    if (isNaN(n) || !isFinite(n) || n%1 || n<2) return false; 
+    var m=Math.sqrt(n);
+    for (var i=2;i<=m;i++) if (n%i==0) return false;
+    return true;
   }
-  return (a.toString(16) + b.toString(16));
-}
+
+  function primeBetween(low,high){
+    low = parseInt(low,16);
+    high = parseInt(high,16);
+    var x = Math.floor(Math.random() * (high - low) + low);
+    while(!isPrime(x)){
+      x = Math.floor(Math.random() * (high - low) + low);
+    }
+    return x;
+  }
+
+  function hashCalculate(id_airport,id_person,worker_name,date){
+    var id = id_airport + id_person + worker_name;
+    var input = id + date.toString();
+
+    var a = primeBetween("0FF","FFF");
+    var b = parseInt("1FFF",16);
+
+    var j = 0;
+    for(var i = 0; i<input.length; i++){
+      a = a ^ input.charCodeAt(i);
+      if(j<id.length)
+        b = b ^ a ^ id.charCodeAt(j);
+      j++;
+    }
+    return (a.toString(16) + b.toString(16));
+  }
 
 exports.list =  function(req, res){
   Airport.findOne({location: req.body.location, name: req.body.name }).select('id_airport').exec(function(err, airport){

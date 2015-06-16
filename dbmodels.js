@@ -107,6 +107,17 @@ var Parameter = new Schema({
 });
 Parameter.index({name: 1}, {unique: true});
 
+var Message = new Schema({
+  id_airport: Number,
+  id_person: String,
+  origin: {type: String, enum: ["device", "server"]},
+  content: String,
+  send_at: Date,
+  is_show_server: Boolean,
+  is_show_device: Boolean
+});
+Message.index({id_airport: 1, id_person: 1, send_at: 1}, {unique: true});
+
 var db = Mongoose.connect('mongodb://localhost/bletaskerDB');
 db.model('Airport', Airport);
 db.model('Person', Person);
@@ -120,3 +131,4 @@ db.model('Type', Type);
 db.model('GCMRegistrationID', GCMRegistrationID);
 db.model('HashRegistration', HashRegistration);
 db.model('Parameter', Parameter);
+db.model('Message', Message);

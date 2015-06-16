@@ -8,7 +8,10 @@ block scripts
   script.
     LOCATION = "#{location}"
     NAME = "#{name}"
-  
+    PERSON = "#{person.id_person}"
+    
+  script(src='/scripts/chat.js')
+
   script(src='/scripts/alerts.js')
   script(src='/scripts/helpers.js')
   script(src='/scripts/localizations.js')
@@ -62,6 +65,18 @@ block content
                 td= person.worker_name
                 td= person.worker_type
                 td= person.device_type
+      .span8.box
+        .box-header#chat-ad
+          = __("panel.employees.messages")
+        .box-content
+          .row-fluid#messages
+            ul.chat#chat-box  
+          .row-fluid
+            .span11
+              input.fill#text(type="text")
+            .span1
+              a.btn.btn-info.fill(title="Send", onClick="send()")
+                i.fa.fa-paper-plane
       .row-fluid
         .span12.box
           .box-header.double

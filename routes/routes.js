@@ -169,4 +169,11 @@ module.exports = function (app,routes) {
 
   var test = require('./testCrypt');
   app.post('/test/crypt',test.index);
+
+
+  var messages = require('./messages');
+  app.post('/messages/send/server',messages.send_server);
+  app.post('/messages/send/device',messages.send_device);
+  app.post('/messages/update/server',messages.update_server);
+  app.post('/messages/update/device',messages.update_device);
 };

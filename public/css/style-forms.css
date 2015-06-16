@@ -37,6 +37,72 @@ textarea,
   width: 206px;
 }
 
+#messages{
+  margin: 5% 2% !important;
+  max-height: 250px;
+  width: 98%;
+  overflow: auto;
+}
+
+#chat-box > li{
+  min-height: 32px;
+}
+
+#chat-box > li.server > div{
+  float: left !important;
+  width: 62.5%;
+  text-align: right;
+  padding: 2.5% 2.5% 2.5% 10%;
+}
+
+#chat-box > li.device > div{
+  float: left !important;
+  width: 62.5%;
+  text-align: left;
+  padding: 2.5%  10% 2.5% 2.5%;
+}
+
+#chat-box > li > div.date{
+  float: right !important;
+  width: 20%;
+  padding: 2.5% !important;
+  color: #CCC;
+  text-align: right !important;
+}
+
+.chat{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.chat li{
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted #B3A9A9;
+}
+
+.chat li.left .chat-body{
+    margin-left: 60px;
+}
+
+.chat li.right .chat-body{
+    margin-right: 60px;
+}
+
+input.fill{
+  width: 90% !important;
+  margin: 0 2% 0 5%;
+  height: 24px;
+}
+
+a.btn.fill{
+  margin: 0 !important;
+}
+a.btn.fill > i{
+  padding: 0 2%;
+}
+
 textarea {
   height: auto;
   width: 80%;
