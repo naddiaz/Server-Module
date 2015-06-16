@@ -215,17 +215,21 @@ exports.tasks =  function(req, res){
           works_pause: works_pause,
           works_stop: works_stop
         };
-	var jsonText = JSON.stringify(json);
-	var tokenServer = Token.generate(jsonText);
+      	var jsonText = JSON.stringify(json);
+      	var tokenServer = Token.generate(jsonText);
+        console.log("Token server: " + tokenServer);
+        console.log("Token device: " + token);
+        console.log("Data: " + jsonText);
+        console.log("Encrypt: " + RSACrypt.encrypt(jsonText,hash.id_airport,hash.id_person));
         if(tokenServer == token){
           res.send({status:true});
         }
-	else{
+      	else{
           res.send({
-	    response:RSACrypt.encrypt(jsonText,hash.id_airport,hash.id_person),
-	    token:RSACrypt.encrypt(tokenServer,hash.id_airport,hash.id_person)
+      	    response:RSACrypt.encrypt(jsonText,hash.id_airport,hash.id_person),
+      	    token:RSACrypt.encrypt(tokenServer,hash.id_airport,hash.id_person)
           });
-	}
+      	}
       });
     }
   });

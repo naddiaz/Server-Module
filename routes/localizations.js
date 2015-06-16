@@ -47,7 +47,7 @@ exports.saveLocation =  function(req, res){
 }
 
 exports.index = function(req, res){
-  res.setLocale('en');
+  //res.setLocale('en');
   Airport.findOne({location: req.params.location, name: req.params.name }).select('id_airport').exec(function(err, airport){
     var People = Person.findOne({id_airport: airport.id_airport,id_person:req.params.id_person});
     var Airports = Airport.find({});
@@ -78,7 +78,7 @@ exports.index = function(req, res){
 
 
 exports.history = function(req, res){
-  res.setLocale('en');
+  //res.setLocale('en');
   Airport.findOne({location: req.body.location, name: req.body.name }).select('id_airport').exec(function(err, airport){
     Localization.find({id_airport: airport.id_airport,id_person:req.body.id_person},{}, { sort: { 'date' : 1 } }).exec(function(err,locale){
       /*
@@ -128,16 +128,17 @@ exports.history = function(req, res){
           Tomamos como puntos significativos todos aquellos que superen la media de la frecuencia
           y volvemos a agrupar, para hacer coincidir los grupos
         */
-        var points = groupedUpToAvg(frequency, position.length/frequency.length);
+        console.log(frequency);
+        var points = groupedUpToAvg(frequency, (position.length-1)/frequency.length);
         console.log("SIGNIFICANT POINTS");
         console.log(points);
         
         /* Volver a filtrar por el 60% de media de los significativos y agrupar */
 
-        var final_points = groupedUpToAvg(points, (getPointsFrequency(points)/points.length * 0.4));
+        /*var final_points = groupedUpToAvg(points, (getPointsFrequency(points)/points.length * 0.4));
         console.log("FINAL POINTS");
-        console.log(final_points);
-
+        console.log(final_points);*/
+        var final_points = points;
         /*
           Para el mapa de calor reagrupamos indistintamente del orden,
           solo nos interesa la frecuencia por punto
@@ -150,22 +151,23 @@ exports.history = function(req, res){
           return 0;
         });
         
-        var prev = 0;
-        var acc = order_points[0].frequency;
-        var hot_points = new Array();
-        for(var i=1; i<order_points.length; i++){
-          if(order_points[prev].id_beacon == order_points[i].id_beacon){
-            acc += order_points[i].frequency;
+        if(order_points.length != 0){
+          var prev = 0;
+          var acc = order_points[0].frequency;
+          var hot_points = new Array();
+          for(var i=1; i<order_points.length; i++){
+            if(order_points[prev].id_beacon == order_points[i].id_beacon){
+              acc += order_points[i].frequency;
+            }
+            else{
+              hot_points.push({id_beacon:order_points[prev].id_beacon,frequency:acc});
+              acc = order_points[i].frequency;
+            }
+            prev++;
           }
-          else{
-            hot_points.push({id_beacon:order_points[prev].id_beacon,frequency:acc});
-            acc = order_points[i].frequency;
-          }
-          prev++;
+          hot_points.push({id_beacon:order_points[prev].id_beacon,frequency:acc});
+          console.log(hot_points);
         }
-        hot_points.push({id_beacon:order_points[prev].id_beacon,frequency:acc});
-        console.log(hot_points);
-
         res.send({sig_points: final_points, hot_points: hot_points});
       }
       else{
