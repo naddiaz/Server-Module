@@ -219,8 +219,6 @@ exports.tasks =  function(req, res){
       	var tokenServer = Token.generate(jsonText);
         console.log("Token server: " + tokenServer);
         console.log("Token device: " + token);
-        console.log("Data: " + jsonText);
-        console.log("Encrypt: " + RSACrypt.encrypt(jsonText,hash.id_airport,hash.id_person));
         if(tokenServer == token){
           res.send({status:true});
         }
