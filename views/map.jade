@@ -30,16 +30,39 @@ block content
     .span12
       .span12.box
         .box-header
-          .span2
-            h2
-              i.fa.fa-edit
-              = __("home.map")
-          .span10.box-action
-            button#mapToggleCircleArea.box-action
-              i.fa.fa-eye
-              = __("map.circleArea")
-            button#mapToggleGraphLines.box-action
-              i.fa.fa-eye
-              = __("map.graphLines")
+          .row-fluid
+            .span2
+              h2
+                i.fa.fa-edit
+                = __("home.map")
+            .span10.box-action
+              button#mapToggleCircleArea.box-action
+                i.fa.fa-eye
+                = __("map.circleArea")
+              button#mapToggleGraphLines.box-action
+                i.fa.fa-eye
+                = __("map.graphLines")
+          .row-fluid
+            .span2
+              p= __("map.groupsTitle")
+            .span3
+              input#groupId(type="number" min="1" max="15" value=1)
+            .span3
+              select#groupColor(style="background:#F44336")
+                option(value='F44336' style="background:#F44336 !important") F44336
+                option(value='673AB7' style="background:#673AB7 !important; color:#FFF") 673AB7
+                option(value='3F51B5' style="background:#3F51B5 !important; color:#FFF") 3F51B5
+                option(value='2196F3' style="background:#2196F3 !important") 2196F3
+                option(value='03A9F4' style="background:#03A9F4 !important") 03A9F4
+                option(value='00BCD4' style="background:#00BCD4 !important") 00BCD4
+                option(value='009688' style="background:#009688 !important") 009688
+                option(value='4CAF50' style="background:#4CAF50 !important") 4CAF50
+                option(value='8BC34A' style="background:#8BC34A !important") 8BC34A
+                option(value='CDDC39' style="background:#CDDC39 !important") CDDC39
+                option(value='FFEB3B' style="background:#FFEB3B !important") FFEB3B
+                option(value='FFC107' style="background:#FFC107 !important") FFC107
+                option(value='FF9800' style="background:#FF9800 !important") FF9800
+                option(value='FF5722' style="background:#FF5722 !important") FF5722
+                option(value='795548' style="background:#795548 !important; color:#FFF") 795548
         .box-content
           #map_canvas

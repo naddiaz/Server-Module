@@ -5,14 +5,18 @@
 	"login.user_id": "ID Usuario",
 	"login.password": "Contraseña",
 	"login.button_access": "Acceder",
+	
 	"home.index": "Inicio",
 	"home.control_panel": "Panel de control",
 	"home.activities": "Actividades",
 	"home.map": "Mapa",
 	"home.employees": "Empleados",
 	"home.categories": "Categorías",
+
 	"map.circleArea": "Mostrar / Ocultar Círculos",
 	"map.graphLines": "Mostrar / Ocultar Grafo",
+	"map.groupsTitle": "Groups",
+
 	"breadcrumb.index": "Inicio",
 	"breadcrumb.control_panel": "Panel de Control",
 	"breadcrumb.employees": "Empleados",

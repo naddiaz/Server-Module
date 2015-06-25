@@ -40,8 +40,17 @@ function initialize() {
       removeAdjacentPolyline(circlesBeacons,polylineAdjacent);
     }
   });
+  refreshBoxGroups();
 }
+
 google.maps.event.addDomListener(window, 'load', initialize);
+
+function refreshBoxGroups(){
+  document.getElementById("groupColor").addEventListener("change", function(){
+    var color = this.value;
+    this.style.background = "#" + color;
+  });
+}
 
 function mapClickEvent(map,circlesBeacons,polylineAdjacent){
   google.maps.event.addListener(map, "click", function(e) {
@@ -54,6 +63,9 @@ function mapClickEvent(map,circlesBeacons,polylineAdjacent){
 }
 
 function paintBeaconCircle(map,latitude,longitude,circlesBeacons,polylineAdjacent){
+  var groupId = document.getElementById("groupId").value;
+  console.log(groupId)
+  var groupColor = document.getElementById("groupColor").value;
   var center = new google.maps.LatLng(latitude,longitude);
   var circleAreaData = {
     strokeColor: '#F44336',
@@ -64,18 +76,20 @@ function paintBeaconCircle(map,latitude,longitude,circlesBeacons,polylineAdjacen
     map: map,
     center: center,
     radius: 30,
-    id: circlesBeacons.length
+    id: circlesBeacons.length,
+    group: groupId
   };
   var circleCenterData = {
     strokeWeight: 0,
-    fillColor: '#3F51B5',
+    fillColor: '#' + groupColor,
     fillOpacity: 1,
     map: map,
     center: center,
     radius: 3,
     draggable: true,
     zIndex:10000,
-    id: circlesBeacons.length
+    id: circlesBeacons.length,
+    group: groupId
   };
   circleArea = new google.maps.Circle(circleAreaData);
   circleCenter = new google.maps.Circle(circleCenterData);
@@ -88,9 +102,9 @@ function paintBeaconCircle(map,latitude,longitude,circlesBeacons,polylineAdjacen
     addAdjacentPolyline(circlesBeacons,polylineAdjacent);
   });
 
-  google.maps.event.addListener(circleArea, "rightclick", function(e) {
+  google.maps.event.addListener(circleCenter, "rightclick", function(e) {
     this.setMap(null);
-    circlesBeacons[this.id].center.setMap(null);
+    circlesBeacons[this.id].area.setMap(null);
     removeAdjacentPolyline(circlesBeacons,polylineAdjacent);
     refreshBeaconsIds(circlesBeacons);
     checkAdjacents(circlesBeacons);
@@ -103,7 +117,7 @@ function checkAdjacents(circlesBeacons){
     var anyAdjacent = 0;
     if(circlesBeacons[i].center.getMap() != null){
       for(var j=0; j<circlesBeacons.length; j++){
-        if(circlesBeacons[j].center.getMap() != null && i!=j){
+        if(circlesBeacons[j].center.getMap() != null && i!=j && circlesBeacons[i].center.group == circlesBeacons[j].center.group){
           if(distanceBetweenTwoPoints(circlesBeacons[i].center.getCenter(),circlesBeacons[j].center.getCenter()) < 30){
             anyAdjacent += 1;
             if(anyAdjacent == 1)
@@ -136,7 +150,6 @@ function showCirclesArea(circlesBeacons){
   isBeaconsArea = true;
   for(var i=0; i<circlesBeacons.length; i++){
     var map = circlesBeacons[i].center.getMap();
-    console.log(circlesBeacons[i].area.isBeacon)
     if(circlesBeacons[i].area.isBeacon){
       circlesBeacons[i].area.setMap(map);
     }
@@ -162,7 +175,7 @@ function addAdjacentPolyline(circlesBeacons,polylineAdjacent){
     var anyAdjacent = 0;
     if(circlesBeacons[i].center.getMap() != null){
       for(var j=0; j<circlesBeacons.length; j++){
-        if(circlesBeacons[j].center.getMap() != null && i!=j){
+        if(circlesBeacons[j].center.getMap() != null && i!=j && circlesBeacons[i].center.group == circlesBeacons[j].center.group){
           if(distanceBetweenTwoPoints(circlesBeacons[i].center.getCenter(),circlesBeacons[j].center.getCenter()) < 30){
             polylineAdjacent.push(
               addPolylineFromPoints(
