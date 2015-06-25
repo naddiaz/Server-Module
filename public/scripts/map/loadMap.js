@@ -20,6 +20,7 @@ function initialize() {
     styles: STYLE
   };
   var map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
+  loadBeacons(map,circlesBeacons,polylineAdjacent);
   mapClickEvent(map,circlesBeacons,polylineAdjacent);
 
 
@@ -40,6 +41,11 @@ function initialize() {
       removeAdjacentPolyline(circlesBeacons,polylineAdjacent);
     }
   });
+
+  window.document.getElementById("mapSaveGraph").addEventListener("click",function(){
+    saveBeaconsAdjacentsAndDistances(circlesBeacons);
+  });
+
   refreshBoxGroups();
 }
 
@@ -49,6 +55,73 @@ function refreshBoxGroups(){
   document.getElementById("groupColor").addEventListener("change", function(){
     var color = this.value;
     this.style.background = "#" + color;
+  });
+}
+
+function saveBeaconsAdjacentsAndDistances(circlesBeacons){
+  var beacons = [];
+  for(var i=0; i<circlesBeacons.length; i++){
+    beacon = {
+      id_beacon: circlesBeacons[i].center.mac,
+      location: {
+        latitude: circlesBeacons[i].center.getCenter().A,
+        longitude: circlesBeacons[i].center.getCenter().F
+      },
+      group: {
+        id: circlesBeacons[i].center.group,
+        color: circlesBeacons[i].center.fillColor
+      },
+      adjacent: []
+    };
+    if(circlesBeacons[i].center.getMap() != null){
+      for(var j=0; j<circlesBeacons.length; j++){
+        if(circlesBeacons[j].center.getMap() != null && i!=j && circlesBeacons[i].center.group == circlesBeacons[j].center.group){
+          var distance = distanceBetweenTwoPoints(circlesBeacons[i].center.getCenter(),circlesBeacons[j].center.getCenter());
+          if(distance < 30){
+            beacon.adjacent.push({
+              id_beacon: circlesBeacons[j].center.mac,
+              distance: distance
+            })
+          }
+        }
+      }
+      beacons.push(beacon);
+    }
+  }
+  saveBeacons(beacons);
+}
+
+function saveBeacons(beacons){
+  var data = {
+    beacons: beacons,
+    id_installation: ID_INSTALATION
+  }
+  $.ajax({
+    url:"/helper/map/saveBeacons",
+    type:"POST",
+    data: data,
+    success:function(req) {
+    }
+  });
+}
+
+function loadBeacons(map,circlesBeacons,polylineAdjacent){
+  var data = {
+    id_installation: ID_INSTALATION
+  }
+  $.ajax({
+    url:"/helper/map/loadBeacons",
+    type:"POST",
+    data: data,
+    success:function(req) {
+      console.log(req);
+      for(var i=0; i<req.beacons.length; i++){
+        paintBeaconsFromDatabase(map,i,req.beacons[i],circlesBeacons,polylineAdjacent)
+      }
+      checkAdjacents(circlesBeacons);
+      hideCirclesArea(circlesBeacons);
+      addAdjacentPolyline(circlesBeacons,polylineAdjacent);
+    }
   });
 }
 
@@ -62,9 +135,53 @@ function mapClickEvent(map,circlesBeacons,polylineAdjacent){
   });
 }
 
+function defineBeaconAddress(beacon) {
+  var id = $.gritter.add({
+    title: "Beacon MAC address",
+    text: "<input id='macAddress' type='text'><button id='macAddressButton' class='btn btn-success'>OK</button>",
+    sticky: true,
+    class_name: 'gritter-alert-warning'
+  });
+
+  $('#macAddressButton').click(function(){
+    var mac = $('#macAddress').val();
+    beacon.setOptions({mac: mac});
+    $.gritter.removeAll();
+  });
+}
+
+function paintBeaconsFromDatabase(map,id,beacon,circlesBeacons,polylineAdjacent){
+  var center = new google.maps.LatLng(beacon.location.latitude,beacon.location.longitude);
+  var circleAreaData = {
+    strokeColor: '#F44336',
+    strokeOpacity: 0.8,
+    strokeWeight: 2,
+    fillColor: '#F44336',
+    fillOpacity: 0.1,
+    map: map,
+    center: center,
+    radius: 30,
+    id: id,
+    group: beacon.group.id
+  };
+  var circleCenterData = {
+    strokeWeight: 0,
+    fillColor: beacon.group.color,
+    fillOpacity: 1,
+    map: map,
+    center: center,
+    radius: 3,
+    draggable: true,
+    zIndex:10000,
+    id: id,
+    group: beacon.group.id,
+    mac: beacon.id_beacon
+  };
+  addCirclesEvents(circleAreaData,circleCenterData,circlesBeacons,polylineAdjacent);
+}
+
 function paintBeaconCircle(map,latitude,longitude,circlesBeacons,polylineAdjacent){
   var groupId = document.getElementById("groupId").value;
-  console.log(groupId)
   var groupColor = document.getElementById("groupColor").value;
   var center = new google.maps.LatLng(latitude,longitude);
   var circleAreaData = {
@@ -91,6 +208,11 @@ function paintBeaconCircle(map,latitude,longitude,circlesBeacons,polylineAdjacen
     id: circlesBeacons.length,
     group: groupId
   };
+  addCirclesEvents(circleAreaData,circleCenterData,circlesBeacons,polylineAdjacent);
+  defineBeaconAddress(circleCenter);
+}
+
+function addCirclesEvents(circleAreaData,circleCenterData,circlesBeacons,polylineAdjacent){
   circleArea = new google.maps.Circle(circleAreaData);
   circleCenter = new google.maps.Circle(circleCenterData);
   circlesBeacons.push({area:circleArea,center: circleCenter});
@@ -110,6 +232,33 @@ function paintBeaconCircle(map,latitude,longitude,circlesBeacons,polylineAdjacen
     checkAdjacents(circlesBeacons);
     addAdjacentPolyline(circlesBeacons,polylineAdjacent);
   });
+
+  google.maps.event.addListener(circleCenter, "click", function(e) {
+    var infoString = "<div><h3>Beacon data:</h3><ul>";
+    infoString += "<li>MAC address: " + this.mac + "</li>";
+    infoString += "<li>Cluster: " + this.group + "</li>";
+    infoString += "<li>Cluster Color: " + this.fillColor + "</li>";
+    infoString += infoAdjacents(this,circlesBeacons);
+    infoString += "</ul></div>";
+    var infowindow = new google.maps.InfoWindow({
+      content: infoString,
+      position: this.getCenter()
+    });
+    infowindow.open(this.getMap(),this);
+  });
+}
+
+function infoAdjacents(beacon,circlesBeacons){
+  var str = "";
+  for(var j=0; j<circlesBeacons.length; j++){
+    if(circlesBeacons[j].center.getMap() != null && beacon.id!=j && beacon.group == circlesBeacons[j].center.group){
+      var distance = distanceBetweenTwoPoints(beacon.getCenter(),circlesBeacons[j].center.getCenter());
+      if(distance < 30){
+        str += "<li>Adjacent: " + circlesBeacons[j].center.mac + ", Distance: " + distance + " m.</li>";
+      }
+    }
+  }
+  return str;
 }
 
 function checkAdjacents(circlesBeacons){

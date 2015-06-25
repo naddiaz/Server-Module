@@ -1,6 +1,7 @@
 
 var Mongoose = require( 'mongoose' );
-var Installation     = Mongoose.model( 'Installation' );
+var Installation = Mongoose.model( 'Installation' );
+var Beacon       = Mongoose.model( 'Beacon' );
 
 exports.index =  function(req, res){
   Installation.find({}).exec(function(err,installations){

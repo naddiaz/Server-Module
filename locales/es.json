@@ -15,7 +15,8 @@
 
 	"map.circleArea": "Mostrar / Ocultar Círculos",
 	"map.graphLines": "Mostrar / Ocultar Grafo",
-	"map.groupsTitle": "Groups",
+	"map.groupsTitle": "Grupos",
+	"map.saveGraph": "Guardar esquema",
 
 	"breadcrumb.index": "Inicio",
 	"breadcrumb.control_panel": "Panel de Control",

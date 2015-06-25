@@ -15,7 +15,8 @@
 
 	"map.circleArea": "Show / Hide Circle",
 	"map.graphLines": "Show / Hide Graph",
-	"map.groupsTitle": "Groups",
+	"map.groupsTitle": "Clusters",
+	"map.saveGraph": "Save Schema",
 
 	"breadcrumb.index": "Home",
     "breadcrumb.control_panel": "Control Panel",

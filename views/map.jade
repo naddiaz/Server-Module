@@ -42,6 +42,7 @@ block content
               button#mapToggleGraphLines.box-action
                 i.fa.fa-eye
                 = __("map.graphLines")
+          hr
           .row-fluid
             .span2
               p= __("map.groupsTitle")
@@ -64,5 +65,9 @@ block content
                 option(value='FF9800' style="background:#FF9800 !important") FF9800
                 option(value='FF5722' style="background:#FF5722 !important") FF5722
                 option(value='795548' style="background:#795548 !important; color:#FFF") 795548
+            .span4
+              button#mapSaveGraph.box-action
+                i.fa.fa-save
+                = __("map.saveGraph")
         .box-content
           #map_canvas

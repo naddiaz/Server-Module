@@ -69,20 +69,18 @@ var Beacon = new Schema({
     latitude: Number,
     longitude: Number
   },
-  view: {
+  group: {
+    id: Number,
     color: String
   },
+  adjacent: [{
+    id_beacon: String,
+    distance: Number
+  }],
   installation: {type: Schema.ObjectId, ref: 'Installation'}
 });
 Beacon.plugin(Tree);
 Beacon.index({id_beacon: 1},{unique: true});
-
-var Adjacent = new Schema({
-  id_adjacent: String,
-  distance: Number,
-  beacon: {type: Schema.ObjectId, ref: 'Beacon'}
-});
-Adjacent.index({id_adjacent: 1, beacon: 1},{unique: true});
 
 var Location = new Schema({
   id_installation: String,
@@ -109,6 +107,5 @@ db.model('Employee',     Employee);
 db.model('Activity',     Activity);
 db.model('Task',         Task);
 db.model('Beacon',       Beacon);
-db.model('Adjacent',     Adjacent);
 db.model('Location',     Location);
 db.model('Parameter',    Parameter);

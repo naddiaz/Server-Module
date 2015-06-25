@@ -24,5 +24,9 @@ module.exports = function (app,dirname) {
   var map = require('./map');
   app.get('/installation/:id_installation/map', map.home);
 
+  // Begin Helpers Map
+  app.post('/helper/map/saveBeacons', map.saveBeacons);
+  app.post('/helper/map/loadBeacons', map.loadBeacons);
+  // End Helpers Map
 // End Map
 };
