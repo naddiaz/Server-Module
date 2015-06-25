@@ -1,7 +1,7 @@
 doctype html
 html
   head
-    title BLE TASKER
+    title #{__("web.title")}
     meta(charset='utf-8' name='viewport', content='width=device-width, initial-scale=1')
     link(rel='stylesheet' href="/css/material-design-color-palette.css")
     link(rel='stylesheet' href="/css/pace.css")
@@ -21,20 +21,20 @@ html
       
   body.mdc-bg-green
     .navbar
-      .navbar-inner.mdc-bg-green-600
+      .navbar-inner.mdc-bg-grey-600
         .container-fluid
           a.btn.btn-navbar(data-toggle='collapse', data-target='.top-nav.nav-collapse,.sidebar-nav.nav-collapse')
             span.icon-bar
             span.icon-bar
             span.icon-bar
           a.brand(href='/index')
-            span BLE TASKER
+            span #{__("web.title")}
           .nav-no-collapse.header-nav
             ul.nav.pull-right
               li.dropdown
                 a.btn.dropdown-toggle(data-toggle='dropdown', href='#')
                   i.halflings-icon.white.user
-                  |  Ble Username
+                  |  #{__("web.title")}
                   span.caret
                 ul.dropdown-menu
                   li.dropdown-menu-title
@@ -59,8 +59,8 @@ html
                   span.hidden-tablet=  __("menu.help")
               block menu_options_help
         #content.span10
-          ul.breadcrumb
-            block breadcrumb
+          block breadcrumb
+            //          ul.breadcrumb
           .mdc-bg-green
             block content
 

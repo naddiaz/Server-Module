@@ -6,7 +6,7 @@ block content
       .login-card
         h1= __("login.welcome")
         br
-        form(action="/index", method='GET',role='form')
+        form(action="/index", method='POST',role='form')
           input(type='text', name='user', placeholder='#{__("login.user_id")}')
           input(type='password', name='pass', placeholder='#{__("login.password")}')
           input.login.login-submit(type='submit', name='login', value='#{__("login.button_access")}')

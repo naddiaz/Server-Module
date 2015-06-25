@@ -1,134 +1,114 @@
 var Mongoose = require( 'mongoose' );
+var Tree = require('mongoose-tree');
 var Schema   = Mongoose.Schema;
 
-var Airport = new Schema({
-  id_airport: Number,
-  latitude: Number,
-  longitude: Number,
-  location: String,
+var Installation = new Schema({
+  id_installation: String,
+  location: {
+    latitude: Number,
+    longitude: Number
+  },
+  name: String,
+  details: String
+});
+Installation.plugin(Tree);
+Installation.index({id_installation: 1},{unique: true});
+
+var Category = new Schema({
+  id_installation: String,
   name: String
 });
-Airport.index({id_airport: 1, location: 1, name: 1}, {unique: true});
+Category.index({id_installation: 1, name: 1},{unique: true});
 
-var Cell = new Schema({
-  id_airport: Number,
-  id_cell: Number,
-  latitude: Number,
-  longitude: Number,
-  color: String
+var Employee = new Schema({
+  id_employee: String,
+  name: String,
+  last_name: String,
+  category: String,
+  device: {type: String, default: 'ANDROID'},
+  gcm: String,
+  hash: String,
+  created_at: Date,
+  update_at: Date,
+  installation: {type: Schema.ObjectId, ref: 'Installation'}
 });
-Cell.index({id_airport: 1, id_cell: 1}, {unique: true});
+Employee.index({id_employee: 1},{unique: true});
 
-var Distance = new Schema({
-  id_airport: Number,
-  cell_origin: Number,
-  cell_end: Number,
-  distance: Number
+var Activity = new Schema({
+  id_activity: String,
+  location: {
+    latitude: Number,
+    longitude: Number
+  },
+  category: String,
+  tasks: Number,
+  details: String,
+  created_at: Date,
+  update_at: Date,
+  installation: {type: Schema.ObjectId, ref: 'Installation'}
 });
-Distance.index({id_airport: 1, cell_origin: 1, cell_end: 1}, {unique: true});
-
-var Person = new Schema({
-  id_airport: Number,
-  id_person: String,
-  worker_name: String,
-  worker_type: String,
-  device_type: {type: String, default: 'ANDROID'},
-  created_at: Date
-});
-Person.index({id_airport: 1, id_person: 1}, {unique: true});
-
-var Localization = new Schema({
-  id_airport: Number,
-  id_person: String,
-  id_beacon: String,
-  rssi: Number,
-  date: Date
-});
-
-var Beacon = new Schema({
-  id_airport: Number,
-  id_beacon: String,
-  id_cell: String
-});
-Beacon.index({id_airport: 1, id_beacon: 1}, {unique: true});
+Activity.plugin(Tree);
+Activity.index({id_activity: 1},{unique: true});
 
 var Task = new Schema({
-  id_airport: Number,
   id_task: String,
-  id_cell: String,
-  type: String,
-  n_employees: Number,
-  priority: {type: Number, enum: [0,1,2,3,4]},
-  description: String
+  state: String,
+  track: [{
+    state: String,
+    update_at: Date
+  }],
+  employee: {type: Schema.ObjectId, ref: 'Employee'},
+  activity: {type: Schema.ObjectId, ref: 'Activity'}
 });
-Task.index({id_airport: 1, id_task: 1}, {unique: true});
+Task.plugin(Tree);
+Task.index({id_task: 1},{unique: true});
 
-var Type = new Schema({
-  id_airport: Number,
-  name: String
+var Beacon = new Schema({
+  id_beacon: String,
+  location: {
+    latitude: Number,
+    longitude: Number
+  },
+  view: {
+    color: String
+  },
+  installation: {type: Schema.ObjectId, ref: 'Installation'}
 });
-Type.index({id_airport: 1, name: 1}, {unique: true});
+Beacon.plugin(Tree);
+Beacon.index({id_beacon: 1},{unique: true});
 
-var Work = new Schema({
-  id_airport: Number,
-  id_person: String,
-  id_task: String,
-  state: {type: String, enum: ["no_asign", "asign", "active", "complete", "pause", "cancel"]},
-  created_at: Date,
-  asign_at: Date,
-  active_at: Date,
-  complete_at: Date,
-  pause_at: Date,
-  cancel_at: Date,
-  person: { type: Schema.ObjectId, ref: 'Person' },
-  task: { type: Schema.ObjectId, ref: 'Task' }
+var Adjacent = new Schema({
+  id_adjacent: String,
+  distance: Number,
+  beacon: {type: Schema.ObjectId, ref: 'Beacon'}
 });
+Adjacent.index({id_adjacent: 1, beacon: 1},{unique: true});
 
-var GCMRegistrationID = new Schema({
-  id_airport: Number,
-  id_person: String,
-  id_push: String,
-  created_at: Date
+var Location = new Schema({
+  id_installation: String,
+  id_employee: String,
+  id_beacon: String,
+  data: {
+    powerDbm: Number,
+    detected_at: Date 
+  }
 });
-GCMRegistrationID.index({id_airport: 1, id_person: 1}, {unique: true});
-
-var HashRegistration = new Schema({
-  id_airport: Number,
-  id_person: String,
-  worker_name: String,
-  hash: String,
-  update_at: Date
-});
-HashRegistration.index({id_airport: 1, id_person: 1}, {unique: true});
+Location.plugin(Tree);
 
 var Parameter = new Schema({
   name: String,
   value: String
-});
-Parameter.index({name: 1}, {unique: true});
+})
+Parameter.index({name: 1},{unique: true});
 
-var Message = new Schema({
-  id_airport: Number,
-  id_person: String,
-  origin: {type: String, enum: ["device", "server"]},
-  content: String,
-  send_at: Date,
-  is_show_server: Boolean,
-  is_show_device: Boolean
-});
-Message.index({id_airport: 1, id_person: 1, send_at: 1}, {unique: true});
+var db = Mongoose.connect('mongodb://localhost/bletasker');
 
-var db = Mongoose.connect('mongodb://localhost/bletaskerDB');
-db.model('Airport', Airport);
-db.model('Person', Person);
-db.model('Localization', Localization);
-db.model('Beacon', Beacon);
-db.model('Task', Task);
-db.model('Work', Work);
-db.model('Cell', Cell);
-db.model('Distance', Distance);
-db.model('Type', Type);
-db.model('GCMRegistrationID', GCMRegistrationID);
-db.model('HashRegistration', HashRegistration);
-db.model('Parameter', Parameter);
-db.model('Message', Message);
+db.model('Installation', Installation);
+db.model('Category',     Category);
+db.model('Employee',     Employee);
+db.model('Activity',     Activity);
+db.model('Task',         Task);
+db.model('Beacon',       Beacon);
+db.model('Adjacent',     Adjacent);
+db.model('Location',     Location);
+db.model('Parameter',    Parameter);

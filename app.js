@@ -46,7 +46,7 @@ if ('development' == app.get('env')) {
 }
 
 //Routes
-require('./routes/routes')(app);
+require('./routes/routes')(app,__dirname);
 
 //Run
 http.createServer(app).listen(app.get('port'), function(){

@@ -1,3 +1,18 @@
+button.box-action{
+  margin: 0 15px;
+  background: #8BC34A;
+  border-radius: 5px;
+  padding: 5px;
+  border: none;
+}
+
+button.box-action > i{
+  margin: 0 4px;
+}
+
+.span10.box-action{
+  text-align: right;
+}
 .add-on,
 select,
 textarea,

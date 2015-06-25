@@ -1,0 +1,49 @@
+extends layout_admin
+
+block content
+  - each complex in installations
+    .row-fluid
+      .span12.box
+        .box-header
+          h1= complex.name
+          h5= complex.details
+        .box-content
+          .span6
+            ul.dashboard-list
+              li
+                .row-fluid
+                  .span3
+                    a.btn.yellow.button-fixed(href="/installation/#{complex.id_installation}/control")
+                      i.fa.fa-gears
+                  .span9
+                    h3= __("home.control_panel")
+              li
+                .row-fluid
+                  .span3
+                    a.btn.green.button-fixed(href="/installation/#{complex.id_installation}/activity")
+                      i.fa.fa-tasks
+                  .span9
+                    h3= __("home.activities")
+              li
+                .row-fluid
+                  .span3
+                    a.btn.blue.button-fixed(href="/installation/#{complex.id_installation}/map")
+                      i.fa.fa-globe
+                  .span9
+                    h3= __("home.map")
+          .span6
+            ul.dashboard-list
+              li
+                .row-fluid
+                  .span3
+                    a.btn.red.button-fixed(href="/installation/#{complex.id_installation}/employees")
+                      i.fa.fa-users
+                  .span9
+                    h3= __("home.employees")
+              li
+                .row-fluid
+                  .span3
+                    a.btn.black.button-fixed(href="/installation/#{complex.id_installation}/categories")
+                      i.fa.fa-th-list
+                  .span9
+                    h3= __("home.categories")

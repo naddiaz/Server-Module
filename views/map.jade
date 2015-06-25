@@ -1,45 +1,45 @@
-extends layout_home
+extends layout_admin
 
 block scripts
   script(type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA5X8YsmAwkfl6i-QnAGSXPJOLaY52ANsM&sensor=false")
   script(src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox.js")
   script(src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js")
-
-  script.
-    LOCATION = "#{location}"
-    NAME = "#{name}"
   
-  script(src='/scripts/helpers.js')
-  script(src='/maps/base.map.js')
+  script.
+    ID_INSTALATION = "#{id_installation}"
+    console.log(ID_INSTALATION)
+
+  script(src="/scripts/installation/helper.js")
+  script(src="/scripts/map/loadMap.js")
 
 block breadcrumb
-  li
-    i.fa.fa-home
-    a(href='/index') Inicio
-    i.fa.fa-angle-right
-  li #{location}
-    i.fa.fa-angle-right
-  li #{name}
-    i.fa.fa-angle-right
-  li
-    i.fa.fa-globe
-    | Mapa
+  ul.breadcrumb
+    li
+      i.fa.fa-home
+      a(href='/index')= __("home.index")
+      i.fa.fa-angle-right
+    li 
+      | #{id_installation}
+      i.fa.fa-angle-right
+    li
+      i.fa.fa-globe
+      = __("home.map")
 
-block menu_options
-  include ../partials/menu.jade
 block content
   .row-fluid
     .span12
       .span12.box
         .box-header
-          h2
-            i.fa.fa-edit
-            | Mapa de edición
-            span.break
-            input#sw_editmode(type="checkbox")
-            | (Activar / Desactivar)
-            span.break
-          span#map_edit_state La edición no está activada
+          .span2
+            h2
+              i.fa.fa-edit
+              = __("home.map")
+          .span10.box-action
+            button#mapToggleCircleArea.box-action
+              i.fa.fa-eye
+              = __("map.circleArea")
+            button#mapToggleGraphLines.box-action
+              i.fa.fa-eye
+              = __("map.graphLines")
         .box-content
           #map_canvas
-            
