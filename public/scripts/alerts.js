@@ -11,7 +11,7 @@ function genericErrorAlert(textError){
 
 function genericWarningAlert(textError){
   $.gritter.add({
-    title: 'Alerta',
+    title: 'Alert',
     text: '<h4>'+textError+'</h4>',
     image: '/img/error.png',
     sticky: false,
@@ -22,7 +22,7 @@ function genericWarningAlert(textError){
 
 function genericSuccessAlert(textAlert,icon){
   $.gritter.add({
-    title: "Completado",
+    title: "Success",
     text: '<h4>'+textAlert+'</h4>',
     image: '/img/'+icon+'.png',
     sticky: false,

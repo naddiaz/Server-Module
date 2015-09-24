@@ -1,3 +1,21 @@
+button.box-action{
+  margin: 0 15px;
+  background: #8BC34A;
+  border-radius: 5px;
+  padding: 5px;
+  border: none;
+}
+
+button.box-action > i{
+  margin: 0 4px;
+}
+
+option:before { content: "☐ " }
+option:checked:before { content: "☑ " }
+
+.span10.box-action{
+  text-align: right;
+}
 .add-on,
 select,
 textarea,
@@ -31,63 +49,20 @@ input[type="file"],
           border-radius: 0px;
 }
 
+.maximumSelected{
+  text-decoration:line-through;
+}
+.noMaximumSelected{
+  text-decoration:none;
+}
+input.small{
+  width: 50px !important;
+}
+
 input,
 textarea,
 .uneditable-input {
   width: 206px;
-}
-
-#messages{
-  margin: 5% 2% !important;
-  max-height: 250px;
-  width: 98%;
-  overflow: auto;
-}
-
-#chat-box > li{
-  min-height: 32px;
-}
-
-#chat-box > li.server > div{
-  float: left !important;
-  width: 62.5%;
-  text-align: right;
-  padding: 2.5% 2.5% 2.5% 10%;
-}
-
-#chat-box > li.device > div{
-  float: left !important;
-  width: 62.5%;
-  text-align: left;
-  padding: 2.5%  10% 2.5% 2.5%;
-}
-
-#chat-box > li > div.date{
-  float: right !important;
-  width: 20%;
-  padding: 2.5% !important;
-  color: #CCC;
-  text-align: right !important;
-}
-
-.chat{
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.chat li{
-    margin-bottom: 10px;
-    padding-bottom: 5px;
-    border-bottom: 1px dotted #B3A9A9;
-}
-
-.chat li.left .chat-body{
-    margin-left: 60px;
-}
-
-.chat li.right .chat-body{
-    margin-right: 60px;
 }
 
 input.fill{
@@ -109,6 +84,7 @@ textarea {
 }
 .no-resize{
   resize: none;
+  width: 90% !important;
 }
 textarea,
 input[type="text"],

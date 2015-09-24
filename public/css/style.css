@@ -31,6 +31,21 @@
 /* Main Colors
 =================================================================== */
 
+.margin-left{
+  margin-left: 5px;
+}
+
+.flexy{
+  display: inline-table !important;
+}
+
+.scrollable { overflow-x:hidden; overflow-y:scroll; }
+
+.fixed-cell{
+  width: 85px !important;
+  text-align: center !important;
+}
+
 .black,
 .black [class="box-header"],
 .black.box,
@@ -60,7 +75,7 @@
 .progressSlim.green .ui-progressbar-value,
 .label-success,
 .badge-success,
-.ACTIVO {
+.active {
 	background: #43B5AD !important;
 	border-color: #43B5AD !important;
 	color: #fff;
@@ -212,7 +227,7 @@
 .progressSlim.red .ui-progressbar-value,
 .label-important,
 .badge-important,
-.DESOCUPADO{
+.inactive{
 	background: #E25A59 !important;
 	border-color: #E25A59 !important;
 	color: #fff;
@@ -258,6 +273,13 @@ th > i{
   padding: 0 10px;
 }
 
+.button-fixed{
+  width: 42px !important;
+}
+
+li.tab{
+  margin: 0 1%;
+}
 
 /* Basic
 =================================================================== */
@@ -334,7 +356,7 @@ h6 {
   	min-height: 40px;
   	padding-right: 20px;
   	padding-left: 20px;
-	background: #080808;
+	background: #222;
 	filter: none;
 	text-shadow: 1px 1px 1px #0a0c0e;
 	border: none;
@@ -343,7 +365,7 @@ h6 {
        -moz-border-radius: 0px;
           	border-radius: 0px;
   	*zoom: 1;
-	border-bottom: 0px solid #38383D; /* rgba(0, 0, 0, 0.05); */
+	border-bottom: 0px solid #222; /* rgba(0, 0, 0, 0.05); */
 	
 }
 
@@ -756,7 +778,7 @@ ul.messages li .message {
 }
 
 .breadcrumb {
-	margin: -28px -28px 28px -26px;
+	margin: -20px -20px 28px -20px;
 	line-height: 33px;
 	background: #222;
 	border: 0px;
@@ -884,7 +906,7 @@ ul.messages li .message {
 }
 
 .box-header {
-	height: 16px;
+	min-height: 16px;
 	font-size: 16px;
 	line-height: 16px;
   	padding: 10px;
@@ -2610,19 +2632,19 @@ footer {
 	background: #67C2EF;
 	width:100%;
 	min-width: 130px; 
-	height: 160px;
-	padding-top: 40px;
+	/*height: 160px;*/
+	padding: 5px 0;
 	margin-bottom: 28px;
 }
 
 .circleStatsItemBox .header {
 	background: rgba(255,255,255,0.2);
 	color: rgba(255,255,255,0.9);
-	width: 100%; 
 	height: 20px;
-	padding: 5px 0px;
+	padding: 5px;
 	position: absolute;
 	top: 0px;
+  border-bottom-right-radius: 5px;
 }
 
 .circleStatsItemBox .footer {

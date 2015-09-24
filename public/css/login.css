@@ -19,7 +19,7 @@ body {
   font-size: 2.3em;
 }
 
-.login-card input[type=submit] {
+.login-card input[type=button] {
   width: 100%;
   display: block;
   margin-bottom: 10px;

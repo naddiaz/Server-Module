@@ -19,7 +19,6 @@ app.locals.moment = require('moment');
 
 i18n.configure({
     locales:['es', 'en'],
-    defaultLocale: 'es',
     directory: __dirname + '/locales'
 });
 
@@ -27,7 +26,7 @@ i18n.configure({
 // all environments
 app.configure(function(){
   app.set('address', 'localhost');
-  app.set('port', process.env.PORT || 10000);
+  app.set('port', process.env.PORT || 7777);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
   app.use(express.favicon());
@@ -46,7 +45,7 @@ if ('development' == app.get('env')) {
 }
 
 //Routes
-require('./routes/routes')(app);
+require('./routes/routes')(app,__dirname);
 
 //Run
 http.createServer(app).listen(app.get('port'), function(){

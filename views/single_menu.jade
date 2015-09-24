@@ -1,0 +1,28 @@
+li 
+  a.tag(href="#")
+    i.fa.fa-plane
+    span #{id_installation}
+li
+  a(href="/installation/#{id_installation}/control?name=#{admin.name}&id=#{admin.id}")
+    i.fa.fa-gears
+    span.hidden-tablet= __("home.control_panel")
+li
+  a(href="/installation/#{id_installation}/activities?name=#{admin.name}&id=#{admin.id}")
+    i.fa.fa-tasks
+    span.hidden-tablet= __("home.activities")
+li
+  a(href="/installation/#{id_installation}/map?name=#{admin.name}&id=#{admin.id}")
+    i.fa.fa-globe
+    span.hidden-tablet= __("home.map")
+li
+  a(href="/installation/#{id_installation}/employees?name=#{admin.name}&id=#{admin.id}")
+    i.fa.fa-users
+    span.hidden-tablet= __("home.employees")
+li
+  a(href="/installation/#{id_installation}/categories?name=#{admin.name}&id=#{admin.id}")
+    i.fa.fa-th-list
+    span.hidden-tablet= __("home.categories")
+li 
+  a.tag(href="#")
+    i.fa.fa-th
+    span= __("home.more_options")

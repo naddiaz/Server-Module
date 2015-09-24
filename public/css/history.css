@@ -1,0 +1,174 @@
+.transparent .center,
+.selector-date .center{
+  text-align: center;
+  vertical-align: middle;
+}
+
+.transparent p,
+.selector-date p{
+  margin: 10px 0;
+  padding: 6px 0;
+}
+.stats button
+{
+  float: right;
+  background: transparent;
+  border: none;
+  font-size: 28px;
+}
+
+.transparent button,
+.selector-date button{
+  margin: 10px 0;
+  width: 100%;
+  background: transparent;
+  border: none;
+}
+
+.chat .messages{
+  height: 200px;
+}
+
+.chat .messages .content{
+  width: 100%;
+  height: 100%;
+  margin: 10px 0;
+  overflow: auto;
+}
+
+.chat hr{
+  border: none;
+  height: 1px;
+  background: #CCC;
+}
+
+.chat .input{
+  height: 100px;
+}
+
+.chat .input .write{
+  resize: none;
+  width: 80%;
+  border: none;
+  background: #CCC;
+  padding: 0 10px;
+  float: right;
+}
+
+.chat .admin-message{
+  max-width: 70%;
+  padding: 5px 15px;
+  text-align: left;
+  margin: 5px;
+  background-color: #EEE;
+  border-radius: 10px;
+  float: right;
+  word-wrap: break-word;
+}
+
+.chat .time{
+  text-align: right;
+  color: #AAA;
+}
+
+.chat .message-separator{
+  border: none;
+  height: 1px;
+  width: 80%;
+  margin: 1px 10%;
+  clear: both;
+}
+
+.chat .employee-message{
+  max-width: 70%;
+  padding: 5px 15px;
+  text-align: left;
+  margin: 5px;
+  background-color: #EEE;
+  border-radius: 10px;
+  float: left;
+  word-wrap: break-word;
+}
+
+.chat .new-date{
+  text-align: center;
+  margin: 10px 0;
+  border-bottom: dashed 1px #CCC;
+}
+
+.tasks{
+  height: 250px;
+  overflow: auto;
+}
+
+.activity-details{
+  height: 65vh;
+  overflow: auto;
+}
+
+.tasks-details{
+  height: 80vh;
+  overflow: auto;
+}
+
+.activity-details > div > .row-fluid > div,
+.tasks-details > div > .row-fluid > div{
+  border-bottom: 1px #CCC solid;
+  margin: 5px 0;
+  padding: 5px;
+}
+
+.activity-details > div > h3,
+.tasks-details > div > h3{
+  margin: 5px 0;
+  padding: 5px;
+}
+
+.activity-details #map_canvas,
+.tasks-details #map_canvas{
+  height: 400px;
+  min-height: 0 !important;
+}
+
+.circle .circles-text{
+  font-size: 25px !important;
+}
+
+.circle .circles-text .small{
+  font-size: 14px !important;
+}
+
+.scrollbar
+{
+  margin-left: 30px;
+  float: left;
+  height: 300px;
+  width: 65px;
+  overflow-y: scroll;
+  margin-bottom: 25px;
+}
+
+.chat-scrollbar::-webkit-scrollbar {
+    height: 12px;
+    width: 7px;
+    background: #F5F5F5;
+}
+
+.chat-scrollbar::-webkit-scrollbar-thumb {
+    background: #444444;
+    -webkit-border-radius: 1ex;
+}
+
+.chat-scrollbar::-webkit-scrollbar-corner {
+    background: #0A0A0A;
+}
+
+.i-refresh-animation{
+  -webkit-animation:spin 0.2s linear infinite;
+  -moz-animation:spin 0.2s linear infinite;
+  animation:spin 0.2s linear infinite;
+}
+
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }

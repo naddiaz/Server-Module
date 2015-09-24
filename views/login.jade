@@ -1,12 +1,17 @@
 extends layout_login
-      
+
+block scripts
+  script(src='/js/jquery-1.9.1.min.js')
+  script(src='/scripts/md5.js')
+  script(src='/scripts/login.js')
+    
 block content
   .container
     .row
       .login-card
         h1= __("login.welcome")
         br
-        form(action="/index", method='GET',role='form')
+        form#login(action="/index", method='POST',role='form')
           input(type='text', name='user', placeholder='#{__("login.user_id")}')
           input(type='password', name='pass', placeholder='#{__("login.password")}')
-          input.login.login-submit(type='submit', name='login', value='#{__("login.button_access")}')
+          input.login.login-submit(type='button', name='login', value='#{__("login.button_access")}', onclick='loginSubmit()')

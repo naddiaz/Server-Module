@@ -1,0 +1,113 @@
+extends layout_admin
+
+block scripts
+  script(type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA5X8YsmAwkfl6i-QnAGSXPJOLaY52ANsM&sensor=false")
+  script(src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox.js")
+  script(src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js")
+  
+  script.
+    ID_INSTALLATION = "#{id_installation}"
+
+  script(src="/scripts/distance.js")
+  script(src="/scripts/installation/helper.js")
+  script(src="/scripts/activities/categories.js")
+  script(src="/scripts/activities/assign.js")
+  script(src="/scripts/activities/loadMap.js")
+
+block breadcrumb
+  ul.breadcrumb
+    li
+      i.fa.fa-home
+      a(href='/index')= __("home.index")
+      i.fa.fa-angle-right
+    li 
+      | #{id_installation}
+      i.fa.fa-angle-right
+    li
+      i.fa.fa-tasks
+      = __("home.activities")
+
+block menu_options
+  include single_menu.jade
+
+block content
+  .row-fluid.box
+    .box-header
+      .row-fluid
+        .span2
+          h3= __("activities.create")
+        .span10.box-action
+          button#activitySave.box-action
+            i.fa.fa-save
+            = __("activities.save")
+    .box-content
+      .span4
+        ul.dashboard-list
+          li
+            p= __("activities.category")
+            select#categories
+          li
+            p= __("activities.priority")
+            select#priority
+              option(value="1")= __("activities.priority.normal")
+              option(value="0")= __("activities.priority.low")
+              option(value="2")= __("activities.priority.high")
+          li
+            p= __("activities.required")
+            input#required.small(type="number" min="1" value=1)
+      .span4
+        ul.dashboard-list
+          li
+            p= __("activities.weight")
+            .row-fluid
+              .span6
+                p= __("activities.weight.hours")
+                input#weightHours.small(type="number" min="0" value=0)
+              .span6
+                p= __("activities.weight.minutes")
+                input#weightMinutes.small(type="number" min="0" max="59" value=0)
+          li
+            p= __("activities.details")
+            textarea#details.no-resize(name="" rows="4")
+      .span4
+        ul.dashboard-list
+          li
+            p= __("activities.location")
+            .row-fluid
+              .span8
+                p= __("activities.location.coordinates")
+                input#location(type='text' disabled)
+              .span4
+                p= __("activities.location.cluster")
+                input.small#cluster(type='text' value="1" disabled)
+          li
+            p= __("activities.assign")
+            select#assignMethod
+              option(value="automatic")= __("activities.assign.automatic")
+              option(value="manual")= __("activities.assign.manual")
+          li#manualAssignBox
+            p= __("activities.assign.isManual")
+            ul.dashboard-list#manualAssignSelect
+  .row-fluid
+    .span12
+      .span12.box
+        .box-header
+          .row-fluid
+            .span2
+              h3= __("activities.map")
+            .span3
+              p= __("activities.map.minDistance")
+              p#minDistance 0m.
+            .span3
+              p= __("activities.map.maxDistance")
+              p#maxDistance 0m.
+            .span4.box-action
+              button#prevCluster.box-action
+                i.fa.fa-arrow-left
+                = __("activities.prevCluster")
+              button#nextCluster.box-action
+                = __("activities.nextCluster")
+                i.fa.fa-arrow-right
+        .box-content
+          #map_canvas
+

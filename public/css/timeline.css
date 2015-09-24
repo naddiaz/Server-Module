@@ -1,0 +1,36 @@
+.timeline{
+  width: 96% !important;
+  height: 50px !important;
+  margin: 2%;
+}
+.timeline .step, .timeline .mark, .timeline .step-finish{
+  display: inline-block;
+  height: 50px;
+  text-align: center;
+  margin-right: 1px;
+}
+
+.timeline .mark > div{
+  width: 10px;
+  font-size: 10px;
+  margin-top: -20px;
+  float: left;
+     -moz-transform: rotate(-90deg);  /* FF3.5+ */
+       -o-transform: rotate(-90deg);  /* Opera 10.5 */
+  -webkit-transform: rotate(-90deg);  /* Saf3.1+, Chrome */
+}
+.timeline .step-finish{
+  margin-left: -5px;
+}
+.timeline .st1{background: #f3e5bc;}
+.timeline .st2{background: #43b5ad;}
+.timeline .st3{background: #deb948;}
+.timeline .st4{background: #578ebe;}
+.timeline .st5{background: #e25a59;}
+
+.st0{background: #e25a59;}
+.st1{background: #f3e5bc;}
+.st2{background: #43b5ad;}
+.st3{background: #deb948;}
+.st4{background: #578ebe;}
+.st5{background: #e25a59;}
