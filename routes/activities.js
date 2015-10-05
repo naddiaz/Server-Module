@@ -4,6 +4,9 @@ var Installation = Mongoose.model( 'Installation' );
 var Employee     = Mongoose.model( 'Employee' );
 var Activity     = Mongoose.model( 'Activity' );
 var Task         = Mongoose.model( 'Task' );
+var Beacon       = Mongoose.model( 'Beacon' );
+var Async        = require( 'async' );
+var SuitableSet  = require( './location/suitableSet' );
 
 exports.home =  function(req, res){
   var id_installation = req.params.id_installation;
@@ -17,6 +20,81 @@ exports.home =  function(req, res){
 };
 
 exports.create =  function(req, res){
+  var activity = createActivity(req);
+  var employees = req.body.employees;
+  if(employees.length > 0){
+    activity.save(function(err,activity){
+      if(!err){
+        var taskList = []
+        for(var i=0; i<employees.length; i++){
+          var task = new Task({
+            id_task: employees[i] + "-" + activity.id_activity,
+            state: 1,
+            time: activity.time,
+            track: [{
+              state: 1,
+              update_at: Date.now()
+            }],
+            id_employee: employees[i],
+            id_activity: activity.id_activity,
+            id_installation: activity.id_installation,
+            created_at: Date.now()
+          });
+          taskList.push(task);
+          task.save();
+        }
+        res.send({activity:activity,task:taskList});
+      }
+    });
+  }
+};
+
+exports.createAuto =  function(req, res){
+  var activity = createActivity(req);
+  activity.save(function(err,activity){
+    if(!err){
+      var date = new Date();
+      date.setHours(0);
+      date.setMinutes(0);
+      date.setSeconds(0);
+
+      var Beacons = Beacon.find({id_installation:req.body.id_installation, "group.id": req.body.cluster}).select("location");
+      var Employees = Employee.find({id_installation:req.body.id_installation},{ track: { $slice: -1 }});
+      var Tasks     = Task.find({id_installation:req.body.id_installation, created_at: {$gte: date}});
+
+      var models = {
+        employees: Employees.exec.bind(Employees),
+        tasks: Tasks.exec.bind(Tasks),
+        beacons: Beacons.exec.bind(Beacons)
+      };
+
+      Async.parallel(models,function(err,results){
+        var employees = SuitableSet(req.body.required,results.beacons,results.employees,activity,results.tasks)
+        var taskList = []
+        for(var i=0; i<employees.length; i++){
+          var task = new Task({
+            id_task: employees[i].id_employee + "-" + activity.id_activity,
+            state: 1,
+            time: activity.time,
+            track: [{
+              state: 1,
+              update_at: Date.now()
+            }],
+            id_employee: employees[i].id_employee,
+            id_activity: activity.id_activity,
+            id_installation: activity.id_installation,
+            created_at: Date.now()
+          });
+          taskList.push(task);
+          task.save();
+        }
+        res.send({activity:activity,task:taskList});
+      });
+    }
+  });
+};
+
+function createActivity(req){
   var current = Date.now();
   var date = new Date(current);
   var time = parseInt(req.body.hour)*60+parseInt(req.body.minutes);
@@ -38,6 +116,7 @@ exports.create =  function(req, res){
       latitude: req.body.location.latitude,
       longitude: req.body.location.longitude
     },
+    cluster: req.body.cluster,
     category: req.body.category,
     priority: req.body.priority,
     required: req.body.required,
@@ -46,32 +125,5 @@ exports.create =  function(req, res){
     created_at: current,
     update_at: current
   });
-  console.log(activity)
-  var employees = req.body.employees;
-  if(employees.length > 0){
-    activity.save(function(err,activity){
-      if(!err){
-        var taskList = []
-        for(var i=0; i<employees.length; i++){
-          var task = new Task({
-            id_task: employees[i] + "-" + activity.id_activity,
-            state: 1,
-            time: activity.time,
-            track: [{
-              state: 1,
-              update_at: Date.now()
-            }],
-            id_employee: employees[i],
-            id_activity: activity.id_activity,
-            id_installation: activity.id_installation,
-            created_at: current
-          });
-          taskList.push(task);
-          task.save();
-        }
-        console.log(taskList)
-        res.send({activity:activity,task:taskList});
-      }
-    });
-  }
-};
+  return activity;
+}

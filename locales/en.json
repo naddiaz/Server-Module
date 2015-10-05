@@ -16,6 +16,7 @@
 	"home.help": "Help",
 	"home.logout": "LogOut",
 
+	"map.track": "Tracking map",
 	"map.circleArea": "Show / Hide Circle",
 	"map.graphLines": "Show / Hide Graph",
 	"map.groupsTitle": "Clusters",
@@ -114,61 +115,4 @@
 	"alerts.error.2":"The location of activity is needed",
 	"alerts.error.3":"Estimated time is required"
 
-<<<<<<< HEAD
-=======
-	"map.circleArea": "Show / Hide Circle",
-	"map.graphLines": "Show / Hide Graph",
-	"map.groupsTitle": "Clusters",
-	"map.saveGraph": "Save Schema",
-
-	"breadcrumb.index": "Home",
-    "breadcrumb.control_panel": "Control Panel",
-    "breadcrumb.employees": "Employees",
-    "breadcrumb.history": "History",
-
-	"menu.index": "Home",
-	"menu.control_panel": "Control Panel",
-	"menu.tasks": "Tasks",
-	"menu.map": "Map",
-	"menu.employees": "Employees",
-	"menu.categories": "Categories",
-	"menu.all_installations": "All installations",
-	"menu.more_options": "More options",
-	"menu.options": "Options",
-	"menu.logout": "Log out",
-	"menu.help": "Help",
-
-	"panel.tasks.tasks": "Tasks",
-	"panel.tasks.active": "Active",
-	"panel.tasks.pending": "Pending",
-	"panel.tasks.complete": "Complete",
-	"panel.tasks.assign": "Assigning",
-	"panel.tasks.assign.partial": "Tasks no assign or partial assign",
-
-	"panel.works.pause": "Paused or canceled works",
-	"panel.works.pending": "Pending works",
-	"panel.works.active": "Active works",
-	"panel.works.complete": "Complete works",
-
-	"panel.tasks.table.id": "Tasks ID",
-	"panel.tasks.table.employee": "Employee",
-	"panel.tasks.table.pending": "Pending",
-	"panel.tasks.table.category": "Category",
-	"panel.tasks.table.priority": "Priority",
-	"panel.tasks.table.state": "State",
-	"panel.tasks.table.description": "Description",
-	"panel.tasks.table.actions": "Actions",
-	"panel.tasks.table.register": "Register",
-
-	"panel.employees.employees": "Employees",
-	"panel.employees.messages": "Messages",
-	"panel.employees.table.history": "Hist",
-	"panel.employees.table.id": "ID",
-	"panel.employees.table.name": "Name",
-	"panel.employees.table.category": "Category",
-	"panel.employees.table.state": "State",
-	"panel.employees.table.device": "Device",
-	"panel.employees.data":"Employee Data",
-	"panel.employees.map":"Location and Monitoring Map"
->>>>>>> f45eb2ac11f2cd6e5aaef9ee38c7a39bcfc4cf6a
 }

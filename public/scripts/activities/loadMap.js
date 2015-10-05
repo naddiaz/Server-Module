@@ -22,6 +22,9 @@ function initialize() {
     center: new google.maps.LatLng(installation.location.latitude,installation.location.longitude),
     zoom: 19,
     mapTypeId: google.maps.MapTypeId.ROADMAP,
+    streetViewControl: false,
+    mapTypeControl: false,
+    scrollwheel: false,
     styles: STYLE
   };
   var map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
@@ -47,11 +50,13 @@ function initialize() {
   $("#categories").change(function(){
     var category = $(this).val();
     for(var i=0; i<circlesEmployees.length; i++){
-      if(circlesEmployees[i].category == category){
-        circlesEmployees[i].setMap(map);
-      }
-      else{
-        circlesEmployees[i].setMap(null);
+      if(circlesEmployees[i] != null){
+        if(circlesEmployees[i].category == category){
+          circlesEmployees[i].setMap(map);
+        }
+        else{
+          circlesEmployees[i].setMap(null);
+        }
       }
     }
   });
@@ -103,30 +108,35 @@ function paintBeaconCircleFromDatabase(beacon){
 }
 
 function paintEmployeeCircleFromDatabase(employee){
-  var center = new google.maps.LatLng(employee.location.x,employee.location.y);
-  var circleCenterData = {
-    strokeWeight: 0,
-    fillColor: '#00C853',
-    fillOpacity: 1,
-    center: center,
-    radius: 1,
-    category: employee.data.category
-  };
-  circlesEmployee = new google.maps.Circle(circleCenterData);
-  google.maps.event.addListener(circlesEmployee, "click", function(e) {
-    var infoString = "<div><h3>Employee Information</h3><ul>";
-    infoString += "<li>Id: " + employee.id + "</li>";
-    infoString += "<li>Name: " + employee.data.name + "</li>";
-    infoString += "<li>Last Name: " + employee.data.last_name + "</li>";
-    infoString += "<li>Category: " + employee.data.category + "</li>";
-    infoString += "</ul></div>";
-    var infowindow = new google.maps.InfoWindow({
-      content: infoString,
-      position: this.getCenter()
+  if(employee.track.length > 0){
+    var center = new google.maps.LatLng(employee.track[0].location.latitude,employee.track[0].location.longitude);
+    var circleCenterData = {
+      strokeWeight: 0,
+      fillColor: '#00C853',
+      fillOpacity: 1,
+      center: center,
+      radius: 1,
+      category: employee.category
+    };
+    circlesEmployee = new google.maps.Circle(circleCenterData);
+    google.maps.event.addListener(circlesEmployee, "click", function(e) {
+      var infoString = "<div><h3>Employee Information</h3><ul>";
+      infoString += "<li>Id: " + employee.id_employee + "</li>";
+      infoString += "<li>Name: " + employee.name + "</li>";
+      infoString += "<li>Last Name: " + employee.last_name + "</li>";
+      infoString += "<li>Category: " + employee.category + "</li>";
+      infoString += "</ul></div>";
+      var infowindow = new google.maps.InfoWindow({
+        content: infoString,
+        position: this.getCenter()
+      });
+      infowindow.open(this.getMap(),this);
     });
-    infowindow.open(this.getMap(),this);
-  });
-  circlesEmployees.push(circlesEmployee);
+    circlesEmployees.push(circlesEmployee);
+  }
+  else{
+    circlesEmployees.push(null);
+  }
 }
 
 
@@ -222,10 +232,12 @@ function loadEmployees(map){
     data: data,
     success:function(req) {
       var category = $("#categories").val();
+      console.log(req.employees)
       for(var i=0; i<req.employees.length; i++){
         paintEmployeeCircleFromDatabase(req.employees[i]);
-        if(req.employees[i].data.category == category){
-          circlesEmployees[i].setMap(map);
+        if(req.employees[i].category == category){
+          if(circlesEmployees[i] != null)
+            circlesEmployees[i].setMap(map);
         }
       }
     }

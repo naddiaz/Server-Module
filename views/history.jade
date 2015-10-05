@@ -6,17 +6,19 @@ block links
     link(rel='stylesheet' href="/css/magnific-popup.css")
 
 block scripts
-  script(type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA5X8YsmAwkfl6i-QnAGSXPJOLaY52ANsM&sensor=false")
+  script(type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA5X8YsmAwkfl6i-QnAGSXPJOLaY52ANsM&sensor=false&libraries=geometry")
   script.
     ID_INSTALLATION = "#{id_installation}"
     ID_EMPLOYEE = "#{employee.id_employee}"
   
+  script(src="/scripts/installation/helper.js")
   script(src='/js/moment-with-locales.js')
   script(src='/js/circles.min.js')
   script(src='/scripts/scroll.js')
   script(src='/scripts/history/timeline.js')
   script(src='/scripts/history/tasks.js')
   script(src='/scripts/history/chat.js')
+  script(src='/scripts/history/loadMap.js')
   script(src='/js/jquery.magnific-popup.min.js')
 
 block breadcrumb
@@ -60,6 +62,7 @@ block content
               button(title=__("history.date.prev"))#prev-date
                 i.fa.fa-angle-left
             .span10.center
+              p Tasks List
               p#tasks-date
             .span1.center
               button(title=__("history.date.next"))#next-date
@@ -121,6 +124,39 @@ block content
             .header Paused
             .circleStat
               #avg-paused.circle
+      .row-fluid
+        .span12.box
+          .box-header.selector-date
+            .row-fluid
+              .span1.center
+                button(title=__("history.date.prev") onclick="moveDateMap('prev')")
+                  i.fa.fa-angle-left
+              .span5.center
+                p= __("map.track")
+              .span4.center
+                p#map-date
+              .span1.center
+                button(title=__("history.date.refresh") onclick="refreshMap()")
+                  i.fa.fa-refresh
+              .span1.center
+                button(title=__("history.date.next") onclick="moveDateMap('next')")
+                  i.fa.fa-angle-right
+            .row-fluid
+              form.slider-hour
+                .span1
+                  | Only Important
+                .span1  
+                  input#important(type="checkbox")
+                .span1
+                  | Hour selector
+                .span1  
+                  output#output(for='value') 00:00
+                .span8
+                  input#value(type='range', value='0', step='1', min='0', max='24', oninput='outputUpdate(value)')
+            .row-fluid#loading
+          .box-content
+            #map_canvas
+
     .row-fluid.white-popup.mfp-with-anim.mfp-hide#tasks-popup
       .span12.box
         .box-header

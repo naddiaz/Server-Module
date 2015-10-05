@@ -12,19 +12,16 @@
 	"home.map": "Mapa",
 	"home.employees": "Empleados",
 	"home.categories": "Categorías",
-<<<<<<< HEAD
 	"home.more_options": "Opciones",
 	"home.help": "Ayuda",
 	"home.logout": "Cerrar Sesión",
-=======
->>>>>>> f45eb2ac11f2cd6e5aaef9ee38c7a39bcfc4cf6a
 
+	"map.track": "Mapa de seguimiento",
 	"map.circleArea": "Mostrar / Ocultar Círculos",
 	"map.graphLines": "Mostrar / Ocultar Grafo",
 	"map.groupsTitle": "Grupos",
 	"map.saveGraph": "Guardar esquema",
 
-<<<<<<< HEAD
 	"tab.employees": "Empleados",
 	"tab.assigned": "A. Asignadas",
 	"tab.active": "A. Activas",
@@ -119,50 +116,4 @@
 	"alerts.error.2":"Se necesita la ubicación de la actividad",
 	"alerts.error.3":"Se necesita especificar el tiempo estimado"
 
-=======
-	"breadcrumb.index": "Inicio",
-	"breadcrumb.control_panel": "Panel de Control",
-	"breadcrumb.employees": "Empleados",
-	"breadcrumb.history": "Histórico",
-	"menu.index": "Inicio",
-	"menu.control_panel": "Panel de control",
-	"menu.tasks": "Tareas",
-	"menu.map": "Mapa",
-	"menu.employees": "Empleados",
-	"menu.categories": "Categorías",
-	"menu.all_installations": "Todas las instalaciones",
-	"menu.more_options": "Más opciones",
-	"menu.options": "Opciones",
-	"menu.logout": "Salir",
-	"menu.help": "Ayuda",
-	"panel.tasks.tasks": "Tareas",
-	"panel.tasks.active": "Activas",
-	"panel.tasks.pending": "Pendientes",
-	"panel.tasks.complete": "Completas",
-	"panel.tasks.assign": "Asignaciones",
-	"panel.tasks.assign.partial": "Tareas sin asignación o parcialmente asignadas",
-	"panel.works.pause": "Trabajos pausados o cancelados",
-	"panel.works.pending": "Trabajos Pendientes",
-	"panel.works.active": "Trabajos Activos",
-	"panel.works.complete": "Trabajos Completados",
-	"panel.tasks.table.id": "ID Tarea",
-	"panel.tasks.table.employee": "Empleado",
-	"panel.tasks.table.pending": "Pendientes",
-	"panel.tasks.table.category": "Categoría",
-	"panel.tasks.table.priority": "Prioridad",
-	"panel.tasks.table.state": "Estado",
-	"panel.tasks.table.description": "Descripción",
-	"panel.tasks.table.actions": "Acciones",
-	"panel.tasks.table.register": "Registro",
-	"panel.employees.employees": "Empleados",
-	"panel.employees.messages": "Mensajes",
-	"panel.employees.table.history": "Hist",
-	"panel.employees.table.id": "ID",
-	"panel.employees.table.name": "Nombre",
-	"panel.employees.table.category": "Categoría",
-	"panel.employees.table.device": "Dispositivo",
-  "panel.employees.table.state": "Estado",
-  "panel.employees.data": "Datos del empleado",
-  "panel.employees.map": "Mapa de Actividad"
->>>>>>> f45eb2ac11f2cd6e5aaef9ee38c7a39bcfc4cf6a
 }

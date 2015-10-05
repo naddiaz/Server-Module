@@ -29,7 +29,7 @@ exports.employeesStates =  function(req, res){
   date.setHours(0);
   date.setMinutes(0);
   date.setSeconds(0);
-  var Employees = Employee.find({id_installation:req.body.id_installation});
+  var Employees = Employee.find({id_installation:req.body.id_installation}).sort({'created_at': 1}).select('id_employee name category');
   var Tasks     = Task.find({id_installation:req.body.id_installation, created_at: {$gte: date}});
 
   var models = {

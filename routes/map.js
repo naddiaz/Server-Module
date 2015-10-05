@@ -50,43 +50,14 @@ exports.loadBeacons = function(req,res){
   });
 }
 
-var Signal = require('./location/signal');
-var Calc = require('./location/calc');
-
 exports.loadEmployees = function(req,res){
-  var Locations = Location.find({id_installation:req.body.id_installation}).select('id_employee beacons detected_at').sort({detected_at: -1});
-  var Beacons = Beacon.find({id_installation:req.body.id_installation}).select('id_beacon location');
-  var Employees = Employee.find({id_installation:req.body.id_installation}).select('id_employee name last_name category');
-  var data = {
-    locations: Locations.exec.bind(Locations),
-    beacons: Beacons.exec.bind(Beacons),
-    employees: Employees.exec.bind(Employees)
-  };
-  async.parallel(data,function(err,results){
-    if(!err){
-      var locations = results.locations;
-      var beacons = results.beacons;
-      var employees = results.employees;
-
-      var data = [];
-      var selected = [];
-
-      for(var i=0; i<locations.length; i++){
-        var calc = Calc();
-        for(var j=0; j<locations[i].beacons.length; j++){
-          var bcn = getLatLngBeaconById(locations[i].beacons[j].id,beacons);
-          var signal = Signal(bcn.lat, bcn.lng,locations[i].beacons[j].powerDbm,-22);
-          calc.addSignal(signal);
-        }
-        if(!isSelected(locations[i].id_employee,selected)){
-          selected.push(locations[i].id_employee);
-          data.push({location:calc.solve(),id:locations[i].id_employee, data:getEmployeeById(locations[i].id_employee,employees)});
-        }
-      }
-      res.send({employees:data});
-    }
-    res.send({error:err});  
-  });
+  Employee
+    .find({id_installation: req.body.id_installation},{ track: { $slice: -1 }})
+    .exec(function(err, employees){
+      if(err)
+        res.send({status:false});
+      res.send({employees: employees});
+    });
 }
 
 function getLatLngBeaconById(id,beacons){

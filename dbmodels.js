@@ -40,7 +40,14 @@ var Employee = new Schema({
   gcm: String,
   hash: String,
   created_at: Date,
-  update_at: Date
+  update_at: Date,
+  track: [{
+    location: {
+      latitude: Number,
+      longitude: Number
+    }, 
+    register_at: Date
+  }]
 });
 Employee.index({id_employee: 1, id_installation: 1},{unique: true});
 
@@ -51,6 +58,7 @@ var Activity = new Schema({
     latitude: Number,
     longitude: Number
   },
+  cluster: Number,
   category: String,
   priority: Number,
   required: Number,

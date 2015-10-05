@@ -1,0 +1,91 @@
+extends layout_admin
+
+block scripts
+  script.
+    ID_INSTALLATION = "#{id_installation}";
+
+    var b1 = "11:11:11:11:11:11";
+    var b2 = "22:22:22:22:22:22";
+    var b3 = "33:33:33:33:33:33";
+    var b4 = "44:44:44:44:44:44";
+    var b5 = "55:55:55:55:55:55";
+
+    var sets = [
+      [b1,b2,b3],
+      [b1,b3,b4],
+      [b3,b4,b5],
+      [b3,b2,b5],
+      [b1,b4],
+      [b1,b2],
+      [b5,b4],
+      [b5,b2]
+    ];
+
+    var id_employee = "#{id_employee}";
+
+    (function(){
+      var i = 0;
+      var MAX = 180;
+
+      setInterval(function(){
+        if(i < MAX){
+          send(i);
+          i++;
+        }
+      }, 20000);
+      
+    })();
+
+    function send(i){
+      var query = {
+        id_installation: ID_INSTALLATION,
+        id_employee: id_employee
+      };
+
+      var li = "<li>";
+      var rand = randomIntFromInterval(0,7);
+      var beacons = [];
+      for(j in sets[rand]){
+        var r = randomIntFromInterval(-90,-69);
+        beacons.push({id:sets[rand][j],powerDbm:r});
+      }
+      query.beacons = beacons;
+      li += "It. " + i + ": " + printQuery(query);
+      li += "</li><hr/>";
+      $('#list').prepend(li);
+      
+      $.ajax({
+        url:"/location/send",
+        type:"POST",
+        data: query,
+        success:function(data) {
+          $('#list').prepend(data);
+        }
+      });
+    }
+
+    function printQuery(query){
+      return "{ id_installation: " + query.id_installation + ", id_employee: " + query.id_employee + ", beacons: " + printBeacons(query.beacons) + "}";
+    }
+
+    function printBeacons(beacons){
+      var str = "[<br>";
+      for(i in beacons){
+        str += "{ id: " + beacons[i].id + ", powerDbm: " + beacons[i].powerDbm + "}<br>";
+      }
+      str += "]";
+      return str;
+    }
+    
+    function randomIntFromInterval(min,max){
+      return Math.floor(Math.random()*(max-min+1)+min);
+    }
+
+block breadcrumb
+  
+block menu_options
+  include single_menu.jade
+
+block content
+  h1 Test Location Send
+  ul#list

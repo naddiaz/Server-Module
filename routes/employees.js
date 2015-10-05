@@ -59,7 +59,8 @@ exports.delete =  function(req, res){
 exports.employeesList =  function(req, res){
   Employee.find({
     id_installation: req.body.id_installation
-  }, {}, { sort: { 'created_at' : -1 } }, function(err, people) {
+  }).sort({'created_at': -1}).select('id_employee name last_name category device')
+  .exec(function(err,people){
     res.send({
       people: people
     });
@@ -134,6 +135,36 @@ exports.employeesListByCategory =  function(req, res){
   }).exec(function(err, employees) {
     res.send({
       employees: employees
+    });
+  });
+};
+
+exports.tracking =  function(req, res){
+  var current = req.body.date.split("/");
+  var day = current[0];
+  var month = current[1];
+  var year = current[2];
+
+  var start = new Date(year, month-1, day,0,0,0,0);
+  var end = new Date(year, month-1, day,0,0,0,0);
+  end.setDate(start.getDate()+1)
+  
+  Employee.findOne({
+    id_installation: req.body.id_installation,
+    id_employee: req.body.id_employee
+  })
+  .select("track")
+  .sort({"track.register_at": -1})
+  .exec(function(err, employee) {
+    var actualTrack = [];
+    for(i in employee.track){
+      var trackDate = new Date(employee.track[i].register_at);
+      if(trackDate >= start && trackDate < end){
+        actualTrack.push(employee.track[i])
+      }
+    }
+    res.send({
+      track: actualTrack
     });
   });
 };

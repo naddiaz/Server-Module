@@ -50,6 +50,7 @@ module.exports = function (app,dirname) {
   app.post('/helper/employees/updateCategory',           employees.updateCategory);
   app.post('/helper/employees/categoriesList',           employees.categoriesList);
   app.post('/helper/employees/employeesListByCategory',  employees.employeesListByCategory);
+  app.post('/helper/employees/tracking',                 employees.tracking);
   // End Helpers Employees
 // End Employees
 
@@ -71,6 +72,7 @@ module.exports = function (app,dirname) {
   var activities = require('./activities');
   app.get('/installation/:id_installation/activities', activities.home);
   app.post('/activity/create', activities.create);
+  app.post('/activity/create/auto', activities.createAuto);
 
   // Begin Helpers Activities
   // End Helpers Activities
@@ -105,7 +107,7 @@ module.exports = function (app,dirname) {
 
   var location = require('./location');
   app.post('/location/send',location.send);
-
+  app.get('/location/send/test/:id',location.test);
 
   var chat = require('./chat');
   app.post('/chat/send',chat.send);

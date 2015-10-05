@@ -19,7 +19,6 @@
     checkMaximum();
   });
   $('#activitySave').click(function(){
-    console.log("SAVE");
     checkFields();
   });
 })();
@@ -120,6 +119,9 @@ function checkFields(){
 }
 
 function createActivity(list){
+  var url = "/activity/create";
+  if($("#assignMethod").val() == 'automatic')
+    url = "/activity/create/auto";
   var loc = JSON.parse($('#location').val());
   var data = {
     id_installation: ID_INSTALLATION,
@@ -127,6 +129,7 @@ function createActivity(list){
       latitude: loc.lat,
       longitude: loc.lng
     },
+    cluster: $("#cluster").val(),
     category: $("#categories").val(),
     priority: $("#priority").val(),
     required: $("#required").val(),
@@ -136,7 +139,7 @@ function createActivity(list){
     employees: list
   }
   $.ajax({
-    url:"/activity/create",
+    url: url,
     type:"POST",
     data: data,
     success:function(data) {
