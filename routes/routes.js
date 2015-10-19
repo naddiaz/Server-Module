@@ -113,4 +113,18 @@ module.exports = function (app,dirname) {
   app.post('/chat/send',chat.send);
   app.post('/chat/update',chat.update);
   app.post('/chat/clear',chat.clear);
+
+// Begin WebServices
+
+  var ws = require('./webservice');
+  app.post('/ws/login', ws.login);
+  app.post('/ws/tasks', ws.tasks);
+  app.post('/ws/activity', ws.activity);
+  app.post('/ws/task/info', ws.taskInfo);
+  app.post('/ws/employee/gcm', ws.employeeGcm);
+
+
+  app.get('/ws/employee/gcm/test/:id_installation/:id_employee', ws.testGcm);
+
+// End WebServices
 };

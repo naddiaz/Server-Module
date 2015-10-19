@@ -65,10 +65,9 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 function mapClickEvent(map){
   google.maps.event.addListener(map, "click", function(e) {
-    coords = translateLatLng(e.latLng);
-    paintBeaconCircle(map,coords.lat,coords.lng);
-    $('#location').val("{\"lat\":" + coords.lat + ",\"lng\":" + coords.lng +"}");
-    centerSelected = new google.maps.LatLng(coords.lat,coords.lng);
+    paintBeaconCircle(map,e.latLng.lat(),e.latLng.lng());
+    $('#location').val("{\"lat\":" + e.latLng.lat() + ",\"lng\":" + e.latLng.lng() +"}");
+    centerSelected = new google.maps.LatLng(e.latLng.lat(),e.latLng.lng());
     var cluster = parseInt($('#cluster').val());
     calculateMinMaxDistances(map,cluster);
   });

@@ -45,9 +45,10 @@ var Employee = new Schema({
     location: {
       latitude: Number,
       longitude: Number
-    }, 
+    },
     register_at: Date
-  }]
+  }],
+  sync_tasks: Number
 });
 Employee.index({id_employee: 1, id_installation: 1},{unique: true});
 
@@ -81,7 +82,8 @@ var Task = new Schema({
   id_employee: String,
   id_activity: String,
   id_installation: String,
-  created_at: Date
+  created_at: Date,
+  update_at: Date
 });
 Task.plugin(Tree);
 Task.index({id_task: 1, id_employee: 1, id_activity: 1, id_installation: 1},{unique: true});
@@ -121,7 +123,7 @@ var Location = new Schema({
     id: String,
     powerDbm: Number
   }],
-  detected_at: Date 
+  detected_at: Date
 });
 Location.plugin(Tree);
 

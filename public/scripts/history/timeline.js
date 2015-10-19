@@ -53,13 +53,22 @@ var Timeline = function(data){
   }
 
   function hourToMinutes(number){
-    number = parseFloat(number.split(':')[0] + "." + number.split(':')[1])
+    number = parseFloat(number.split(':')[0] + "." + number.split(':')[1] + number.split(':')[2]*60)
     var hour = getPartNumber(number,'int');
     var minutes = getPartNumber(number,'frac',2);
     hour = (hour < 10) ? '0'+hour : hour;
     minutes = (minutes < 10) ? '0'+minutes : minutes;
     return parseInt(hour)*60+parseInt(minutes);
   }
+
+  /*function hourToMinutes(number){
+    number = parseFloat(number.split(':')[0] + "." + number.split(':')[1])
+    var hour = getPartNumber(number,'int');
+    var minutes = getPartNumber(number,'frac',2);
+    hour = (hour < 10) ? '0'+hour : hour;
+    minutes = (minutes < 10) ? '0'+minutes : minutes;
+    return parseInt(hour)*60+parseInt(minutes);
+  }*/
 
   function formatHour(number){
     number = parseFloat(number.split(':')[0] + "." + number.split(':')[1])

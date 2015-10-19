@@ -86,7 +86,7 @@ exports.noAssignedActivities =  function(req, res){
     id_installation:req.body.id_installation,
     created_at: {$gte: date}
   });
-  
+
   var models = {
     tasks: Tasks.exec.bind(Tasks),
     activities: Activities.exec.bind(Activities)
@@ -99,9 +99,7 @@ exports.noAssignedActivities =  function(req, res){
     for(var i=0; i<results.activities.length; i++){
       var isAssigned = false;
       var n = results.activities[i].required;
-      console.log("A:",results.activities[i].id_activity)
       for(var j=0; j<results.tasks.length; j++){
-        console.log("T:",results.tasks[j].id_activity)
         if(results.activities[i].id_activity == results.tasks[j].id_activity){
           n -= 1;
         }
@@ -131,10 +129,25 @@ exports.updateTask = function(req,res){
   var current = Date.now();
   Task.update(
     { id_task: req.body.id_task },
-    { state : state, $push: { track: {state:state,update_at:current} } },
+    {
+      state : state, $push: { track: {state:state,update_at:current} },
+      update_at: current
+    },
     function(err,task){
-    if(!err)
-      res.send({task:task});
-    res.send({state:false});
+      if(err)
+        return res.send(500,err);
+      updateEmployee(req.body.id_installation,req.body.id_employee);
+      res.json(200,{task:task});
+    }
+  );
+}
+
+function updateEmployee(id_installation,id_employee){
+  var curr = new Date().getTime()
+  var conditions = {id_installation: id_installation, id_employee: id_employee};
+  var query = {sync_tasks: curr};
+  Employee.update(conditions, query, function(err){
+    if(err)
+      console.log(err);
   });
 }

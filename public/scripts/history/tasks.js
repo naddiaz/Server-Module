@@ -172,7 +172,8 @@ function taskEvent(id){
           var date = new Date(data.task.track[i].update_at);
           var hour = (date.getHours() < 10)? '0'+date.getHours() : date.getHours();
           var minutes = (date.getMinutes() < 10)? '0'+date.getMinutes() : date.getMinutes();
-          timelineData.hour.push(hour+":"+minutes);
+          var seconds = (date.getSeconds() < 10)? '0'+date.getSeconds() : date.getSeconds();
+          timelineData.hour.push(hour+":"+minutes+":"+seconds);
           timelineData.state.push(data.task.track[i].state);
 
           if(data.task.state == 4 || data.task.state == 5){
@@ -248,6 +249,7 @@ function taskEvent(id){
         Circles.create(circle);
 
         initMap(data.activity.location.latitude,data.activity.location.longitude);
+        console.log(timelineData);
         new Timeline(timelineData).exec();
       }
     });

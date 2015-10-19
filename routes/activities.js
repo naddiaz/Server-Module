@@ -38,10 +38,12 @@ exports.create =  function(req, res){
             id_employee: employees[i],
             id_activity: activity.id_activity,
             id_installation: activity.id_installation,
-            created_at: Date.now()
+            created_at: Date.now(),
+            update_at: Date.now()
           });
           taskList.push(task);
           task.save();
+          updateEmployee(activity.id_installation, employees[i]);
         }
         res.send({activity:activity,task:taskList});
       }
@@ -83,10 +85,12 @@ exports.createAuto =  function(req, res){
             id_employee: employees[i].id_employee,
             id_activity: activity.id_activity,
             id_installation: activity.id_installation,
-            created_at: Date.now()
+            created_at: Date.now(),
+            update_at: Date.now()
           });
           taskList.push(task);
           task.save();
+          updateEmployee(activity.id_installation, employees[i].id_employee);
         }
         res.send({activity:activity,task:taskList});
       });
@@ -126,4 +130,14 @@ function createActivity(req){
     update_at: current
   });
   return activity;
+}
+
+function updateEmployee(id_installation,id_employee){
+  var current = new Date().getTime();
+  var conditions = {id_installation: id_installation, id_employee: id_employee};
+  var query = {sync_tasks: current};
+  Employee.update(conditions, query, function(err){
+    if(err)
+      console.log(err);
+  });
 }
